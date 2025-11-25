@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Graduation Jacket Collection</title>
+  <title>Graduation Collection</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <!-- Google Font -->
@@ -15,10 +15,12 @@
 
   <style>
     :root {
-      --bg-main: #020203;
-      --bg-card: #121215;
-      --bg-card-soft: #18181c;
-      --accent-gold: #f5b942;
+      /* ذهبـي مطفي و ألوان هادئة */
+      --bg-main: #050506;
+      --bg-card: #101015;
+      --bg-card-soft: #17171d;
+      --accent-gold: #d1b25a;
+      --accent-gold-soft: #2b2617;
       --accent-teal: #3aa6a0;
       --text-main: #f7f7f7;
       --text-muted: #b3b3b3;
@@ -36,7 +38,7 @@
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #202020 0, #020203 55%);
+      background: #050506;
       color: var(--text-main);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
@@ -61,22 +63,22 @@
 
     .app-inner {
       width: 100%;
-      max-width: 480px; /* mobile-like even on desktop */
-      padding: env(safe-area-inset-top, 14px) 16px 20px;
+      max-width: 480px; /* mobile width even on desktop */
+      padding: calc(env(safe-area-inset-top, 0px) + 26px) 16px 20px;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* Floating background orb */
+    /* Floating background orb – هادي */
     .floating-orb {
       position: fixed;
-      top: -120px;
-      right: -80px;
+      top: -140px;
+      right: -90px;
       width: 260px;
       height: 260px;
-      background: radial-gradient(circle at 30% 20%, rgba(245,185,66,0.9), transparent 60%);
-      opacity: 0.22;
+      background: radial-gradient(circle at 30% 20%, rgba(209,178,90,0.45), transparent 60%);
+      opacity: 0.18;
       filter: blur(1px);
       pointer-events: none;
       animation: orbFloat 18s ease-in-out infinite;
@@ -85,13 +87,13 @@
 
     @keyframes orbFloat {
       0%   { transform: translate3d(0,0,0); }
-      50%  { transform: translate3d(-36px,24px,0); }
+      50%  { transform: translate3d(-28px,22px,0); }
       100% { transform: translate3d(0,0,0); }
     }
 
     @keyframes orbBoost {
       0%   { transform: translate3d(0,0,0) scale(1); }
-      40%  { transform: translate3d(-22px,14px,0) scale(1.05); }
+      40%  { transform: translate3d(-18px,10px,0) scale(1.04); }
       100% { transform: translate3d(0,0,0) scale(1); }
     }
 
@@ -101,13 +103,13 @@
         orbFloat 18s ease-in-out infinite;
     }
 
-    /* Header – compact mobile style */
+    /* Header */
     .top-bar {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 6px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding-bottom: 4px;
     }
 
     .brand {
@@ -117,7 +119,7 @@
     }
 
     .brand img {
-      height: 34px;
+      height: 38px;
       width: auto;
     }
 
@@ -127,7 +129,7 @@
     }
 
     .brand-text-title {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
     }
 
@@ -136,54 +138,24 @@
       color: var(--text-muted);
     }
 
-    .map-button {
-      border-radius: 999px;
-      border: 1px solid rgba(245,185,66,0.6);
-      background: rgba(0,0,0,0.4);
-      padding: 7px 12px;
-      font-size: 11px;
-      color: var(--accent-gold);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .map-button-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #3b2a00;
-    }
-
-    .map-button span:last-child {
-      font-weight: 500;
-    }
-
     /* Card base */
     .card {
-      background: radial-gradient(circle at top left, #222227, #09090b 60%);
+      background: radial-gradient(circle at top left, #181820, #07070a 70%);
       border-radius: 22px;
-      padding: 16px 14px 16px;
-      border: 1px solid rgba(245,185,66,0.15);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.85);
+      padding: 18px 14px 18px;
+      border: 1px solid rgba(209,178,90,0.22);
+      box-shadow: 0 15px 34px rgba(0,0,0,0.9);
       position: relative;
     }
 
     .card-glow {
-      animation: cardGlow 1.7s ease-out;
+      animation: cardGlow 1.6s ease-out;
     }
 
     @keyframes cardGlow {
-      0%   { box-shadow: 0 14px 36px rgba(0,0,0,0.85); }
-      35%  { box-shadow: 0 0 32px rgba(245,185,66,0.75); }
-      100% { box-shadow: 0 14px 36px rgba(0,0,0,0.85); }
+      0%   { box-shadow: 0 15px 34px rgba(0,0,0,0.9); }
+      35%  { box-shadow: 0 0 30px rgba(209,178,90,0.7); }
+      100% { box-shadow: 0 15px 34px rgba(0,0,0,0.9); }
     }
 
     /* Hero text inside main card */
@@ -232,7 +204,7 @@
       width: 100%;
       padding: 14px 16px;
       border-radius: 999px;
-      border: 1px solid #3a3a3f;
+      border: 1px solid #373740;
       background: var(--bg-card-soft);
       color: var(--text-main);
       font-size: 15px;
@@ -246,8 +218,8 @@
 
     .input-text:focus {
       border-color: var(--accent-gold);
-      box-shadow: 0 0 0 1px rgba(245,185,66,0.7);
-      background: #141418;
+      box-shadow: 0 0 0 1px rgba(209,178,90,0.7);
+      background: #14141a;
     }
 
     .submit-button {
@@ -256,7 +228,7 @@
       border-radius: 999px;
       border: none;
       background: var(--accent-gold);
-      color: #000;
+      color: #17130a;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
@@ -270,8 +242,8 @@
 
     .submit-button:hover {
       transform: translateY(-1px);
-      background: #ffd166;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.7);
+      background: #e1c46d;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.75);
     }
 
     .submit-button:disabled {
@@ -296,8 +268,8 @@
       margin-top: 6px;
       padding: 9px 12px;
       border-radius: 12px;
-      border: 1px solid rgba(245, 185, 66, 0.9);
-      background: rgba(245, 185, 66, 0.1);
+      border: 1px solid rgba(209,178,90,0.9);
+      background: rgba(209,178,90,0.08);
       color: var(--accent-gold);
       font-size: 12px;
       cursor: pointer;
@@ -312,12 +284,12 @@
       width: 18px;
       height: 18px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      color: #3b2a00;
+      color: #3b2f10;
     }
 
     .loading-text {
@@ -351,9 +323,9 @@
       padding: 5px 10px;
       border-radius: 999px;
       background: rgba(0,0,0,0.95);
-      border: 1px solid rgba(245,185,66,0.7);
+      border: 1px solid rgba(209,178,90,0.7);
       font-size: 10px;
-      color: #ffe9b0;
+      color: #f5ebc6;
       display: none;
       align-items: center;
       gap: 5px;
@@ -374,7 +346,7 @@
 
     /* Results section */
     .results {
-      margin-top: 14px;
+      margin-top: 16px;
       display: none;
     }
 
@@ -387,13 +359,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
-      color: #3b2a00;
+      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
+      color: #3b2f10;
       font-weight: 800;
       font-size: 24px;
       box-shadow:
-        0 0 10px rgba(245,185,66,0.8),
-        0 0 24px rgba(245,185,66,0.6);
+        0 0 8px rgba(209,178,90,0.7),
+        0 0 18px rgba(0,0,0,0.7);
       text-align: center;
       padding: 8px;
     }
@@ -421,13 +393,13 @@
     }
 
     .warning-bar {
-      margin: 0 auto 10px;
+      margin: 0 auto 12px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(255,196,0,0.18), rgba(255,115,0,0.18));
-      border: 1px solid rgba(255,190,0,0.6);
+      background: linear-gradient(90deg, rgba(209,178,90,0.14), rgba(209,140,70,0.16));
+      border: 1px solid rgba(209,178,90,0.45);
       font-size: 11px;
-      color: #ffd37a;
+      color: #f5ebc6;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -444,8 +416,29 @@
     .results-item {
       padding: 10px 12px;
       border-radius: 16px;
-      background: #18181c;
-      border: 1px solid rgba(255,255,255,0.06);
+      background: #18181f;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .results-item-time {
+      background: var(--accent-gold-soft);
+      border-color: rgba(209,178,90,0.7);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #3b2f10;
+      flex-shrink: 0;
     }
 
     .results-label {
@@ -500,13 +493,13 @@
       color: var(--text-muted);
     }
 
-    /* Quotes */
+    /* Quote */
     .quote-card {
-      margin-top: 14px;
+      margin-top: 16px;
       padding: 10px 12px;
       border-radius: 16px;
-      border: 1px solid rgba(245,185,66,0.15);
-      background: linear-gradient(135deg, rgba(245,185,66,0.08), rgba(0,0,0,0.85));
+      border: 1px solid rgba(209,178,90,0.2);
+      background: linear-gradient(135deg, rgba(209,178,90,0.1), rgba(0,0,0,0.9));
       font-size: 12px;
       position: relative;
       overflow: hidden;
@@ -518,7 +511,7 @@
       top: -18px;
       left: 8px;
       font-size: 40px;
-      color: rgba(245,185,66,0.2);
+      color: rgba(209,178,90,0.25);
       pointer-events: none;
     }
 
@@ -527,9 +520,9 @@
       z-index: 1;
     }
 
-    /* Footer with line divider + inner glow text */
+    /* Footer */
     footer {
-      margin-top: 18px;
+      margin-top: 20px;
       padding-top: 12px;
     }
 
@@ -542,7 +535,7 @@
       text-align: center;
       padding-top: 8px;
       color: transparent;
-      background: linear-gradient(90deg, #f5b942, #ffe7a0, #f5b942);
+      background: linear-gradient(90deg, #b89a4d, #f0ddaa, #b89a4d);
       background-size: 220% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -556,8 +549,8 @@
       left: 15%;
       right: 15%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(245,185,66,0.8), transparent);
-      opacity: 0.8;
+      background: linear-gradient(90deg, transparent, rgba(209,178,90,0.8), transparent);
+      opacity: 0.85;
     }
 
     @keyframes textGlowShift {
@@ -590,11 +583,11 @@
       width: 100%;
       max-width: 460px;
       max-height: 60vh;
-      background: #101013;
+      background: #101015;
       border-radius: 22px;
       padding: 14px 16px 14px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-      border: 1px solid rgba(245,185,66,0.6);
+      border: 1px solid rgba(209,178,90,0.7);
       transform: translateY(16px) scale(0.96);
       opacity: 0;
       transition: transform 220ms ease, opacity 220ms ease;
@@ -619,15 +612,15 @@
       width: 32px;
       height: 32px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #3b2a00;
+      color: #3b2f10;
       font-weight: 800;
       box-shadow:
-        0 0 6px rgba(245,185,66,0.7),
-        0 0 16px rgba(245,185,66,0.5);
+        0 0 6px rgba(209,178,90,0.7),
+        0 0 16px rgba(209,178,90,0.5);
       flex-shrink: 0;
     }
 
@@ -667,16 +660,16 @@
       width: 24px;
       height: 24px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 12px;
       font-weight: 700;
-      color: #3b2a00;
+      color: #3b2f10;
       box-shadow:
-        0 0 6px rgba(245,185,66,0.8),
-        0 0 12px rgba(245,185,66,0.5);
+        0 0 6px rgba(209,178,90,0.8),
+        0 0 12px rgba(209,178,90,0.5);
     }
 
     .step-text {
@@ -715,7 +708,7 @@
       border-radius: 999px;
       border: none;
       background: var(--accent-gold);
-      color: #000;
+      color: #17130a;
       font-weight: 600;
       font-size: 13px;
       cursor: pointer;
@@ -725,7 +718,7 @@
 
     .modal-button:hover:not(:disabled) {
       transform: translateY(-1px);
-      background: #ffd166;
+      background: #e1c46d;
       box-shadow: 0 10px 26px rgba(0,0,0,0.9);
     }
 
@@ -738,7 +731,7 @@
 
     @media (min-width: 768px) {
       .app-inner {
-        padding-top: 22px;
+        padding-top: 40px;
         padding-bottom: 26px;
       }
     }
@@ -806,16 +799,10 @@
         <div class="brand">
           <img src="logo.png" alt="Graduation Team logo" />
           <div class="brand-text">
-            <span class="brand-text-title">Graduation Jacket Team</span>
+            <span class="brand-text-title">Graduation Team</span>
             <span class="brand-text-sub">Because every detail matters</span>
           </div>
         </div>
-        <button class="map-button"
-                type="button"
-                onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')">
-          <div class="map-button-icon">📍</div>
-          <span>Sports field</span>
-        </button>
       </div>
 
       <!-- Main card -->
@@ -891,9 +878,12 @@
                 <div class="results-label">Section</div>
                 <div class="results-value" id="resultSection">—</div>
               </div>
-              <div class="results-item">
-                <div class="results-label">Period time</div>
-                <div class="results-value" id="resultPeriod">—</div>
+              <div class="results-item results-item-time">
+                <div class="time-icon">⏰</div>
+                <div>
+                  <div class="results-label">Period time</div>
+                  <div class="results-value" id="resultPeriod">—</div>
+                </div>
               </div>
             </div>
 
@@ -907,9 +897,9 @@
 
           <!-- Robe info -->
           <div class="robe-card" id="robeCard" style="display:none;">
-            <div class="robe-card-title">Robe Pickup</div>
+            <div class="robe-card-title">Robe Pickup – 3/12</div>
             <p>
-              الاستلام يتم في مخزن <strong>رعاية الطلبة</strong> في الكلية. بعد استلامك للروب، يُفضّل التوجّه
+              الاستلام يتم من <strong>رعاية الطلبة</strong> في الكلية. بعد استلامك للروب، يُفضّل التوجّه
               إلى ساحة الكلية لتخفيف الزحام عند نقطة التسليم.
             </p>
             <button
@@ -918,7 +908,7 @@
               onclick="window.open('https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc','_blank')"
             >
               <div class="location-inline-button-icon">📍</div>
-              <span>موقع مخزن رعاية الطلبة في الخريطة</span>
+              <span>موقع رعاية الطلبة في الخريطة</span>
             </button>
           </div>
 
@@ -947,14 +937,12 @@
     const JACKETS_FILE = "Order_Arrangement_UPDATED.xlsx";
     const ROBES_FILE = "All_graduation_Orders_sorted_by_size.xlsx";
 
-    // We read the FIRST row as headers (no skipping).
     const JACKETS_STUDENT_ID_COL = "Student ID ( 8 digits e.g.20200456)";
-    const JACKETS_STATION_COL = "Station "; // note the space in the header
+    const JACKETS_STATION_COL = "Station ";
     const JACKETS_PERIOD_COL = "Period";
-
     const ROBES_STUDENT_ID_COL = "Student ID";
 
-    let jacketData = []; // { id, station, period }
+    let jacketData = [];
     let robeIdSet = new Set();
     let dataLoaded = false;
     let dataLoadFailed = false;
@@ -965,7 +953,6 @@
     const periodEl = document.getElementById("resultPeriod");
     const sectionBadgeEl = document.getElementById("sectionBadge");
     const robeCardEl = document.getElementById("robeCard");
-    const screenshotTipEl = document.getElementById("screenshotTip");
     const errorEl = document.getElementById("errorText");
     const loadingTextEl = document.getElementById("loadingText");
     const submitButton = document.getElementById("submitButton");
@@ -979,7 +966,6 @@
     const floatingOrb = document.getElementById("floatingOrb");
     const popoverHint = document.getElementById("popoverHint");
 
-    // Pending result until popup is confirmed
     let pendingResult = null;
     let pendingHasRobe = false;
 
@@ -1043,9 +1029,7 @@
         robesRows.forEach((row) => {
           const rawId = row[ROBES_STUDENT_ID_COL];
           const id = normalizeId(rawId);
-          if (id) {
-            robeIdSet.add(id);
-          }
+          if (id) robeIdSet.add(id);
         });
 
         dataLoaded = true;
@@ -1111,18 +1095,13 @@
       }
 
       pendingResult = match
-        ? {
-            station: match.station || "N/A",
-            period: match.period || "N/A",
-            id
-          }
+        ? { station: match.station || "N/A", period: match.period || "N/A", id }
         : null;
 
       pendingHasRobe = hasRobeAlso;
       showGuidelinesModal();
     }
 
-    // Enable/disable modal button based on checkbox
     modalCheck.addEventListener("change", () => {
       modalConfirm.disabled = !modalCheck.checked;
     });
@@ -1146,9 +1125,7 @@
         sectionEl.textContent = pendingResult.station;
         periodEl.textContent = pendingResult.period;
         const badgeValue = sectionBadgeEl.querySelector(".section-badge-value");
-        if (badgeValue) {
-          badgeValue.textContent = pendingResult.station;
-        }
+        if (badgeValue) badgeValue.textContent = pendingResult.station;
         sectionBadgeEl.classList.add("badge-pop");
         setTimeout(() => sectionBadgeEl.classList.remove("badge-pop"), 600);
       } else {
@@ -1161,13 +1138,12 @@
         robeCardEl.style.display = "none";
       }
 
-      // Glow, orb boost, popover
       lookupCard.classList.add("card-glow");
-      setTimeout(() => lookupCard.classList.remove("card-glow"), 1800);
+      setTimeout(() => lookupCard.classList.remove("card-glow"), 1600);
 
       if (floatingOrb) {
         floatingOrb.classList.add("orb-active");
-        setTimeout(() => floatingOrb.classList.remove("orb-active"), 2400);
+        setTimeout(() => floatingOrb.classList.remove("orb-active"), 2200);
       }
 
       if (popoverHint && hasJacket) {

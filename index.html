@@ -140,7 +140,7 @@
       border-radius: 999px;
       border: 1px solid rgba(245,185,66,0.6);
       background: rgba(0,0,0,0.4);
-      padding: 6px 10px;
+      padding: 7px 12px;
       font-size: 11px;
       color: var(--accent-gold);
       display: inline-flex;
@@ -150,8 +150,20 @@
       white-space: nowrap;
     }
 
-    .map-button span:first-child {
-      font-size: 13px;
+    .map-button-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #3b2a00;
+    }
+
+    .map-button span:last-child {
+      font-weight: 500;
     }
 
     /* Card base */
@@ -280,24 +292,32 @@
       margin-top: 4px;
     }
 
-    .inline-note {
-      margin-top: 4px;
-      font-size: 11px;
-      color: var(--text-muted);
+    .location-inline-button {
+      margin-top: 6px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(245, 185, 66, 0.9);
+      background: rgba(245, 185, 66, 0.1);
+      color: var(--accent-gold);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
     }
 
-    .location-inline-button {
-      margin-top: 8px;
-      padding: 7px 12px;
+    .location-inline-button-icon {
+      width: 18px;
+      height: 18px;
       border-radius: 999px;
-      border: 1px solid rgba(245, 185, 66, 0.7);
-      background: transparent;
-      color: var(--accent-gold);
-      font-size: 11px;
-      cursor: pointer;
-      display: inline-flex;
+      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      font-size: 11px;
+      color: #3b2a00;
     }
 
     .loading-text {
@@ -359,22 +379,45 @@
     }
 
     .section-badge {
-      width: 80px;
-      height: 80px;
+      width: 86px;
+      height: 86px;
       border-radius: 999px;
-      margin: 0 auto 10px;
+      margin: 4px auto 12px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
       color: #3b2a00;
       font-weight: 800;
-      font-size: 22px;
+      font-size: 24px;
       box-shadow:
         0 0 10px rgba(245,185,66,0.8),
         0 0 24px rgba(245,185,66,0.6);
       text-align: center;
       padding: 8px;
+    }
+
+    .section-badge-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.8;
+      margin-bottom: 2px;
+    }
+
+    .section-badge-value {
+      font-size: 22px;
+    }
+
+    .badge-pop {
+      animation: badgePop 0.55s ease-out;
+    }
+
+    @keyframes badgePop {
+      0%   { transform: scale(0.6); opacity: 0; }
+      60%  { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     .warning-bar {
@@ -439,8 +482,16 @@
 
     .robe-card-title {
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       color: var(--accent-gold);
+    }
+
+    .robe-location-button {
+      margin-top: 6px;
+      font-size: 11px;
+      border-color: rgba(58,166,160,0.9);
+      background: rgba(12,95,95,0.4);
+      color: #e9ffff;
     }
 
     .screenshot-tip {
@@ -515,18 +566,19 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Modal (bottom-sheet style) */
+    /* Modal – center, half-screen style */
     .modal-backdrop {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.78);
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: opacity 220ms ease;
+      padding: 0 16px;
     }
 
     .modal-backdrop.visible {
@@ -536,24 +588,47 @@
 
     .modal {
       width: 100%;
-      max-width: 480px;
+      max-width: 460px;
+      max-height: 60vh;
       background: #101013;
-      border-radius: 18px 18px 0 0;
+      border-radius: 22px;
       padding: 14px 16px 14px;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.9);
-      border-top: 1px solid rgba(245,185,66,0.4);
-      transform: translateY(22px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+      border: 1px solid rgba(245,185,66,0.6);
+      transform: translateY(16px) scale(0.96);
       opacity: 0;
       transition: transform 220ms ease, opacity 220ms ease;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     .modal-backdrop.visible .modal {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
       opacity: 1;
     }
 
     .modal-header {
       margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3b2a00;
+      font-weight: 800;
+      box-shadow:
+        0 0 6px rgba(245,185,66,0.7),
+        0 0 16px rgba(245,185,66,0.5);
+      flex-shrink: 0;
     }
 
     .modal-title {
@@ -568,8 +643,14 @@
       color: var(--text-muted);
     }
 
+    .modal-body {
+      margin-top: 6px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
     .steps {
-      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -609,7 +690,7 @@
     }
 
     .modal-actions {
-      margin-top: 10px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -666,34 +747,43 @@
 <body>
   <div class="floating-orb" aria-hidden="true" id="floatingOrb"></div>
 
-  <!-- Guidelines modal (after ID lookup) -->
+  <!-- Guidelines modal -->
   <div class="modal-backdrop" id="guidelinesModal" aria-modal="true" role="dialog">
     <div class="modal">
       <div class="modal-header">
-        <div class="modal-title">Before you come to collect your jacket</div>
-        <div class="modal-subtitle">Please follow these three short rules.</div>
+        <div class="modal-icon-circle">!</div>
+        <div>
+          <div class="modal-title">Before you come to collect your jacket</div>
+          <div class="modal-subtitle">Please follow these three short rules.</div>
+        </div>
       </div>
-      <div class="steps">
-        <div class="step-row">
-          <div class="step-badge">1</div>
-          <div class="step-text">
-            Bring your <span class="highlight">student ID card</span> if your college requires it, and make sure you know your
-            <span class="highlight">order number</span>. Having the order number ready makes pickup much faster.
+      <div class="modal-body">
+        <div class="steps">
+          <div class="step-row">
+            <div class="step-badge">1</div>
+            <div class="step-text">
+              It is <span class="highlight">mandatory</span> to bring your
+              <span class="highlight">student ID card</span>. It is also strongly recommended that you
+              know your <span class="highlight">order number</span> to make pickup much faster.
+            </div>
           </div>
-        </div>
-        <div class="step-row">
-          <div class="step-badge">2</div>
-          <div class="step-text">
-            If you <span class="highlight">cannot come yourself</span>, send someone on your behalf with your order number or student ID.
-            Items may <span class="highlight">not be held</span> otherwise.
+          <div class="step-row">
+            <div class="step-badge">2</div>
+            <div class="step-text">
+              If you <span class="highlight">cannot come yourself</span>, send someone on your behalf with your
+              order number or student ID. Items may <span class="highlight">not be held</span> otherwise.
+            </div>
           </div>
-        </div>
-        <div class="step-row">
-          <div class="step-badge">3</div>
-          <div class="step-text">
-            Come only at your <span class="highlight">assigned period time</span>.
-            If you arrive <span class="highlight">before or after</span> your period, you will
-            <span class="highlight">not be able to collect</span> your items.
+          <div class="step-row">
+            <div class="step-badge">3</div>
+            <div class="step-text">
+              Come only at your <span class="highlight">assigned period time</span> to avoid crowding and to let
+              everyone collect their jackets comfortably. If you arrive
+              <span class="highlight">before or after</span> your period, you will
+              <span class="highlight">not be able to collect</span> your items.
+              After receiving your jacket, please move to the <span class="highlight">college yard</span> so
+              the pickup area stays clear.
+            </div>
           </div>
         </div>
       </div>
@@ -723,7 +813,8 @@
         <button class="map-button"
                 type="button"
                 onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')">
-          <span>📍</span><span>Sports Field</span>
+          <div class="map-button-icon">📍</div>
+          <span>Sports field</span>
         </button>
       </div>
 
@@ -764,7 +855,8 @@
             class="location-inline-button"
             onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')"
           >
-            Open sports field location in Maps
+            <div class="location-inline-button-icon">📍</div>
+            <span>Open sports field location in Maps</span>
           </button>
 
           <div class="loading-text" id="loadingText">
@@ -775,7 +867,7 @@
           <div class="error-text" id="errorText" role="alert" aria-live="polite"></div>
         </div>
 
-        <!-- Popover hint (shows briefly after closing popup) -->
+        <!-- Popover hint -->
         <div class="popover-hint" id="popoverHint">
           <span>⚠</span>
           <span>Remember: come only at your assigned period time.</span>
@@ -783,40 +875,54 @@
 
         <!-- Results -->
         <div class="results" id="results">
-          <div class="section-badge" id="sectionBadge">Section</div>
-
-          <div class="warning-bar">
-            <span>⚠</span>
-            <span>Important: your jacket can only be collected at the period shown below.</span>
-          </div>
-
-          <div class="results-row">
-            <div class="results-item">
-              <div class="results-label">Section</div>
-              <div class="results-value" id="resultSection">—</div>
+          <div id="jacketResultBlock">
+            <div class="section-badge" id="sectionBadge">
+              <div class="section-badge-label">Your section</div>
+              <div class="section-badge-value">—</div>
             </div>
-            <div class="results-item">
-              <div class="results-label">Period time</div>
-              <div class="results-value" id="resultPeriod">—</div>
+
+            <div class="warning-bar">
+              <span>⚠</span>
+              <span>Important: your jacket can only be collected at the period shown below.</span>
             </div>
-          </div>
 
-          <p class="results-note">
-            Please arrive at the college sports field <strong>only during this period</strong>.
-            Arriving <strong>earlier or later</strong> means you will
-            <strong>not be able to collect</strong> your items.
-          </p>
+            <div class="results-row">
+              <div class="results-item">
+                <div class="results-label">Section</div>
+                <div class="results-value" id="resultSection">—</div>
+              </div>
+              <div class="results-item">
+                <div class="results-label">Period time</div>
+                <div class="results-value" id="resultPeriod">—</div>
+              </div>
+            </div>
 
-          <div class="robe-card" id="robeCard" style="display:none;">
-            <div class="robe-card-title">Robe Pickup Information</div>
-            <p>
-              Our records show that you have also requested a <strong>graduation robe</strong>.<br/>
-              Please collect your robe from the <strong>Student Affairs Office</strong>.
-              Staff members will be there to assist you with your robe and answer any questions.
+            <p class="results-note">
+              Please arrive at the college sports field <strong>only during this period</strong>.
+              Arriving <strong>earlier or later</strong> means you will
+              <strong>not be able to collect</strong> your items. After you receive your jacket,
+              you can move to the <strong>college yard</strong> so the pickup area stays clear.
             </p>
           </div>
 
-          <p class="screenshot-tip">
+          <!-- Robe info -->
+          <div class="robe-card" id="robeCard" style="display:none;">
+            <div class="robe-card-title">Robe Pickup – 3/12</div>
+            <p>
+              الاستلام يتم من <strong>رعاية الطلبة</strong> في الكلية. بعد استلامك للروب، يُفضّل التوجّه
+              إلى ساحة الكلية لتخفيف الزحام عند نقطة التسليم.
+            </p>
+            <button
+              type="button"
+              class="location-inline-button robe-location-button"
+              onclick="window.open('https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc','_blank')"
+            >
+              <div class="location-inline-button-icon">📍</div>
+              <span>موقع رعاية الطلبة في الخريطة</span>
+            </button>
+          </div>
+
+          <p class="screenshot-tip" id="screenshotTip">
             Tip: take a screenshot of this screen so you can quickly show your section and period at the field.
           </p>
         </div>
@@ -854,10 +960,12 @@
     let dataLoadFailed = false;
 
     const resultsEl = document.getElementById("results");
+    const jacketBlockEl = document.getElementById("jacketResultBlock");
     const sectionEl = document.getElementById("resultSection");
     const periodEl = document.getElementById("resultPeriod");
     const sectionBadgeEl = document.getElementById("sectionBadge");
     const robeCardEl = document.getElementById("robeCard");
+    const screenshotTipEl = document.getElementById("screenshotTip");
     const errorEl = document.getElementById("errorText");
     const loadingTextEl = document.getElementById("loadingText");
     const submitButton = document.getElementById("submitButton");
@@ -966,8 +1074,9 @@
 
     function handleLookup() {
       errorEl.textContent = "";
-      robeCardEl.style.display = "none";
       resultsEl.style.display = "none";
+      jacketBlockEl.style.display = "none";
+      robeCardEl.style.display = "none";
       pendingResult = null;
       pendingHasRobe = false;
 
@@ -992,21 +1101,24 @@
       }
 
       const match = jacketData.find((row) => row.id === id);
+      const hasRobeOnly = !match && robeIdSet.has(id);
+      const hasRobeAlso = robeIdSet.has(id);
 
-      if (!match) {
-        // تغيير الرسالة: الطالب ما طلب جاكيت أساساً
+      if (!match && !hasRobeOnly) {
         errorEl.textContent =
-          "This student ID does not have a jacket order in the system.";
+          "This student ID does not have a jacket or robe order in the system.";
         return;
       }
 
-      pendingResult = {
-        station: match.station || "N/A",
-        period: match.period || "N/A",
-        id
-      };
-      pendingHasRobe = robeIdSet.has(id);
+      pendingResult = match
+        ? {
+            station: match.station || "N/A",
+            period: match.period || "N/A",
+            id
+          }
+        : null;
 
+      pendingHasRobe = hasRobeAlso;
       showGuidelinesModal();
     }
 
@@ -1017,39 +1129,50 @@
 
     modalConfirm.addEventListener("click", () => {
       hideGuidelinesModal();
-      if (!pendingResult) return;
 
-      sectionEl.textContent = pendingResult.station;
-      periodEl.textContent = pendingResult.period;
-      sectionBadgeEl.textContent = pendingResult.station || "Section";
+      const hasJacket = !!pendingResult;
+      const hasRobe = pendingHasRobe;
+
+      if (!hasJacket && !hasRobe) {
+        pendingResult = null;
+        pendingHasRobe = false;
+        return;
+      }
+
       resultsEl.style.display = "block";
 
-      if (pendingHasRobe) {
+      if (hasJacket) {
+        jacketBlockEl.style.display = "block";
+        sectionEl.textContent = pendingResult.station;
+        periodEl.textContent = pendingResult.period;
+        const badgeValue = sectionBadgeEl.querySelector(".section-badge-value");
+        if (badgeValue) {
+          badgeValue.textContent = pendingResult.station;
+        }
+        sectionBadgeEl.classList.add("badge-pop");
+        setTimeout(() => sectionBadgeEl.classList.remove("badge-pop"), 600);
+      } else {
+        jacketBlockEl.style.display = "none";
+      }
+
+      if (hasRobe) {
         robeCardEl.style.display = "block";
       } else {
         robeCardEl.style.display = "none";
       }
 
-      // Glow around card
+      // Glow, orb boost, popover
       lookupCard.classList.add("card-glow");
-      setTimeout(() => {
-        lookupCard.classList.remove("card-glow");
-      }, 1800);
+      setTimeout(() => lookupCard.classList.remove("card-glow"), 1800);
 
-      // Boost background orb movement briefly
       if (floatingOrb) {
         floatingOrb.classList.add("orb-active");
-        setTimeout(() => {
-          floatingOrb.classList.remove("orb-active");
-        }, 2400);
+        setTimeout(() => floatingOrb.classList.remove("orb-active"), 2400);
       }
 
-      // Show small popover hint briefly
-      if (popoverHint) {
+      if (popoverHint && hasJacket) {
         popoverHint.classList.add("visible");
-        setTimeout(() => {
-          popoverHint.classList.remove("visible");
-        }, 3200);
+        setTimeout(() => popoverHint.classList.remove("visible"), 3200);
       }
 
       pendingResult = null;

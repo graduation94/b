@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Graduation Jacket Collection</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,9 +15,9 @@
 
   <style>
     :root {
-      --bg-main: #050505;
-      --bg-card: #111111;
-      --bg-card-soft: #181818;
+      --bg-main: #020203;
+      --bg-card: #121215;
+      --bg-card-soft: #18181c;
       --accent-gold: #f5b942;
       --accent-teal: #3aa6a0;
       --text-main: #f7f7f7;
@@ -36,7 +36,7 @@
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #202020 0, #050505 55%);
+      background: radial-gradient(circle at top, #202020 0, #020203 55%);
       color: var(--text-main);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
@@ -52,89 +52,23 @@
       text-decoration: underline;
     }
 
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(245, 185, 66, 0.3);
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 10px 14px;
+    /* App shell – mobile-first layout */
+    .app-shell {
+      min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: center;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand img {
-      height: 40px;
-      width: auto;
-    }
-
-    .brand-title {
+    .app-inner {
+      width: 100%;
+      max-width: 480px; /* mobile-like even on desktop */
+      padding: env(safe-area-inset-top, 14px) 16px 20px;
       display: flex;
       flex-direction: column;
+      gap: 16px;
     }
 
-    .brand-title span:first-child {
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .brand-title span:last-child {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .header-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .header-link-button {
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(245, 185, 66, 0.5);
-      background: transparent;
-      color: var(--accent-gold);
-      cursor: pointer;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
-    }
-
-    .header-link-button:hover {
-      transform: translateY(-1px);
-      background: rgba(245, 185, 66, 0.1);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
-    }
-
-    /* Main layout */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 26px 14px 32px;
-      position: relative;
-      perspective: 900px;
-    }
-
-    /* 3D floating orb background */
+    /* Floating background orb */
     .floating-orb {
       position: fixed;
       top: -120px;
@@ -145,95 +79,130 @@
       opacity: 0.22;
       filter: blur(1px);
       pointer-events: none;
-      animation: orbFloat 14s ease-in-out infinite;
+      animation: orbFloat 18s ease-in-out infinite;
       z-index: -1;
     }
 
     @keyframes orbFloat {
       0%   { transform: translate3d(0,0,0); }
-      50%  { transform: translate3d(-40px,18px,0); }
+      50%  { transform: translate3d(-36px,24px,0); }
       100% { transform: translate3d(0,0,0); }
     }
 
     @keyframes orbBoost {
       0%   { transform: translate3d(0,0,0) scale(1); }
-      40%  { transform: translate3d(-25px,10px,0) scale(1.05); }
+      40%  { transform: translate3d(-22px,14px,0) scale(1.05); }
       100% { transform: translate3d(0,0,0) scale(1); }
     }
 
     .floating-orb.orb-active {
       animation:
-        orbBoost 2.4s ease-in-out 1,
-        orbFloat 14s ease-in-out infinite;
+        orbBoost 2.2s ease-in-out 1,
+        orbFloat 18s ease-in-out infinite;
     }
 
-    .hero {
+    /* Header – compact mobile style */
+    .top-bar {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
-      margin-bottom: 24px;
+      gap: 10px;
+      padding-bottom: 6px;
     }
 
-    .hero-label {
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent-teal);
-      margin-bottom: 6px;
-    }
-
-    .hero-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent-gold);
-      margin-bottom: 6px;
-    }
-
-    .hero-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      max-width: 520px;
-    }
-
-    /* Card */
-    .card {
-      position: relative;
-      background: radial-gradient(circle at top left, #202020, #0b0b0b 60%);
-      border-radius: 20px;
-      padding: 18px 16px 18px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(245, 185, 66, 0.2);
-      transform-style: preserve-3d;
-      transition: box-shadow 220ms ease, border-color 220ms ease;
-    }
-
-    .card + .card {
-      margin-top: 16px;
-    }
-
-    .card.result-glow {
-      animation: cardGlow 1.7s ease-out;
-    }
-
-    @keyframes cardGlow {
-      0%   { box-shadow: 0 18px 40px rgba(0,0,0,0.85); }
-      35%  { box-shadow: 0 0 40px rgba(245,185,66,0.7); }
-      100% { box-shadow: 0 18px 40px rgba(0,0,0,0.85); }
-    }
-
-    .card-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .brand {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
+    .brand img {
+      height: 34px;
+      width: auto;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .map-button {
+      border-radius: 999px;
+      border: 1px solid rgba(245,185,66,0.6);
+      background: rgba(0,0,0,0.4);
+      padding: 6px 10px;
+      font-size: 11px;
+      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .map-button span:first-child {
+      font-size: 13px;
+    }
+
+    /* Card base */
+    .card {
+      background: radial-gradient(circle at top left, #222227, #09090b 60%);
+      border-radius: 22px;
+      padding: 16px 14px 16px;
+      border: 1px solid rgba(245,185,66,0.15);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.85);
+      position: relative;
+    }
+
+    .card-glow {
+      animation: cardGlow 1.7s ease-out;
+    }
+
+    @keyframes cardGlow {
+      0%   { box-shadow: 0 14px 36px rgba(0,0,0,0.85); }
+      35%  { box-shadow: 0 0 32px rgba(245,185,66,0.75); }
+      100% { box-shadow: 0 14px 36px rgba(0,0,0,0.85); }
+    }
+
+    /* Hero text inside main card */
+    .hero-block {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-teal);
+      margin-bottom: 4px;
+    }
+
+    .hero-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
     /* Form */
-    .id-form {
-      margin-top: 16px;
+    .form-block {
+      margin-top: 6px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -241,7 +210,6 @@
 
     .field-label {
       font-size: 12px;
-      text-align: left;
     }
 
     .input-wrapper {
@@ -250,30 +218,29 @@
 
     .input-text {
       width: 100%;
-      padding: 11px 14px;
+      padding: 14px 16px;
       border-radius: 999px;
-      border: 1px solid #333;
+      border: 1px solid #3a3a3f;
       background: var(--bg-card-soft);
       color: var(--text-main);
-      font-size: 13px;
+      font-size: 15px;
       outline: none;
-      transition: border 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      transition: border 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
     .input-text::placeholder {
-      color: #777;
+      color: #7a7a80;
     }
 
-    /* شلنا أي حركة 3D، بس خليّنا glow ناعم */
     .input-text:focus {
       border-color: var(--accent-gold);
-      box-shadow: 0 0 0 1px rgba(245, 185, 66, 0.6);
-      background: #151515;
+      box-shadow: 0 0 0 1px rgba(245,185,66,0.7);
+      background: #141418;
     }
 
     .submit-button {
       margin-top: 4px;
-      padding: 11px 16px;
+      padding: 13px 16px;
       border-radius: 999px;
       border: none;
       background: var(--accent-gold);
@@ -285,63 +252,112 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      width: 100%;
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
     }
 
     .submit-button:hover {
       transform: translateY(-1px);
       background: #ffd166;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.7);
     }
 
     .submit-button:disabled {
       opacity: 0.7;
-      cursor: default;
       transform: none;
       box-shadow: none;
+      cursor: default;
     }
 
     .help-text {
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 2px;
-      text-align: left;
     }
 
     .error-text {
       font-size: 12px;
       color: var(--error);
-      margin-top: 8px;
+      margin-top: 4px;
+    }
+
+    .inline-note {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
     }
 
     .location-inline-button {
       margin-top: 8px;
-      padding: 7px 14px;
+      padding: 7px 12px;
       border-radius: 999px;
       border: 1px solid rgba(245, 185, 66, 0.7);
       background: transparent;
       color: var(--accent-gold);
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
     }
 
-    .location-inline-button:hover {
-      transform: translateY(-1px);
-      background: rgba(245, 185, 66, 0.12);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.55);
+    .loading-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: none;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Results */
+    .dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      animation: dotPulse 1s infinite ease-in-out;
+    }
+
+    @keyframes dotPulse {
+      0% { transform: scale(0.9); opacity: 0.4; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.4; }
+    }
+
+    /* Popover hint */
+    .popover-hint {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.95);
+      border: 1px solid rgba(245,185,66,0.7);
+      font-size: 10px;
+      color: #ffe9b0;
+      display: none;
+      align-items: center;
+      gap: 5px;
+      z-index: 3;
+    }
+
+    .popover-hint.visible {
+      display: inline-flex;
+      animation: popFade 3.3s ease-out forwards;
+    }
+
+    @keyframes popFade {
+      0%   { opacity: 0; transform: translateY(-4px); }
+      10%  { opacity: 1; transform: translateY(0); }
+      70%  { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-4px); }
+    }
+
+    /* Results section */
     .results {
-      margin-top: 18px;
+      margin-top: 14px;
       display: none;
     }
 
-    /* Badge كبير للـ Section */
     .section-badge {
       width: 80px;
       height: 80px;
@@ -361,7 +377,6 @@
       padding: 8px;
     }
 
-    /* Mini Warning Bar */
     .warning-bar {
       margin: 0 auto 10px;
       padding: 6px 10px;
@@ -374,33 +389,27 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-    }
-
-    .warning-bar span:first-child {
-      font-size: 13px;
+      text-align: center;
     }
 
     .results-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .results-item {
-      flex: 1 1 140px;
-      min-width: 0;
       padding: 10px 12px;
-      border-radius: 14px;
-      background: #181818;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+      border-radius: 16px;
+      background: #18181c;
+      border: 1px solid rgba(255,255,255,0.06);
     }
 
     .results-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       margin-bottom: 3px;
     }
 
@@ -415,14 +424,17 @@
       color: var(--text-muted);
     }
 
+    .results-note strong {
+      color: var(--accent-gold);
+    }
+
     .robe-card {
-      margin-top: 14px;
-      padding: 12px 12px 13px;
+      margin-top: 12px;
+      padding: 11px 12px 12px;
       border-radius: 16px;
       background: linear-gradient(135deg, rgba(58,166,160,0.26), rgba(5,5,5,0.95));
-      border: 1px solid rgba(58, 166, 160, 0.75);
+      border: 1px solid rgba(58,166,160,0.75);
       font-size: 12px;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.7);
     }
 
     .robe-card-title {
@@ -431,73 +443,20 @@
       color: var(--accent-gold);
     }
 
-    .loading-text {
+    .screenshot-tip {
+      margin-top: 10px;
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 6px;
-      display: none;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .dot-pulse {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      animation: dotPulse 1s infinite ease-in-out;
-    }
-
-    @keyframes dotPulse {
-      0% { transform: scale(0.9); opacity: 0.4; }
-      50% { transform: scale(1.3); opacity: 1; }
-      100% { transform: scale(0.9); opacity: 0.4; }
-    }
-
-    /* Popover hint */
-    .popover-hint {
-      position: absolute;
-      right: 12px;
-      top: 10px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.9);
-      border: 1px solid rgba(245,185,66,0.7);
-      font-size: 11px;
-      color: #ffe9b0;
-      display: none;
-      align-items: center;
-      gap: 6px;
-      z-index: 5;
-    }
-
-    .popover-hint.visible {
-      display: inline-flex;
-      animation: popFade 3.3s ease-out forwards;
-    }
-
-    @keyframes popFade {
-      0%   { opacity: 0; transform: translateY(-4px); }
-      10%  { opacity: 1; transform: translateY(0); }
-      70%  { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-4px); }
     }
 
     /* Quotes */
-    .quotes {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
-    }
-
     .quote-card {
-      padding: 13px 13px;
+      margin-top: 14px;
+      padding: 10px 12px;
       border-radius: 16px;
-      border: 1px solid rgba(245, 185, 66, 0.15);
-      background: linear-gradient(135deg, rgba(245, 185, 66, 0.08), rgba(0, 0, 0, 0.8));
-      font-size: 13px;
+      border: 1px solid rgba(245,185,66,0.15);
+      background: linear-gradient(135deg, rgba(245,185,66,0.08), rgba(0,0,0,0.85));
+      font-size: 12px;
       position: relative;
       overflow: hidden;
     }
@@ -507,8 +466,8 @@
       position: absolute;
       top: -18px;
       left: 8px;
-      font-size: 50px;
-      color: rgba(245, 185, 66, 0.2);
+      font-size: 40px;
+      color: rgba(245,185,66,0.2);
       pointer-events: none;
     }
 
@@ -517,28 +476,23 @@
       z-index: 1;
     }
 
-    /* Footer */
+    /* Footer with line divider + inner glow text */
     footer {
-      margin-top: 26px;
-      padding: 14px 14px 20px;
-      border-top: 1px solid rgba(245, 185, 66, 0.25);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin-top: 18px;
+      padding-top: 12px;
     }
 
-    /* Line divider + inner glow name */
     .footer-credit {
       position: relative;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       text-align: center;
       padding-top: 8px;
       color: transparent;
       background: linear-gradient(90deg, #f5b942, #ffe7a0, #f5b942);
-      background-size: 200% 100%;
+      background-size: 220% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       animation: textGlowShift 4s ease-in-out infinite;
@@ -552,7 +506,7 @@
       right: 15%;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(245,185,66,0.8), transparent);
-      opacity: 0.75;
+      opacity: 0.8;
     }
 
     @keyframes textGlowShift {
@@ -561,19 +515,18 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Modal */
+    /* Modal (bottom-sheet style) */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(245,185,66,0.2), rgba(0,0,0,0.9));
+      background: rgba(0,0,0,0.78);
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: opacity 220ms ease;
-      padding: 0 14px;
     }
 
     .modal-backdrop.visible {
@@ -582,31 +535,32 @@
     }
 
     .modal {
-      width: min(100%, 480px);
-      background: #0f0f0f;
-      border-radius: 22px;
-      padding: 18px 16px 16px;
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.9);
-      border: 1px solid rgba(245, 185, 66, 0.55);
-      transform: translateY(16px) scale(0.96);
+      width: 100%;
+      max-width: 480px;
+      background: #101013;
+      border-radius: 18px 18px 0 0;
+      padding: 14px 16px 14px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.9);
+      border-top: 1px solid rgba(245,185,66,0.4);
+      transform: translateY(22px);
       opacity: 0;
       transition: transform 220ms ease, opacity 220ms ease;
     }
 
     .modal-backdrop.visible .modal {
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
       opacity: 1;
     }
 
     .modal-header {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .modal-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--accent-gold);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .modal-subtitle {
@@ -615,7 +569,7 @@
     }
 
     .steps {
-      margin-top: 10px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -624,19 +578,19 @@
     .step-row {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 9px;
     }
 
     .step-badge {
       flex-shrink: 0;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 20%, #ffe7a0, #f5b942);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #3b2a00;
       box-shadow:
@@ -655,18 +609,17 @@
     }
 
     .modal-actions {
-      margin-top: 14px;
-      text-align: right;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .modal-check {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
@@ -677,7 +630,7 @@
     }
 
     .modal-button {
-      padding: 9px 18px;
+      padding: 10px 16px;
       border-radius: 999px;
       border: none;
       background: var(--accent-gold);
@@ -692,7 +645,7 @@
     .modal-button:hover:not(:disabled) {
       transform: translateY(-1px);
       background: #ffd166;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.9);
     }
 
     .modal-button:disabled {
@@ -702,18 +655,10 @@
       transform: none;
     }
 
-    @media (min-width: 720px) {
-      .hero-title {
-        font-size: 28px;
-      }
-      .quotes {
-        max-width: 720px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .modal-button {
-        width: auto;
-        align-self: flex-end;
+    @media (min-width: 768px) {
+      .app-inner {
+        padding-top: 22px;
+        padding-bottom: 26px;
       }
     }
   </style>
@@ -726,30 +671,29 @@
     <div class="modal">
       <div class="modal-header">
         <div class="modal-title">Before you come to collect your jacket</div>
-        <div class="modal-subtitle">Please follow these three steps carefully.</div>
+        <div class="modal-subtitle">Please follow these three short rules.</div>
       </div>
       <div class="steps">
         <div class="step-row">
           <div class="step-badge">1</div>
           <div class="step-text">
-            Bring your <span class="highlight">student ID card</span> if your college requires it,
-            and make sure you know your <span class="highlight">order number</span>.
-            Having the order number ready makes pickup much faster.
+            Bring your <span class="highlight">student ID card</span> if your college requires it, and make sure you know your
+            <span class="highlight">order number</span>. Having the order number ready makes pickup much faster.
           </div>
         </div>
         <div class="step-row">
           <div class="step-badge">2</div>
           <div class="step-text">
-            If you <span class="highlight">cannot come yourself</span>, send someone on your behalf
-            with your order number or student ID. Items may <span class="highlight">not be held</span> otherwise.
+            If you <span class="highlight">cannot come yourself</span>, send someone on your behalf with your order number or student ID.
+            Items may <span class="highlight">not be held</span> otherwise.
           </div>
         </div>
         <div class="step-row">
           <div class="step-badge">3</div>
           <div class="step-text">
             Come only at your <span class="highlight">assigned period time</span>.
-            If you arrive <span class="highlight">before or after</span> your period,
-            you will <span class="highlight">not be able to collect</span> your items.
+            If you arrive <span class="highlight">before or after</span> your period, you will
+            <span class="highlight">not be able to collect</span> your items.
           </div>
         </div>
       </div>
@@ -765,131 +709,132 @@
     </div>
   </div>
 
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <img src="logo.png" alt="Graduation Team logo" />
-        <div class="brand-title">
-          <span>Graduation Jacket Team</span>
-          <span>Because every detail matters</span>
+  <div class="app-shell">
+    <div class="app-inner">
+      <!-- Header -->
+      <div class="top-bar">
+        <div class="brand">
+          <img src="logo.png" alt="Graduation Team logo" />
+          <div class="brand-text">
+            <span class="brand-text-title">Graduation Jacket Team</span>
+            <span class="brand-text-sub">Because every detail matters</span>
+          </div>
         </div>
-      </div>
-      <div class="header-links">
-        <button class="header-link-button" onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')">
-          <span>Sports Field Location</span>
+        <button class="map-button"
+                type="button"
+                onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')">
+          <span>📍</span><span>Sports Field</span>
         </button>
       </div>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-label">Graduation 2024 / Jackets</div>
-      <h1 class="hero-title">Find Your Section and Period Time</h1>
-      <p class="hero-subtitle">
-        Enter your student ID to see which <strong>section</strong> you belong to and at what
-        <strong>period time</strong> you should collect your jacket at the sports field.
-      </p>
-    </section>
-
-    <!-- Lookup Card -->
-    <section class="card" aria-labelledby="lookup-title" id="lookupCard">
-      <div class="card-title" id="lookup-title">
-        <span>Student ID Lookup</span>
-      </div>
-
-      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-align: left;">
-        Jacket collection takes place at the college sports field.
-      </p>
-      <button
-        type="button"
-        class="location-inline-button"
-        onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')"
-      >
-        Open location in Maps
-      </button>
-
-      <form class="id-form" id="idForm">
-        <label class="field-label" for="studentId">Student ID number</label>
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="studentId"
-            name="studentId"
-            class="input-text"
-            placeholder="e.g. 20200456"
-            inputmode="numeric"
-            autocomplete="off"
-            aria-describedby="studentIdHelp"
-          />
+      <!-- Main card -->
+      <section class="card" id="lookupCard">
+        <div class="hero-block">
+          <div class="hero-label">Graduation jackets</div>
+          <div class="hero-title">Find your pickup details</div>
+          <div class="hero-subtitle">
+            Enter your student ID to see your <strong>section</strong> and <strong>period time</strong>
+            for jacket collection at the college sports field.
+          </div>
         </div>
-        <button type="submit" class="submit-button" id="submitButton">
-          <span>Check my pickup details</span>
-        </button>
-        <div class="help-text" id="studentIdHelp">
-          Type your 8-digit student ID. The system will only show your <strong>section</strong> and <strong>period time</strong>.
-        </div>
-        <div class="loading-text" id="loadingText">
-          <span class="dot-pulse"></span>
-          <span>Loading collection data… Please wait a moment.</span>
-        </div>
-        <div class="error-text" id="errorText" role="alert" aria-live="polite"></div>
-      </form>
 
-      <!-- Popover hint (shows briefly after closing popup) -->
-      <div class="popover-hint" id="popoverHint">
-        <span>⚠</span>
-        <span>Remember: come only at your assigned period time.</span>
-      </div>
+        <div class="form-block">
+          <label class="field-label" for="studentId">Student ID number</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="studentId"
+              name="studentId"
+              class="input-text"
+              placeholder="e.g. 20201234"
+              inputmode="numeric"
+              autocomplete="off"
+              aria-describedby="studentIdHelp"
+            />
+          </div>
+          <button type="button" class="submit-button" id="submitButton">
+            Check my pickup details
+          </button>
+          <div class="help-text" id="studentIdHelp">
+            Type your 8-digit student ID. The system will only show your <strong>section</strong> and <strong>period time</strong>.
+          </div>
 
-      <!-- Results -->
-      <div class="results" id="results">
-        <!-- Badge + warning bar -->
-        <div class="section-badge" id="sectionBadge">Section</div>
-        <div class="warning-bar">
+          <button
+            type="button"
+            class="location-inline-button"
+            onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')"
+          >
+            Open sports field location in Maps
+          </button>
+
+          <div class="loading-text" id="loadingText">
+            <span class="dot-pulse"></span>
+            <span>Loading collection data… Please wait a moment.</span>
+          </div>
+
+          <div class="error-text" id="errorText" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Popover hint (shows briefly after closing popup) -->
+        <div class="popover-hint" id="popoverHint">
           <span>⚠</span>
-          <span>Important: You can only collect your jacket at this period time.</span>
+          <span>Remember: come only at your assigned period time.</span>
         </div>
 
-        <div class="results-row">
-          <div class="results-item">
-            <div class="results-label">Section</div>
-            <div class="results-value" id="resultSection">—</div>
-          </div>
-          <div class="results-item">
-            <div class="results-label">Period time</div>
-            <div class="results-value" id="resultPeriod">—</div>
-          </div>
-        </div>
-        <p class="results-note">
-          Please arrive exactly at this period at the college sports field.
-          If you come before or after this time, you will not be able to collect your items.
-        </p>
+        <!-- Results -->
+        <div class="results" id="results">
+          <div class="section-badge" id="sectionBadge">Section</div>
 
-        <div class="robe-card" id="robeCard" style="display:none;">
-          <div class="robe-card-title">Robe Pickup Information</div>
-          <p>
-            Our records show that you have also requested a <strong>graduation robe</strong>.<br/>
-            Please collect your robe from the <strong>Student Affairs Office</strong>.
-            Staff members will be there to assist you with your robe and answer any questions.
+          <div class="warning-bar">
+            <span>⚠</span>
+            <span>Important: your jacket can only be collected at the period shown below.</span>
+          </div>
+
+          <div class="results-row">
+            <div class="results-item">
+              <div class="results-label">Section</div>
+              <div class="results-value" id="resultSection">—</div>
+            </div>
+            <div class="results-item">
+              <div class="results-label">Period time</div>
+              <div class="results-value" id="resultPeriod">—</div>
+            </div>
+          </div>
+
+          <p class="results-note">
+            Please arrive at the college sports field <strong>only during this period</strong>.
+            Arriving <strong>earlier or later</strong> means you will
+            <strong>not be able to collect</strong> your items.
+          </p>
+
+          <div class="robe-card" id="robeCard" style="display:none;">
+            <div class="robe-card-title">Robe Pickup Information</div>
+            <p>
+              Our records show that you have also requested a <strong>graduation robe</strong>.<br/>
+              Please collect your robe from the <strong>Student Affairs Office</strong>.
+              Staff members will be there to assist you with your robe and answer any questions.
+            </p>
+          </div>
+
+          <p class="screenshot-tip">
+            Tip: take a screenshot of this screen so you can quickly show your section and period at the field.
           </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Quotes / Uplifting phrase -->
-    <section class="quotes" aria-label="Graduation message">
-      <article class="quote-card">
-        <div class="quote-text">
-          Every step brought you here. Every detail celebrates your journey.
-        </div>
-      </article>
-    </section>
-  </main>
+        <!-- Short uplifting line -->
+        <article class="quote-card">
+          <div class="quote-text">
+            Every step brought you here. Every detail celebrates your journey.
+          </div>
+        </article>
+      </section>
 
-  <footer>
-    <span class="footer-credit">PROGRAMMED BY ALBARA.</span>
-  </footer>
+      <!-- Footer -->
+      <footer>
+        <div class="footer-credit">PROGRAMMED BY ALBARA.</div>
+      </footer>
+    </div>
+  </div>
 
   <script>
     // --------- Config: Excel file names and column headers ----------
@@ -916,6 +861,7 @@
     const errorEl = document.getElementById("errorText");
     const loadingTextEl = document.getElementById("loadingText");
     const submitButton = document.getElementById("submitButton");
+    const studentIdInput = document.getElementById("studentId");
 
     const modalBackdrop = document.getElementById("guidelinesModal");
     const modalConfirm = document.getElementById("guidelinesConfirm");
@@ -1018,16 +964,14 @@
       modalBackdrop.classList.remove("visible");
     }
 
-    function handleLookup(event) {
-      event.preventDefault();
+    function handleLookup() {
       errorEl.textContent = "";
       robeCardEl.style.display = "none";
       resultsEl.style.display = "none";
       pendingResult = null;
       pendingHasRobe = false;
 
-      const input = document.getElementById("studentId");
-      const rawInput = input.value;
+      const rawInput = studentIdInput.value;
       const id = normalizeId(rawInput);
 
       if (!dataLoaded && !dataLoadFailed) {
@@ -1050,8 +994,9 @@
       const match = jacketData.find((row) => row.id === id);
 
       if (!match) {
+        // تغيير الرسالة: الطالب ما طلب جاكيت أساساً
         errorEl.textContent =
-          "We could not find this student ID. Please check the number and try again.";
+          "This student ID does not have a jacket order in the system.";
         return;
       }
 
@@ -1074,7 +1019,6 @@
       hideGuidelinesModal();
       if (!pendingResult) return;
 
-      // Fill results
       sectionEl.textContent = pendingResult.station;
       periodEl.textContent = pendingResult.period;
       sectionBadgeEl.textContent = pendingResult.station || "Section";
@@ -1087,9 +1031,9 @@
       }
 
       // Glow around card
-      lookupCard.classList.add("result-glow");
+      lookupCard.classList.add("card-glow");
       setTimeout(() => {
-        lookupCard.classList.remove("result-glow");
+        lookupCard.classList.remove("card-glow");
       }, 1800);
 
       // Boost background orb movement briefly
@@ -1097,7 +1041,7 @@
         floatingOrb.classList.add("orb-active");
         setTimeout(() => {
           floatingOrb.classList.remove("orb-active");
-        }, 2500);
+        }, 2400);
       }
 
       // Show small popover hint briefly
@@ -1115,8 +1059,13 @@
     document.addEventListener("DOMContentLoaded", () => {
       loadExcelData();
 
-      const form = document.getElementById("idForm");
-      form.addEventListener("submit", handleLookup);
+      submitButton.addEventListener("click", handleLookup);
+      studentIdInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleLookup();
+        }
+      });
     });
   </script>
 </body>

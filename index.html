@@ -5,7 +5,7 @@
   <title>Graduation Pickup Checker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Font: Poppins -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- SheetJS -->
@@ -13,9 +13,9 @@
 
   <style>
     :root {
-      --bg-charcoal: #0c0c10;
-      --bg-elevated: #15151d;
-      --bg-elevated-soft: #181822;
+      --bg-main: #05060c;
+      --bg-card: #11121a;
+      --bg-card-soft: #161722;
       --gold: #c9a25f;
       --gold-soft: #e0c58a;
       --gold-deep: #8b6a35;
@@ -25,7 +25,7 @@
       --danger: #ffcc66;
       --input-bg: #15151c;
       --border-soft: #2b2b35;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.85);
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.9);
       --radius-lg: 22px;
       --radius-md: 16px;
       --radius-pill: 999px;
@@ -41,14 +41,25 @@
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #20202a 0, #050509 55%, #000 100%);
-      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       padding: 24px 12px 80px;
       overflow-x: hidden;
       position: relative;
+      background: radial-gradient(circle at top, #1a1b27 0, #05060c 55%, #000 100%);
+    }
+
+    body::before {
+      /* فينيت خفيف على الأطراف عشان يعطي إحساس احترافي */
+      content: "";
+      position: fixed;
+      inset: -40px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,0.03), transparent 55%),
+        radial-gradient(circle at bottom, rgba(0,0,0,0.8), transparent 55%);
+      z-index: 0;
     }
 
     a {
@@ -60,37 +71,37 @@
       font-family: inherit;
     }
 
-    /* Subtle animated orb in background */
+    /* Orb صغيرة وخفيفة جداً */
     .orb {
       position: fixed;
-      width: 320px;
-      height: 320px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(102, 194, 194, 0.95), rgba(12, 25, 30, 0.1));
-      filter: blur(6px);
-      top: 12%;
+      background: radial-gradient(circle at 30% 30%, rgba(201, 162, 95, 0.45), rgba(10, 14, 18, 0.2));
+      filter: blur(4px);
+      top: 9%;
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0.22;
+      opacity: 0.12;
       pointer-events: none;
-      animation: orbFloat 10s ease-in-out infinite;
+      animation: orbFloat 12s ease-in-out infinite;
       z-index: 0;
     }
 
     .orb.orb-boost {
-      animation: orbBoost 0.8s ease-out;
+      animation: orbBoost 0.9s ease-out;
     }
 
     @keyframes orbFloat {
-      0%   { transform: translate(-50%, -6px) scale(1); }
-      50%  { transform: translate(-52%, 8px) scale(1.03); }
-      100% { transform: translate(-50%, -6px) scale(1); }
+      0%   { transform: translate(-50%, -4px) scale(1); }
+      50%  { transform: translate(-51%, 6px) scale(1.03); }
+      100% { transform: translate(-50%, -4px) scale(1); }
     }
 
     @keyframes orbBoost {
-      0%   { transform: translate(-50%, 0) scale(1); opacity: 0.28; }
-      40%  { transform: translate(-50%, -10px) scale(1.15); opacity: 0.4; }
-      100% { transform: translate(-50%, -4px) scale(1); opacity: 0.22; }
+      0%   { transform: translate(-50%, 0) scale(1); opacity: 0.18; }
+      40%  { transform: translate(-50%, -8px) scale(1.12); opacity: 0.22; }
+      100% { transform: translate(-50%, -4px) scale(1); opacity: 0.12; }
     }
 
     .app-shell {
@@ -109,36 +120,27 @@
     }
 
     .logo-wrapper {
-      width: 96px;
-      height: 96px;
-      margin: 0 auto 16px;
-      border-radius: 28px;
-      background: radial-gradient(circle at 20% 0%, rgba(224, 197, 138, 0.35), transparent 60%),
-                  linear-gradient(145deg, #14141c, #090910);
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 25% 10%, rgba(255,255,255,0.22), transparent 55%),
+        radial-gradient(circle at 30% 30%, #f4e1ac, #b9883c 52%, #664016 100%);
       box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.9),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+        0 18px 40px rgba(0,0,0,0.9),
+        inset 0 0 12px rgba(255,255,255,0.32);
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       position: relative;
-    }
-
-    .logo-inner-ring {
-      position: absolute;
-      inset: 10px;
-      border-radius: 24px;
-      border: 1px solid rgba(201, 162, 95, 0.35);
-      opacity: 0.9;
+      overflow: hidden;
     }
 
     .logo-wrapper img {
-      width: 70%;
-      height: 70%;
+      width: 60%;
+      height: 60%;
       object-fit: contain;
-      position: relative;
-      z-index: 1;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
     }
 
@@ -158,11 +160,11 @@
 
     /* Card */
     .card {
-      background: radial-gradient(circle at top left, #262633 0, #15151c 40%, #101015 100%);
+      background: radial-gradient(circle at top left, #22232f 0, #10111a 45%, #080912 100%);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
       padding: 20px 18px 22px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.03);
       position: relative;
       overflow: hidden;
     }
@@ -176,7 +178,7 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.18), transparent 55%);
+      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.16), transparent 55%);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.6s ease-out;
@@ -244,7 +246,7 @@
       gap: 6px;
       cursor: pointer;
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
       transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
 
@@ -254,7 +256,7 @@
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.98);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
       filter: brightness(0.96);
     }
 
@@ -270,7 +272,7 @@
       padding: 11px 14px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(102, 194, 194, 0.22);
-      background: linear-gradient(135deg, rgba(18, 34, 39, 0.95), rgba(15, 26, 30, 1));
+      background: linear-gradient(135deg, #0b181b, #081214);
       color: var(--teal);
       font-size: 0.86rem;
       display: inline-flex;
@@ -279,7 +281,7 @@
       gap: 8px;
       cursor: pointer;
       transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
     }
 
     .location-btn-icon {
@@ -288,7 +290,7 @@
 
     .location-btn:active {
       transform: translateY(1px) scale(0.985);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
     }
 
     .error-text {
@@ -311,7 +313,7 @@
     }
 
     .result-card {
-      background: radial-gradient(circle at top left, #262633 0, #15151c 40%, #101015 100%);
+      background: radial-gradient(circle at top left, #22232f 0, #11111a 40%, #080912 100%);
       border-radius: var(--radius-lg);
       padding: 16px 16px 18px;
       border: 1px solid rgba(255, 255, 255, 0.04);
@@ -337,7 +339,7 @@
       color: var(--text-muted);
     }
 
-    /* Section & time boxes */
+    /* Station & time boxes */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -347,9 +349,9 @@
 
     .info-box {
       border-radius: var(--radius-md);
-      background: linear-gradient(145deg, #181821, #101018);
+      background: linear-gradient(145deg, #171822, #0f1018);
       box-shadow:
-        0 12px 26px rgba(0, 0, 0, 0.85),
+        0 12px 26px rgba(0, 0, 0, 0.9),
         inset 0 0 0 1px rgba(255, 255, 255, 0.03);
       padding: 10px 12px;
     }
@@ -366,9 +368,11 @@
       font-size: 0.96rem;
       font-weight: 600;
       color: var(--gold-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Section badge small circle inside box */
     .info-value-badge {
       display: inline-flex;
       align-items: center;
@@ -397,13 +401,6 @@
       100% { transform: scale(1) translateY(0); opacity: 1; }
     }
 
-    .station-label {
-      margin-top: 8px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* Warning bar */
     .warning-bar {
       display: flex;
       align-items: center;
@@ -421,7 +418,6 @@
       font-size: 1rem;
     }
 
-    /* Period time block */
     .period-block {
       margin-top: 12px;
       padding: 11px 12px;
@@ -431,7 +427,7 @@
         linear-gradient(145deg, #15151c, #111017);
       box-shadow:
         inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-        0 14px 28px rgba(0, 0, 0, 0.8);
+        0 14px 28px rgba(0, 0, 0, 0.85);
       position: relative;
       overflow: hidden;
     }
@@ -462,7 +458,7 @@
       justify-content: center;
       font-size: 0.92rem;
       color: #20130a;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.8);
     }
 
     .period-text-main {
@@ -475,7 +471,6 @@
       color: var(--text-muted);
     }
 
-    /* Jacket note */
     .jacket-note {
       margin-top: 12px;
       font-size: 0.8rem;
@@ -507,7 +502,7 @@
       padding: 10px 14px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(201, 162, 95, 0.4);
-      background: linear-gradient(135deg, rgba(20, 20, 25, 1), rgba(24, 24, 32, 1));
+      background: linear-gradient(135deg, #151521, #1c1c2a);
       color: var(--gold-soft);
       font-size: 0.86rem;
       display: inline-flex;
@@ -515,16 +510,15 @@
       justify-content: center;
       gap: 6px;
       cursor: pointer;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8);
       transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
     }
 
     .robe-location-btn:active {
       transform: translateY(1px) scale(0.985);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.85);
     }
 
-    /* No items message */
     .no-items {
       font-size: 0.86rem;
       color: var(--text-muted);
@@ -588,7 +582,7 @@
       background: radial-gradient(circle at top, #262633 0, #14141b 45%, #09090d 100%);
       border-radius: 22px;
       padding: 18px 18px 16px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.04);
       transform: translateY(30px);
       opacity: 0;
@@ -610,7 +604,7 @@
       justify-content: center;
       margin-bottom: 10px;
       color: #1f130a;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
     }
 
     .modal-title {
@@ -685,7 +679,7 @@
       opacity: 0.4;
       pointer-events: none;
       transition: opacity 0.2s ease-out, transform 0.14s ease-out, box-shadow 0.18s ease-out;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
     }
 
     .modal-confirm-btn.enabled {
@@ -695,7 +689,7 @@
 
     .modal-confirm-btn:active {
       transform: translateY(1px) scale(0.98);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.9);
     }
 
     /* Popover hint */
@@ -710,7 +704,7 @@
       font-size: 0.78rem;
       color: var(--text-muted);
       border: 1px solid rgba(201, 162, 95, 0.35);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
       display: none;
       z-index: 4000;
     }
@@ -727,17 +721,17 @@
       100% { opacity: 1; transform: translate(-50%, 0); }
     }
 
-    /* Draggable Stadium Pop-up */
+    /* Stadium Pop-up */
     .stadium-popup {
       position: fixed;
       bottom: -70%;
       left: 0;
       width: 100%;
       height: 65%;
-      background: #111217;
+      background: #0c0d13;
       border-top-left-radius: 26px;
       border-top-right-radius: 26px;
-      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.7);
       transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
       transform: translateY(100%);
       z-index: 2500;
@@ -769,7 +763,6 @@
       transform: scale(0.9);
     }
 
-    /* Small screens tweaks */
     @media (max-width: 360px) {
       .header-title {
         font-size: 1.3rem;
@@ -791,10 +784,9 @@
     <!-- Header -->
     <header class="header">
       <div class="logo-wrapper">
-        <div class="logo-inner-ring"></div>
         <img src="logo.png" alt="Graduation Logo" />
       </div>
-      <div class="header-title">Graduation Team</div>
+      <div class="header-title">GRADUATION TEAM</div>
       <div class="header-subtitle">Because every detail matters</div>
     </header>
 
@@ -845,12 +837,11 @@
           </div>
         </div>
 
-        <!-- Section & Time boxes -->
         <div class="info-grid">
           <div class="info-box">
-            <div class="info-label">Section</div>
+            <div class="info-label">Station</div>
             <div class="info-value">
-              <span class="info-value-badge" id="sectionBadge">A</span>
+              <span class="info-value-badge" id="stationBadge">A</span>
             </div>
           </div>
           <div class="info-box">
@@ -983,8 +974,6 @@
   <!-- Stadium Draggable Pop-up -->
   <div id="stadium-popup" class="stadium-popup">
     <div class="stadium-grabber"></div>
-
-    <!-- 🔥 هنا تحط صورة تقسيمة الملعب -->
     <img
       id="stadium-img"
       src="stadium_layout.jpg"
@@ -993,9 +982,12 @@
   </div>
 
   <script>
-    // =======================
-    // Data loading with SheetJS
-    // =======================
+    // ======== Excel config: column names من الملفات اللي رفعتها =========
+    const JACKET_ID_COL = "Student ID ( 8 digits e.g.20200456)";
+    const JACKET_STATION_COL = "Station";
+    const JACKET_PERIOD_COL = "Period";
+    const ROBE_ID_COL = "Student ID";
+
     const jacketMap = new Map();
     const robeSet = new Set();
     let dataReady = false;
@@ -1014,28 +1006,27 @@
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
       const firstSheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[firstSheetName];
-      const json = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-      return json;
+      return XLSX.utils.sheet_to_json(sheet, { defval: "" });
     }
 
     async function loadData() {
       try {
         const [jacketRows, robeRows] = await Promise.all([
-          loadWorkbook("Order_Arrangement_UPDATED.xlsx"),
-          loadWorkbook("All_graduation_Orders_sorted_by_size.xlsx"),
+          loadWorkbook("Order_Arrangement_UPDATED (1).xlsx"),
+          loadWorkbook("All_graduation_Orders_sorted_by_size (3).xlsx"),
         ]);
 
         jacketRows.forEach((row) => {
-          const id = normalizeId(row["Student ID"] ?? row["student id"]);
+          const id = normalizeId(row[JACKET_ID_COL]);
           if (!id) return;
           jacketMap.set(id, {
-            station: row["Station"] ?? row["station"] ?? "",
-            period: row["Period"] ?? row["period"] ?? "",
+            station: row[JACKET_STATION_COL] ?? "",
+            period: row[JACKET_PERIOD_COL] ?? "",
           });
         });
 
         robeRows.forEach((row) => {
-          const id = normalizeId(row["Student ID"] ?? row["student id"]);
+          const id = normalizeId(row[ROBE_ID_COL]);
           if (!id) return;
           robeSet.add(id);
         });
@@ -1048,9 +1039,7 @@
 
     window.addEventListener("load", loadData);
 
-    // =======================
-    // DOM references
-    // =======================
+    // DOM refs
     const lookupForm = document.getElementById("lookupForm");
     const studentIdInput = document.getElementById("studentIdInput");
     const errorText = document.getElementById("errorText");
@@ -1059,7 +1048,7 @@
     const robeCard = document.getElementById("robeCard");
     const noItemsCard = document.getElementById("noItemsCard");
     const noItemsText = document.getElementById("noItemsText");
-    const sectionBadge = document.getElementById("sectionBadge");
+    const stationBadge = document.getElementById("stationBadge");
     const stationLabelEl = document.getElementById("stationLabel");
     const periodMainEl = document.getElementById("periodMain");
     const periodMainDetailEl = document.getElementById("periodMainDetail");
@@ -1077,9 +1066,7 @@
 
     let pendingLookup = null;
 
-    // =======================
-    // Modal logic
-    // =======================
+    // Modal
     function openRulesModal() {
       rulesCheckbox.checked = false;
       rulesConfirmBtn.classList.remove("enabled");
@@ -1109,9 +1096,6 @@
       openStadiumPopup();
     });
 
-    // =======================
-    // Popover hint
-    // =======================
     function showPopoverHint() {
       popoverHint.classList.add("active");
       setTimeout(() => {
@@ -1119,9 +1103,7 @@
       }, 2600);
     }
 
-    // =======================
-    // Stadium popup logic
-    // =======================
+    // Stadium popup drag
     let startY = 0;
     let currentY = 0;
     let dragging = false;
@@ -1135,10 +1117,9 @@
     function onDragMove(clientY) {
       if (!dragging) return;
       currentY = clientY - startY;
-
       if (currentY > 0) {
         const translate = currentY;
-        const scale = 0.9 + Math.min(currentY / 600, 0.15); // 0.9 → ~1.05
+        const scale = 0.9 + Math.min(currentY / 600, 0.15);
         stadiumImg.style.transform = "scale(" + scale.toFixed(3) + ")";
         stadiumPopup.style.transform = "translateY(" + translate + "px)";
       }
@@ -1149,17 +1130,14 @@
       dragging = false;
 
       if (currentY > 140) {
-        // close with shrink
         stadiumPopup.classList.remove("active");
         stadiumPopup.style.transform = "translateY(100%)";
         stadiumImg.style.transform = "scale(0.85)";
       } else {
-        // snap back to open
         stadiumPopup.classList.add("active");
         stadiumPopup.style.transform = "translateY(0)";
         stadiumImg.style.transform = "scale(0.95)";
       }
-
       currentY = 0;
     }
 
@@ -1167,26 +1145,21 @@
       const touch = e.touches[0];
       onDragStart(touch.clientY);
     });
-
     stadiumPopup.addEventListener("touchmove", (e) => {
       const touch = e.touches[0];
       onDragMove(touch.clientY);
     });
-
     stadiumPopup.addEventListener("touchend", () => {
       onDragEnd();
     });
 
-    // Mouse support
     stadiumPopup.addEventListener("mousedown", (e) => {
       onDragStart(e.clientY);
     });
-
     window.addEventListener("mousemove", (e) => {
       if (!dragging) return;
       onDragMove(e.clientY);
     });
-
     window.addEventListener("mouseup", () => {
       if (!dragging) return;
       onDragEnd();
@@ -1198,12 +1171,10 @@
       stadiumImg.style.transform = "scale(0.9)";
     }
 
-    // =======================
     // Animations & results
-    // =======================
     function boostOrb() {
       orb.classList.remove("orb-boost");
-      void orb.offsetWidth; // restart animation
+      void orb.offsetWidth;
       orb.classList.add("orb-boost");
     }
 
@@ -1219,7 +1190,6 @@
     }
 
     function applyResults(id, hasJacket, hasRobe) {
-      // Reset visibility
       jacketCard.style.display = "none";
       robeCard.style.display = "none";
       noItemsCard.style.display = "none";
@@ -1229,17 +1199,17 @@
         const station = (data && data.station) ? String(data.station).trim() : "";
         const period = (data && data.period) ? String(data.period).trim() : "";
 
-        const sectionLetter = station ? station.toString().trim().charAt(0).toUpperCase() : "-";
-        sectionBadge.textContent = sectionLetter || "-";
+        const stationLetter = station ? station.toString().trim().charAt(0).toUpperCase() : "-";
+        stationBadge.textContent = stationLetter || "-";
 
         stationLabelEl.textContent = station ? ("Station " + station) : "Station –";
         periodMainEl.textContent = period || "Assigned period";
         periodMainDetailEl.textContent = period || "Assigned period";
         periodSubEl.textContent = "Please follow the time exactly.";
 
-        sectionBadge.classList.remove("pop-in");
-        void sectionBadge.offsetWidth;
-        sectionBadge.classList.add("pop-in");
+        stationBadge.classList.remove("pop-in");
+        void stationBadge.offsetWidth;
+        stationBadge.classList.add("pop-in");
 
         jacketCard.style.display = "block";
       }
@@ -1258,12 +1228,10 @@
       showResultsWrapper();
     }
 
-    // =======================
-    // Lookup behavior
-    // =======================
+    // Lookup
     lookupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      let rawId = studentIdInput.value.trim();
+      const rawId = studentIdInput.value.trim();
       const normalized = normalizeId(rawId);
 
       errorText.textContent = "";

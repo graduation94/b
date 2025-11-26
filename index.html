@@ -48,6 +48,7 @@
       overflow-x: hidden;
       position: relative;
       background: radial-gradient(circle at top, #191b27 0, #05060c 55%, #000 100%);
+      color: var(--text-main);
     }
 
     body::before {
@@ -64,6 +65,7 @@
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; }
 
+    /* Orb خفيف بالخلفية */
     .orb {
       position: fixed;
       width: 220px;
@@ -109,9 +111,10 @@
       text-align: center;
       margin-top: 36px;
       margin-bottom: 24px;
+      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
     }
 
-    /* ✅ شكل لوجو بسيط واحترافي بدون دوائر غريبة */
+    /* لوجو بسيط */
     .logo-wrapper {
       display: inline-flex;
       align-items: center;
@@ -149,7 +152,7 @@
       color: var(--text-muted);
     }
 
-    /* Card */
+    /* Main card */
     .card {
       background: radial-gradient(circle at top left, #22232f 0, #10111a 45%, #080912 100%);
       border-radius: var(--radius-lg);
@@ -158,6 +161,7 @@
       border: 1px solid rgba(255, 255, 255, 0.03);
       position: relative;
       overflow: hidden;
+      transition: transform 0.35s ease-out;
     }
 
     .card-main { margin-bottom: 20px; }
@@ -247,7 +251,7 @@
     .hint-text {
       font-size: 0.76rem;
       color: var(--text-muted);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .error-text {
@@ -259,7 +263,7 @@
 
     .location-btn {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 10px;
       padding: 11px 14px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(102, 194, 194, 0.22);
@@ -281,58 +285,11 @@
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
     }
 
-    /* File uploads */
-    .file-upload-wrapper {
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255,255,255,0.08);
-    }
-
-    .file-upload-title {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .file-upload-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .file-btn {
-      width: 100%;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(255,255,255,0.06);
-      background: #10121b;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      padding: 7px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .file-btn span.label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .file-btn span.status {
-      font-size: 0.7rem;
-      color: var(--teal);
-    }
-
-    .file-btn input[type="file"] {
-      display: none;
-    }
-
     /* Results */
     .results-wrapper {
       margin-top: 18px;
       display: none;
+      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
     }
 
     .results-title {
@@ -759,7 +716,7 @@
   <div class="orb" id="orb"></div>
 
   <div class="app-shell">
-    <header class="header">
+    <header class="header" id="header">
       <div class="logo-wrapper">
         <img src="logo.png" alt="Graduation Logo" />
       </div>
@@ -798,30 +755,6 @@
         <span class="location-btn-icon">📍</span>
         <span>Open sports field location in Maps</span>
       </a>
-
-      <!-- File uploads -->
-      <div class="file-upload-wrapper">
-        <div class="file-upload-title">
-          Upload the Excel files once (jacket & robe) to enable lookup.
-        </div>
-        <div class="file-upload-row">
-          <label class="file-btn">
-            <span class="label">
-              📎 Jacket Excel
-            </span>
-            <span class="status" id="jacketStatus">Not loaded</span>
-            <input type="file" id="jacketFileInput" accept=".xlsx,.xls" />
-          </label>
-
-          <label class="file-btn">
-            <span class="label">
-              📎 Robe Excel
-            </span>
-            <span class="status" id="robeStatus">Not loaded</span>
-            <input type="file" id="robeFileInput" accept=".xlsx,.xls" />
-          </label>
-        </div>
-      </div>
     </main>
 
     <section class="results-wrapper" id="resultsSection">
@@ -971,7 +904,7 @@
   </div>
 
   <script>
-    // أعمدة الإكسل اللي اتفقنا عليها
+    // أسماء الأعمدة الحقيقية من الملفات
     const JACKET_ID_COL = "Student ID ( 8 digits e.g.20200456)";
     const JACKET_STATION_COL = "Station";
     const JACKET_PERIOD_COL = "Period";
@@ -979,8 +912,7 @@
 
     const jacketMap = new Map();
     const robeSet = new Set();
-    let jacketLoaded = false;
-    let robeLoaded = false;
+    let dataReady = false;
 
     function normalizeId(value) {
       if (value === undefined || value === null) return "";
@@ -989,48 +921,57 @@
       return digits.padStart(8, "0");
     }
 
-    function sheetToJson(file) {
-      return file.arrayBuffer().then((buf) => {
-        const wb = XLSX.read(buf, { type: "array" });
-        const sheetName = wb.SheetNames[0];
-        const sheet = wb.Sheets[sheetName];
-        return XLSX.utils.sheet_to_json(sheet, { defval: "" });
-      });
+    // يساعدنا نتعامل مع مسافات في آخر اسم العمود مثل "Station "
+    function getTrimmed(row, targetName) {
+      const target = targetName.trim().toLowerCase();
+      for (const key of Object.keys(row)) {
+        if (key.trim().toLowerCase() === target) {
+          return row[key];
+        }
+      }
+      return "";
     }
 
-    function processJacketRows(rows) {
-      jacketMap.clear();
-      rows.forEach((row) => {
-        const id = normalizeId(row[JACKET_ID_COL]);
-        if (!id) return;
-        jacketMap.set(id, {
-          station: row[JACKET_STATION_COL] ?? "",
-          period: row[JACKET_PERIOD_COL] ?? "",
+    async function loadWorkbook(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to load " + url);
+      const arrayBuffer = await res.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const firstSheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[firstSheetName];
+      return XLSX.utils.sheet_to_json(sheet, { defval: "" });
+    }
+
+    async function loadData() {
+      try {
+        const [jacketRows, robeRows] = await Promise.all([
+          loadWorkbook("Order_Arrangement_UPDATED.xlsx"),
+          loadWorkbook("All_graduation_Orders_sorted_by_size.xlsx"),
+        ]);
+
+        jacketRows.forEach((row) => {
+          const id = normalizeId(getTrimmed(row, JACKET_ID_COL));
+          if (!id) return;
+          const station = getTrimmed(row, JACKET_STATION_COL);
+          const period = getTrimmed(row, JACKET_PERIOD_COL);
+          jacketMap.set(id, { station, period });
         });
-      });
-      jacketLoaded = true;
+
+        robeRows.forEach((row) => {
+          const id = normalizeId(getTrimmed(row, ROBE_ID_COL));
+          if (!id) return;
+          robeSet.add(id);
+        });
+
+        dataReady = true;
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
     }
 
-    function processRobeRows(rows) {
-      robeSet.clear();
-      rows.forEach((row) => {
-        const id = normalizeId(row[ROBE_ID_COL]);
-        if (!id) return;
-        robeSet.add(id);
-      });
-      robeLoaded = true;
-    }
-
-    function dataReady() {
-      return jacketLoaded || robeLoaded;
-    }
+    window.addEventListener("load", loadData);
 
     // DOM refs
-    const jacketFileInput = document.getElementById("jacketFileInput");
-    const robeFileInput = document.getElementById("robeFileInput");
-    const jacketStatus = document.getElementById("jacketStatus");
-    const robeStatus = document.getElementById("robeStatus");
-
     const lookupForm = document.getElementById("lookupForm");
     const studentIdInput = document.getElementById("studentIdInput");
     const errorText = document.getElementById("errorText");
@@ -1045,6 +986,7 @@
     const periodMainDetailEl = document.getElementById("periodMainDetail");
     const periodSubEl = document.getElementById("periodSub");
     const mainCard = document.getElementById("mainCard");
+    const header = document.getElementById("header");
     const orb = document.getElementById("orb");
 
     const rulesModal = document.getElementById("rulesModal");
@@ -1057,35 +999,7 @@
 
     let pendingLookup = null;
 
-    jacketFileInput.addEventListener("change", async () => {
-      const file = jacketFileInput.files[0];
-      if (!file) return;
-      jacketStatus.textContent = "Loading...";
-      try {
-        const rows = await sheetToJson(file);
-        processJacketRows(rows);
-        jacketStatus.textContent = "Loaded ✓";
-      } catch (e) {
-        console.error(e);
-        jacketStatus.textContent = "Error";
-      }
-    });
-
-    robeFileInput.addEventListener("change", async () => {
-      const file = robeFileInput.files[0];
-      if (!file) return;
-      robeStatus.textContent = "Loading...";
-      try {
-        const rows = await sheetToJson(file);
-        processRobeRows(rows);
-        robeStatus.textContent = "Loaded ✓";
-      } catch (e) {
-        console.error(e);
-        robeStatus.textContent = "Error";
-      }
-    });
-
-    // Modal logic
+    // Modal
     function openRulesModal() {
       rulesCheckbox.checked = false;
       rulesConfirmBtn.classList.remove("enabled");
@@ -1180,6 +1094,27 @@
       stadiumImg.style.transform = "scale(0.9)";
     }
 
+    // Scroll swapping animation (Header/Main card/Results)
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      const max = 200;
+      const t = Math.min(y / max, 1);
+
+      const mainScale = 1 - 0.04 * t;
+      const mainTranslate = -6 * t;
+      mainCard.style.transform = `translateY(${mainTranslate}px) scale(${mainScale})`;
+
+      const headerTranslate = -8 * t;
+      const headerOpacity = 1 - 0.3 * t;
+      header.style.transform = `translateY(${headerTranslate}px)`;
+      header.style.opacity = headerOpacity.toString();
+
+      const resultsTranslate = 14 * (1 - t);
+      const resultsOpacity = 0.1 + 0.9 * t;
+      resultsSection.style.transform = `translateY(${resultsTranslate}px)`;
+      resultsSection.style.opacity = resultsOpacity.toString();
+    });
+
     // Animations & results
     function boostOrb() {
       orb.classList.remove("orb-boost");
@@ -1205,8 +1140,8 @@
 
       if (hasJacket) {
         const data = jacketMap.get(id);
-        const station = (data && data.station) ? String(data.station).trim() : "";
-        const period = (data && data.period) ? String(data.period).trim() : "";
+        const station = data && data.station ? String(data.station).trim() : "";
+        const period = data && data.period ? String(data.period).trim() : "";
 
         const stationLetter = station ? station.toString().trim().charAt(0).toUpperCase() : "-";
         stationBadge.textContent = stationLetter || "-";
@@ -1249,8 +1184,8 @@
         return;
       }
 
-      if (!dataReady()) {
-        errorText.textContent = "Please upload the Excel files first.";
+      if (!dataReady) {
+        errorText.textContent = "Data is still loading. Please try again in a few seconds.";
         return;
       }
 

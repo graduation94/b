@@ -409,7 +409,6 @@
     }
 
     .period-text-main { font-size: 0.88rem; font-weight: 500; }
-    .period-text-sub { font-size: 0.76rem; color: var(--text-muted); }
 
     /* stadium preview inside jacket card */
     .stadium-preview {
@@ -650,34 +649,6 @@
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.9);
     }
 
-    .popover-hint {
-      position: fixed;
-      bottom: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(16, 16, 24, 0.96);
-      border-radius: 999px;
-      padding: 5px 12px;
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      border: 1px solid rgba(201, 162, 95, 0.35);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
-      display: none;
-      z-index: 4000;
-    }
-
-    .popover-hint.active {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      animation: hintIn 0.35s ease-out;
-    }
-
-    @keyframes hintIn {
-      0% { opacity: 0; transform: translate(-50%, 10px); }
-      100% { opacity: 1; transform: translate(-50%, 0); }
-    }
-
     /* Stadium popup */
     .stadium-popup {
       position: fixed;
@@ -795,7 +766,6 @@
             <div class="period-icon">⏰</div>
             <div>
               <div class="period-text-main" id="periodMainDetail">Assigned period</div>
-              <div class="period-text-sub" id="periodSub">Please follow the time exactly.</div>
             </div>
           </div>
         </div>
@@ -879,9 +849,14 @@
         <div class="modal-step">
           <div class="modal-step-title">3</div>
           <div class="modal-step-text">
-            Come only at your assigned period. Before/after your period = no collection.
+            Come only at your assigned period. If you miss your pickup day, the next chance will be only after practical exams.
+          </div>
+        </div>
+
+        <div class="modal-step">
+          <div class="modal-step-title">4</div>
+          <div class="modal-step-text">
             After collecting your items, move to the college yard to keep the pickup point clear.
-            If you miss your pickup day, the next chance will be only after practical exams.
           </div>
         </div>
       </div>
@@ -894,11 +869,6 @@
         <button class="modal-confirm-btn" id="rulesConfirmBtn">Continue</button>
       </div>
     </div>
-  </div>
-
-  <div class="popover-hint" id="popoverHint">
-    <span>👇</span>
-    <span>You can drag the stadium card down to resize or close it.</span>
   </div>
 
   <!-- Bottom-sheet stadium -->
@@ -987,7 +957,6 @@
     const stationLabelEl = document.getElementById("stationLabel");
     const periodMainEl = document.getElementById("periodMain");
     const periodMainDetailEl = document.getElementById("periodMainDetail");
-    const periodSubEl = document.getElementById("periodSub");
     const mainCard = document.getElementById("mainCard");
     const header = document.getElementById("header");
     const orb = document.getElementById("orb");
@@ -995,7 +964,6 @@
     const rulesModal = document.getElementById("rulesModal");
     const rulesCheckbox = document.getElementById("rulesCheckbox");
     const rulesConfirmBtn = document.getElementById("rulesConfirmBtn");
-    const popoverHint = document.getElementById("popoverHint");
 
     const stadiumPopup = document.getElementById("stadium-popup");
     const stadiumImg = document.getElementById("stadium-img");
@@ -1034,18 +1002,10 @@
       closeRulesModal();
       applyResults(pendingLookup.id, pendingLookup.hasJacket, pendingLookup.hasRobe);
       if (lastLookupHasJacket) {
-        showPopoverHint();
         openStadiumPopup();
       }
       pendingLookup = null;
     });
-
-    function showPopoverHint() {
-      popoverHint.classList.add("active");
-      setTimeout(() => {
-        popoverHint.classList.remove("active");
-      }, 2600);
-    }
 
     // Stadium popup drag
     let startY = 0;
@@ -1105,12 +1065,10 @@
       stadiumImg.style.transform = "scale(0.9)";
     }
 
-    // Click on preview to open popup (only if he has jacket)
+    // Click on preview to open popup (always)
     if (stadiumPreview) {
       stadiumPreview.addEventListener("click", () => {
-        if (lastLookupHasJacket) {
-          openStadiumPopup();
-        }
+        openStadiumPopup();
       });
     }
 
@@ -1169,7 +1127,6 @@
         stationLabelEl.textContent = station ? ("Station " + station) : "Station –";
         periodMainEl.textContent = period || "Assigned period";
         periodMainDetailEl.textContent = period || "Assigned period";
-        periodSubEl.textContent = "Please follow the time exactly.";
 
         stationBadge.classList.remove("pop-in");
         void stationBadge.offsetWidth;

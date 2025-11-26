@@ -411,14 +411,28 @@
     .period-text-main { font-size: 0.88rem; font-weight: 500; }
     .period-text-sub { font-size: 0.76rem; color: var(--text-muted); }
 
-    .jacket-note {
+    /* معاينة الملعب داخل كرت الجاكت */
+    .stadium-preview {
       margin-top: 8px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #05060c;
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.7);
     }
 
-    .jacket-note strong { color: var(--gold-soft); }
+    .stadium-preview img {
+      width: 100%;
+      display: block;
+    }
+
+    .stadium-preview-caption {
+      padding: 6px 10px 7px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
 
     .jacket-location-btn {
       width: 100%;
@@ -483,8 +497,8 @@
     .footer {
       margin-top: 18px;
       text-align: center;
-      font-size: 0.68rem;
-      letter-spacing: 0.24em;
+      font-size: 0.8rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--gold-soft);
       position: relative;
@@ -725,10 +739,11 @@
         <div class="input-row">
           <input
             id="studentIdInput"
-            type="tel"
+            type="text"
             inputmode="numeric"
+            pattern="\\d*"
             maxlength="8"
-            placeholder="e.g. 20200000"
+            placeholder="e.g. 20201234"
           />
           <button type="submit" class="primary-btn">
             <span>Check</span>
@@ -744,6 +759,7 @@
     <section class="results-wrapper" id="resultsSection">
       <div class="results-title">Your graduation items</div>
 
+      <!-- Jacket card -->
       <div class="result-card" id="jacketCard" style="display:none;">
         <div class="result-card-header">
           <div>
@@ -780,12 +796,15 @@
           </div>
         </div>
 
-        <div class="jacket-note">
-          Please arrive at the sports field only during the assigned period.
-          Arriving <strong>before or after your period</strong> means you cannot collect your items.
+        <!-- معاينة الملعب داخل كرت الجاكت -->
+        <div class="stadium-preview" id="stadiumPreview">
+          <img src="stadium_layout.jpg" alt="Stadium layout" />
+          <div class="stadium-preview-caption">
+            Tap to view the full stadium pickup layout.
+          </div>
         </div>
 
-        <!-- زر موقع الملعب الخاص باستلام الجاكت -->
+        <!-- زر لوكيشن الملعب الخاص باستلام الجاكت -->
         <a
           href="https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc"
           target="_blank"
@@ -796,6 +815,7 @@
         </a>
       </div>
 
+      <!-- Robe card -->
       <div class="result-card" id="robeCard" style="display:none;">
         <div class="robe-block-title">Robe Pickup</div>
         <p class="robe-block-text">
@@ -812,6 +832,7 @@
         </a>
       </div>
 
+      <!-- No items -->
       <div class="result-card" id="noItemsCard" style="display:none;">
         <div class="no-items" id="noItemsText">
           This student ID does not have any graduation items registered.
@@ -821,7 +842,7 @@
 
     <footer class="footer">
       <div class="footer-glow">
-        <span>PROGRAMMED BY ALBARA</span>
+        <span>PROGRAMMED BY ALBARA.</span>
       </div>
     </footer>
   </div>
@@ -876,6 +897,7 @@
     <span>You can drag the stadium card down to resize or close it.</span>
   </div>
 
+  <!-- Bottom-sheet صورة الملعب -->
   <div id="stadium-popup" class="stadium-popup">
     <div class="stadium-grabber"></div>
     <img id="stadium-img" src="stadium_layout.jpg" alt="Stadium Layout" />
@@ -973,11 +995,12 @@
 
     const stadiumPopup = document.getElementById("stadium-popup");
     const stadiumImg = document.getElementById("stadium-img");
+    const stadiumPreview = document.getElementById("stadiumPreview");
 
     let pendingLookup = null;
     let lastLookupHasJacket = false;
 
-    // force digits only while typing
+    // digits only in input
     studentIdInput.addEventListener("input", () => {
       studentIdInput.value = studentIdInput.value.replace(/[^0-9]/g, "").slice(0, 8);
     });
@@ -1076,6 +1099,15 @@
       stadiumPopup.classList.add("active");
       stadiumPopup.style.transform = "translateY(0)";
       stadiumImg.style.transform = "scale(0.9)";
+    }
+
+    // Click on preview to open popup (only if he has jacket)
+    if (stadiumPreview) {
+      stadiumPreview.addEventListener("click", () => {
+        if (lastLookupHasJacket) {
+          openStadiumPopup();
+        }
+      });
     }
 
     // Scroll swap animation

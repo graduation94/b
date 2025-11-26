@@ -2,1172 +2,1227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Graduation Collection</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Graduation Pickup Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- XLSX (SheetJS) -->
+  <!-- SheetJS -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
     :root {
-      /* ذهبـي مطفي و ألوان هادئة */
-      --bg-main: #050506;
-      --bg-card: #101015;
-      --bg-card-soft: #17171d;
-      --accent-gold: #d1b25a;
-      --accent-gold-soft: #2b2617;
-      --accent-teal: #3aa6a0;
-      --text-main: #f7f7f7;
-      --text-muted: #b3b3b3;
-      --error: #ff6b6b;
+      --bg-charcoal: #101014;
+      --bg-elevated: #181820;
+      --gold: #c9a25f;
+      --gold-soft: #e0c58a;
+      --gold-deep: #8b6a35;
+      --teal: #66c2c2;
+      --text-main: #f6f6f6;
+      --text-muted: #b2b2b8;
+      --danger: #ffcc66;
+      --input-bg: #15151c;
+      --border-soft: #2b2b35;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.75);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-pill: 999px;
+      --transition-soft: 0.35s ease;
+      --transition-spring: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html, body {
       margin: 0;
       padding: 0;
     }
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #050506;
+      background: radial-gradient(circle at top, #1f1f25 0, #050509 55%, #000 100%);
       color: var(--text-main);
       min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px 80px;
       overflow-x: hidden;
+      position: relative;
     }
 
     a {
-      color: var(--accent-teal);
+      color: inherit;
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
+    button {
+      font-family: inherit;
     }
 
-    /* App shell – mobile-first layout */
-    .app-shell {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-    }
-
-    .app-inner {
-      width: 100%;
-      max-width: 480px; /* mobile width even on desktop */
-      padding: calc(env(safe-area-inset-top, 0px) + 26px) 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Floating background orb – هادي */
-    .floating-orb {
+    /* Subtle animated orb in background */
+    .orb {
       position: fixed;
-      top: -140px;
-      right: -90px;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle at 30% 20%, rgba(209,178,90,0.45), transparent 60%);
-      opacity: 0.18;
-      filter: blur(1px);
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(102, 194, 194, 0.95), rgba(12, 25, 30, 0.1));
+      filter: blur(6px);
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.22;
       pointer-events: none;
-      animation: orbFloat 18s ease-in-out infinite;
-      z-index: -1;
+      animation: orbFloat 10s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .orb.orb-boost {
+      animation: orbBoost 0.8s ease-out;
     }
 
     @keyframes orbFloat {
-      0%   { transform: translate3d(0,0,0); }
-      50%  { transform: translate3d(-28px,22px,0); }
-      100% { transform: translate3d(0,0,0); }
+      0%   { transform: translate(-50%, -6px) scale(1); }
+      50%  { transform: translate(-52%, 8px) scale(1.03); }
+      100% { transform: translate(-50%, -6px) scale(1); }
     }
 
     @keyframes orbBoost {
-      0%   { transform: translate3d(0,0,0) scale(1); }
-      40%  { transform: translate3d(-18px,10px,0) scale(1.04); }
-      100% { transform: translate3d(0,0,0) scale(1); }
+      0%   { transform: translate(-50%, 0) scale(1); opacity: 0.28; }
+      40%  { transform: translate(-50%, -10px) scale(1.15); opacity: 0.4; }
+      100% { transform: translate(-50%, -4px) scale(1); opacity: 0.22; }
     }
 
-    .floating-orb.orb-active {
-      animation:
-        orbBoost 2.2s ease-in-out 1,
-        orbFloat 18s ease-in-out infinite;
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
     }
 
     /* Header */
-    .top-bar {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      padding-bottom: 4px;
+    .header {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 28px;
     }
 
-    .brand {
+    .logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold-soft), var(--gold-deep));
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
     }
 
-    .brand img {
-      height: 38px;
-      width: auto;
+    .logo img {
+      max-width: 64%;
+      max-height: 64%;
+      display: block;
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-text-title {
-      font-size: 15px;
+    .header-title {
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       font-weight: 600;
+      color: var(--gold-soft);
+      margin-bottom: 4px;
     }
 
-    .brand-text-sub {
-      font-size: 11px;
+    .header-subtitle {
+      font-size: 0.92rem;
       color: var(--text-muted);
     }
 
-    /* Card base */
+    /* Card */
     .card {
-      background: radial-gradient(circle at top left, #181820, #07070a 70%);
-      border-radius: 22px;
-      padding: 18px 14px 18px;
-      border: 1px solid rgba(209,178,90,0.22);
-      box-shadow: 0 15px 34px rgba(0,0,0,0.9);
+      background: radial-gradient(circle at top left, #262633 0, #15151c 40%, #101015 100%);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
       position: relative;
+      overflow: hidden;
     }
 
-    .card-glow {
-      animation: cardGlow 1.6s ease-out;
+    .card-main {
+      margin-bottom: 20px;
     }
 
-    @keyframes cardGlow {
-      0%   { box-shadow: 0 15px 34px rgba(0,0,0,0.9); }
-      35%  { box-shadow: 0 0 30px rgba(209,178,90,0.7); }
-      100% { box-shadow: 0 15px 34px rgba(0,0,0,0.9); }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.16), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease-out;
     }
 
-    /* Hero text inside main card */
-    .hero-block {
-      margin-bottom: 10px;
-      text-align: left;
+    .card-glow::before {
+      opacity: 1;
+      animation: cardGlowPulse 1.2s ease-out forwards;
     }
 
-    .hero-label {
-      font-size: 11px;
+    @keyframes cardGlowPulse {
+      0% { opacity: 0; }
+      30% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Input section */
+    .section-label {
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: var(--accent-teal);
-      margin-bottom: 4px;
-    }
-
-    .hero-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--accent-gold);
-      margin-bottom: 4px;
-    }
-
-    .hero-subtitle {
-      font-size: 12px;
       color: var(--text-muted);
+      margin-bottom: 12px;
     }
 
-    /* Form */
-    .form-block {
-      margin-top: 6px;
+    .input-row {
       display: flex;
-      flex-direction: column;
       gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .field-label {
-      font-size: 12px;
-    }
-
-    .input-wrapper {
-      position: relative;
-    }
-
-    .input-text {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 999px;
-      border: 1px solid #373740;
-      background: var(--bg-card-soft);
+    .input-row input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      background: var(--input-bg);
       color: var(--text-main);
-      font-size: 15px;
+      font-size: 0.98rem;
       outline: none;
-      transition: border 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      transition: border-color var(--transition-soft), box-shadow var(--transition-soft), background var(--transition-soft);
     }
 
-    .input-text::placeholder {
-      color: #7a7a80;
+    .input-row input::placeholder {
+      color: #6b6b73;
     }
 
-    .input-text:focus {
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 0 1px rgba(209,178,90,0.7);
-      background: #14141a;
+    .input-row input:focus {
+      border-color: var(--gold-soft);
+      box-shadow: 0 0 0 1px rgba(201, 162, 95, 0.6), 0 0 18px rgba(201, 162, 95, 0.32);
+      background: #181822;
     }
 
-    .submit-button {
-      margin-top: 4px;
-      padding: 13px 16px;
-      border-radius: 999px;
+    .primary-btn {
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
       border: none;
-      background: var(--accent-gold);
-      color: #17130a;
+      background: linear-gradient(135deg, #c9a25f, #8b6a35);
+      color: #0b0b10;
       font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
+      font-size: 0.9rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      width: 100%;
-      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
 
-    .submit-button:hover {
-      transform: translateY(-1px);
-      background: #e1c46d;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.75);
+    .primary-btn span.icon {
+      font-size: 1rem;
     }
 
-    .submit-button:disabled {
-      opacity: 0.7;
-      transform: none;
-      box-shadow: none;
-      cursor: default;
+    .primary-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      filter: brightness(0.96);
     }
 
-    .help-text {
-      font-size: 11px;
+    .hint-text {
+      font-size: 0.76rem;
       color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .location-btn {
+      width: 100%;
+      margin-top: 4px;
+      padding: 11px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(102, 194, 194, 0.22);
+      background: linear-gradient(135deg, rgba(18, 34, 39, 0.9), rgba(15, 26, 30, 1));
+      color: var(--teal);
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .location-btn-icon {
+      font-size: 1rem;
+    }
+
+    .location-btn:active {
+      transform: translateY(1px) scale(0.985);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.7);
     }
 
     .error-text {
-      font-size: 12px;
-      color: var(--error);
-      margin-top: 4px;
-    }
-
-    .location-inline-button {
-      margin-top: 6px;
-      padding: 9px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(209,178,90,0.9);
-      background: rgba(209,178,90,0.08);
-      color: var(--accent-gold);
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-    }
-
-    .location-inline-button-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #3b2f10;
-    }
-
-    .loading-text {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      display: none;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .dot-pulse {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-gold);
-      animation: dotPulse 1s infinite ease-in-out;
-    }
-
-    @keyframes dotPulse {
-      0% { transform: scale(0.9); opacity: 0.4; }
-      50% { transform: scale(1.3); opacity: 1; }
-      100% { transform: scale(0.9); opacity: 0.4; }
-    }
-
-    /* Popover hint */
-    .popover-hint {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.95);
-      border: 1px solid rgba(209,178,90,0.7);
-      font-size: 10px;
-      color: #f5ebc6;
-      display: none;
-      align-items: center;
-      gap: 5px;
-      z-index: 3;
-    }
-
-    .popover-hint.visible {
-      display: inline-flex;
-      animation: popFade 3.3s ease-out forwards;
-    }
-
-    @keyframes popFade {
-      0%   { opacity: 0; transform: translateY(-4px); }
-      10%  { opacity: 1; transform: translateY(0); }
-      70%  { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-4px); }
+      font-size: 0.78rem;
+      color: #ff9b6a;
+      min-height: 16px;
+      margin-top: 2px;
     }
 
     /* Results section */
-    .results {
-      margin-top: 16px;
+    .results-wrapper {
+      margin-top: 18px;
       display: none;
     }
 
-    .section-badge {
-      width: 86px;
-      height: 86px;
-      border-radius: 999px;
-      margin: 4px auto 12px;
+    .results-title {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+
+    .result-card {
+      background: radial-gradient(circle at top left, #262633 0, #15151c 40%, #101015 100%);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .result-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .result-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Section badge */
+    .section-badge {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #f3d9a0, #b4873f 48%, #6c4b1f 100%);
+      box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.75),
+        inset 0 0 10px rgba(255, 255, 255, 0.18);
+      display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
-      color: #3b2f10;
-      font-weight: 800;
-      font-size: 24px;
-      box-shadow:
-        0 0 8px rgba(209,178,90,0.7),
-        0 0 18px rgba(0,0,0,0.7);
-      text-align: center;
-      padding: 8px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1a1307;
+      transform: scale(0);
+      opacity: 0;
     }
 
-    .section-badge-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      opacity: 0.8;
-      margin-bottom: 2px;
-    }
-
-    .section-badge-value {
-      font-size: 22px;
-    }
-
-    .badge-pop {
-      animation: badgePop 0.55s ease-out;
+    .section-badge.pop-in {
+      animation: badgePop 0.5s var(--transition-spring) forwards;
     }
 
     @keyframes badgePop {
-      0%   { transform: scale(0.6); opacity: 0; }
-      60%  { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+      0% { transform: scale(0.2) translateY(18px); opacity: 0; }
+      60% { transform: scale(1.1) translateY(-2px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
     }
 
+    .station-label {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Warning bar */
     .warning-bar {
-      margin: 0 auto 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(209,178,90,0.14), rgba(209,140,70,0.16));
-      border: 1px solid rgba(209,178,90,0.45);
-      font-size: 11px;
-      color: #f5ebc6;
       display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 7px 10px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(139, 106, 53, 0.05));
+      border: 1px solid rgba(255, 204, 102, 0.35);
+      font-size: 0.8rem;
+      color: var(--danger);
+    }
+
+    .warning-icon {
+      font-size: 1rem;
+    }
+
+    /* Period time block */
+    .period-block {
+      margin-top: 14px;
+      padding: 11px 12px;
+      border-radius: var(--radius-md);
+      background:
+        radial-gradient(circle at top, rgba(201, 162, 95, 0.22), transparent 65%),
+        linear-gradient(145deg, #15151c, #111017);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 14px 28px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .period-block::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      border: 1px solid rgba(235, 202, 134, 0.18);
+      pointer-events: none;
+    }
+
+    .period-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .period-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f4dea6, #a57c3b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.92rem;
+      color: #20130a;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .period-text-main {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .period-text-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Jacket note */
+    .jacket-note {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .jacket-note strong {
+      color: var(--gold-soft);
+    }
+
+    /* Robe block */
+    .robe-block-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .robe-block-text {
+      direction: rtl;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .robe-location-btn {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(201, 162, 95, 0.4);
+      background: linear-gradient(135deg, rgba(20, 20, 25, 1), rgba(24, 24, 32, 1));
+      color: var(--gold-soft);
+      font-size: 0.86rem;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
     }
 
-    .results-row {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .robe-location-btn:active {
+      transform: translateY(1px) scale(0.985);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.75);
     }
 
-    .results-item {
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: #18181f;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .results-item-time {
-      background: var(--accent-gold-soft);
-      border-color: rgba(209,178,90,0.7);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .time-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #3b2f10;
-      flex-shrink: 0;
-    }
-
-    .results-label {
-      font-size: 10px;
+    /* No items message */
+    .no-items {
+      font-size: 0.86rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 3px;
-    }
-
-    .results-value {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .results-note {
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .results-note strong {
-      color: var(--accent-gold);
-    }
-
-    .robe-card {
-      margin-top: 12px;
-      padding: 11px 12px 12px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(58,166,160,0.26), rgba(5,5,5,0.95));
-      border: 1px solid rgba(58,166,160,0.75);
-      font-size: 12px;
-    }
-
-    .robe-card-title {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--accent-gold);
-    }
-
-    .robe-location-button {
-      margin-top: 6px;
-      font-size: 11px;
-      border-color: rgba(58,166,160,0.9);
-      background: rgba(12,95,95,0.4);
-      color: #e9ffff;
-    }
-
-    .screenshot-tip {
-      margin-top: 10px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* Quote */
-    .quote-card {
-      margin-top: 16px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(209,178,90,0.2);
-      background: linear-gradient(135deg, rgba(209,178,90,0.1), rgba(0,0,0,0.9));
-      font-size: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quote-card::before {
-      content: "“";
-      position: absolute;
-      top: -18px;
-      left: 8px;
-      font-size: 40px;
-      color: rgba(209,178,90,0.25);
-      pointer-events: none;
-    }
-
-    .quote-text {
-      position: relative;
-      z-index: 1;
+      padding: 12px 12px 8px;
     }
 
     /* Footer */
-    footer {
-      margin-top: 20px;
-      padding-top: 12px;
-    }
-
-    .footer-credit {
-      position: relative;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+    .footer {
+      margin-top: 26px;
       text-align: center;
-      padding-top: 8px;
-      color: transparent;
-      background: linear-gradient(90deg, #b89a4d, #f0ddaa, #b89a4d);
-      background-size: 220% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation: textGlowShift 4s ease-in-out infinite;
+      font-size: 0.8rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      position: relative;
     }
 
-    .footer-credit::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 15%;
-      right: 15%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(209,178,90,0.8), transparent);
-      opacity: 0.85;
-    }
-
-    @keyframes textGlowShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Modal – center, half-screen style */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.78);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 220ms ease;
-      padding: 0 16px;
-    }
-
-    .modal-backdrop.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 460px;
-      max-height: 60vh;
-      background: #101015;
-      border-radius: 22px;
-      padding: 14px 16px 14px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-      border: 1px solid rgba(209,178,90,0.7);
-      transform: translateY(16px) scale(0.96);
-      opacity: 0;
-      transition: transform 220ms ease, opacity 220ms ease;
-      display: flex;
-      flex-direction: column;
+    .footer-glow {
+      display: inline-block;
+      position: relative;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
 
-    .modal-backdrop.visible .modal {
-      transform: translateY(0) scale(1);
+    .footer-glow span {
+      background: linear-gradient(120deg, #5b4420, #f1d08d, #5b4420);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: footerGlow 4s linear infinite;
+    }
+
+    @keyframes footerGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.68);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 18px;
+      background: radial-gradient(circle at top, #262633 0, #14141b 45%, #09090d 100%);
+      border-radius: 22px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform var(--transition-spring), opacity var(--transition-soft);
+    }
+
+    .modal-backdrop.active .modal-dialog {
+      transform: translateY(0);
       opacity: 1;
     }
 
-    .modal-header {
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-icon-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
+    .modal-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f4dea6, #a57c3b);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #3b2f10;
-      font-weight: 800;
-      box-shadow:
-        0 0 6px rgba(209,178,90,0.7),
-        0 0 16px rgba(209,178,90,0.5);
-      flex-shrink: 0;
+      margin-bottom: 10px;
+      color: #1f130a;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.75);
     }
 
     .modal-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--accent-gold);
-      margin-bottom: 2px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
     .modal-subtitle {
-      font-size: 12px;
+      font-size: 0.84rem;
       color: var(--text-muted);
+      margin-bottom: 10px;
     }
 
-    .modal-body {
-      margin-top: 6px;
-      flex: 1;
+    .modal-steps {
+      margin-bottom: 10px;
+      max-height: 48vh;
       overflow-y: auto;
       padding-right: 4px;
     }
 
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .modal-step {
+      margin-bottom: 8px;
     }
 
-    .step-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-    }
-
-    .step-badge {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f0ddaa, #d1b25a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: #3b2f10;
-      box-shadow:
-        0 0 6px rgba(209,178,90,0.8),
-        0 0 12px rgba(209,178,90,0.5);
-    }
-
-    .step-text {
-      font-size: 12px;
-      color: var(--text-main);
-    }
-
-    .highlight {
-      color: var(--accent-gold);
+    .modal-step-title {
+      font-size: 0.86rem;
       font-weight: 600;
+      color: var(--gold-soft);
+      margin-bottom: 2px;
     }
 
-    .modal-actions {
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .modal-check {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
+    .modal-step-text {
+      font-size: 0.8rem;
       color: var(--text-muted);
+      line-height: 1.45;
     }
 
-    .modal-check input {
-      width: 14px;
-      height: 14px;
-      accent-color: var(--accent-gold);
+    .modal-confirm-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
     }
 
-    .modal-button {
-      padding: 10px 16px;
-      border-radius: 999px;
+    .modal-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .modal-checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--gold-soft);
+    }
+
+    .modal-confirm-btn {
+      border-radius: var(--radius-pill);
       border: none;
-      background: var(--accent-gold);
-      color: #17130a;
+      padding: 8px 14px;
+      font-size: 0.84rem;
       font-weight: 600;
-      font-size: 13px;
+      background: linear-gradient(135deg, #c9a25f, #8b6a35);
+      color: #121219;
       cursor: pointer;
-      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease, opacity 150ms ease;
+      white-space: nowrap;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: opacity 0.2s ease-out, transform 0.14s ease-out, box-shadow 0.18s ease-out;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75);
+    }
+
+    .modal-confirm-btn.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-confirm-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Popover hint */
+    .popover-hint {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 16, 24, 0.96);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border: 1px solid rgba(201, 162, 95, 0.35);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
+      display: none;
+      z-index: 4000;
+    }
+
+    .popover-hint.active {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: hintIn 0.35s ease-out;
+    }
+
+    @keyframes hintIn {
+      0% { opacity: 0; transform: translate(-50%, 10px); }
+      100% { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    /* Draggable Stadium Pop-up */
+    .stadium-popup {
+      position: fixed;
+      bottom: -70%;
+      left: 0;
       width: 100%;
+      height: 65%;
+      background: #111217;
+      border-top-left-radius: 26px;
+      border-top-right-radius: 26px;
+      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6);
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      transform: translateY(100%);
+      z-index: 2500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 14px;
+      touch-action: none;
     }
 
-    .modal-button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      background: #e1c46d;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.9);
+    .stadium-popup.active {
+      transform: translateY(0);
     }
 
-    .modal-button:disabled {
-      opacity: 0.5;
-      cursor: default;
-      box-shadow: none;
-      transform: none;
+    .stadium-grabber {
+      width: 55px;
+      height: 6px;
+      background: #444;
+      border-radius: 6px;
+      margin-bottom: 12px;
     }
 
-    @media (min-width: 768px) {
-      .app-inner {
-        padding-top: 40px;
-        padding-bottom: 26px;
+    .stadium-popup img {
+      width: 90%;
+      border-radius: 16px;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      user-select: none;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    /* Small screens tweaks */
+    @media (max-width: 360px) {
+      .header-title {
+        font-size: 1.3rem;
+      }
+      .card,
+      .result-card {
+        padding: 16px 14px 18px;
+      }
+      .period-block {
+        padding: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="floating-orb" aria-hidden="true" id="floatingOrb"></div>
+  <div class="orb" id="orb"></div>
 
-  <!-- Guidelines modal -->
-  <div class="modal-backdrop" id="guidelinesModal" aria-modal="true" role="dialog">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-icon-circle">!</div>
-        <div>
-          <div class="modal-title">Before you come to collect</div>
-          <div class="modal-subtitle">Please follow these four short rules.</div>
+  <div class="app-shell">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="logo.png" alt="Graduation Logo" />
+      </div>
+      <div class="header-title">Graduation Team</div>
+      <div class="header-subtitle">Because every detail matters</div>
+    </header>
+
+    <!-- Main card -->
+    <main class="card card-main" id="mainCard">
+      <div class="section-label">Student ID lookup</div>
+
+      <form id="lookupForm" autocomplete="off">
+        <div class="input-row">
+          <input
+            id="studentIdInput"
+            type="tel"
+            inputmode="numeric"
+            maxlength="8"
+            placeholder="e.g. 20201234"
+          />
+          <button type="submit" class="primary-btn">
+            <span class="icon">🔎</span>
+            <span>Check</span>
+          </button>
+        </div>
+        <div class="hint-text">
+          Enter your 8-digit student ID to see your jacket and robe pickup details.
+        </div>
+        <div id="errorText" class="error-text"></div>
+      </form>
+
+      <a
+        href="https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc"
+        target="_blank"
+        class="location-btn"
+      >
+        <span class="location-btn-icon">📍</span>
+        <span>Open sports field location in Maps</span>
+      </a>
+    </main>
+
+    <!-- Results -->
+    <section class="results-wrapper" id="resultsSection">
+      <div class="results-title">Your graduation items</div>
+
+      <!-- Jacket card -->
+      <div class="result-card" id="jacketCard" style="display:none;">
+        <div class="result-card-header">
+          <div>
+            <div class="result-title">Jacket Pickup</div>
+            <div class="result-sub" id="stationLabel">Station –</div>
+          </div>
+          <div class="section-badge" id="sectionBadge">A</div>
+        </div>
+
+        <div class="warning-bar">
+          <span class="warning-icon">⚠️</span>
+          <span>Important: your items can only be collected at your assigned period.</span>
+        </div>
+
+        <div class="period-block">
+          <div class="period-row">
+            <div class="period-icon">⏰</div>
+            <div>
+              <div class="period-text-main" id="periodMain">Assigned period</div>
+              <div class="period-text-sub" id="periodSub">Please follow the time exactly.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="jacket-note">
+          Please arrive at the sports field only during the assigned period.
+          Arriving <strong>before or after your period</strong> means you cannot collect your items.
         </div>
       </div>
-      <div class="modal-body">
-        <div class="steps">
-          <div class="step-row">
-            <div class="step-badge">1</div>
-            <div class="step-text">
-              It is <span class="highlight">mandatory</span> to bring your
-              <span class="highlight">student ID card</span>. It is also strongly recommended that you
-              know your <span class="highlight">order number</span> to make pickup much faster.
-            </div>
-          </div>
 
-          <div class="step-row">
-            <div class="step-badge">2</div>
-            <div class="step-text">
-              If you <span class="highlight">cannot come yourself</span>, send someone on your behalf with your
-              order number or student ID. Items may <span class="highlight">not be held</span> otherwise.
-            </div>
-          </div>
+      <!-- Robe card -->
+      <div class="result-card" id="robeCard" style="display:none;">
+        <div class="robe-block-title">Robe Pickup</div>
+        <p class="robe-block-text">
+          الاستلام يتم من مخزن رعاية الطلبة في الكلية. بعد استلامك للروب، يُفضّل التوجّه
+          إلى ساحة الكلية لتخفيف الزحام عند نقطة التسليم.
+        </p>
+        <a
+          href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"
+          target="_blank"
+          class="robe-location-btn"
+        >
+          <span>📍</span>
+          <span>موقع مخزن رعاية الطلبة في الخريطة</span>
+        </a>
+      </div>
 
-          <div class="step-row">
-            <div class="step-badge">3</div>
-            <div class="step-text">
-              Come only at your <span class="highlight">assigned period time</span> to avoid crowding and to let
-              everyone collect their jackets comfortably. If you arrive
-              <span class="highlight">before or after</span> your period, you will
-              <span class="highlight">not be able to collect</span> your items. If you miss your
-              assigned day, there will be <span class="highlight">no second pickup</span> before the
-              practical exams.
-            </div>
-          </div>
+      <!-- No items message -->
+      <div class="result-card" id="noItemsCard" style="display:none;">
+        <div class="no-items" id="noItemsText">
+          This student ID does not have any graduation items registered.
+        </div>
+      </div>
+    </section>
 
-          <div class="step-row">
-            <div class="step-badge">4</div>
-            <div class="step-text">
-              After receiving your jacket, please move to the <span class="highlight">college yard</span> so
-              the pickup area stays clear.
-            </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-glow">
+        <span>PROGRAMMED BY ALBARA.</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Items pickup modal -->
+  <div class="modal-backdrop" id="rulesModal">
+    <div class="modal-dialog">
+      <div class="modal-icon">!</div>
+      <div class="modal-title">Before you come to collect</div>
+      <div class="modal-subtitle">Please follow these rules.</div>
+
+      <div class="modal-steps">
+        <div class="modal-step">
+          <div class="modal-step-title">Step 1</div>
+          <div class="modal-step-text">
+            Bringing the student ID card is mandatory.
+            Knowing the order number is strongly recommended for faster pickup.
+          </div>
+        </div>
+
+        <div class="modal-step">
+          <div class="modal-step-title">Step 2</div>
+          <div class="modal-step-text">
+            If you cannot come, send someone with:
+            <br />• Picture of your student ID card
+            <br />• Your order number
+            <br />(Required)
+          </div>
+        </div>
+
+        <div class="modal-step">
+          <div class="modal-step-title">Step 3</div>
+          <div class="modal-step-text">
+            Come only at your assigned period to avoid crowding.
+            Before/after period = no collection.
+          </div>
+        </div>
+
+        <div class="modal-step">
+          <div class="modal-step-title">Step 4</div>
+          <div class="modal-step-text">
+            After collecting your items, move to the college yard
+            to keep the pickup point clear.
+          </div>
+        </div>
+
+        <div class="modal-step">
+          <div class="modal-step-title">Step 5</div>
+          <div class="modal-step-text">
+            If you miss your assigned pickup day,
+            there will be no second pickup until after practical exams.
           </div>
         </div>
       </div>
-      <div class="modal-actions">
-        <label class="modal-check">
-          <input type="checkbox" id="guidelinesCheck" />
+
+      <div class="modal-confirm-row">
+        <label class="modal-checkbox-row">
+          <input type="checkbox" id="rulesCheckbox" />
           <span>I have read and understood these rules.</span>
         </label>
-        <button class="modal-button" id="guidelinesConfirm" disabled>
-          I understand – show my section
-        </button>
+        <button class="modal-confirm-btn" id="rulesConfirmBtn">Continue</button>
       </div>
     </div>
   </div>
 
-  <div class="app-shell">
-    <div class="app-inner">
-      <!-- Header -->
-      <div class="top-bar">
-        <div class="brand">
-          <img src="logo.png" alt="Graduation Team logo" />
-          <div class="brand-text">
-            <span class="brand-text-title">Graduation Team</span>
-            <span class="brand-text-sub">Because every detail matters</span>
-          </div>
-        </div>
-      </div>
+  <!-- Popover hint -->
+  <div class="popover-hint" id="popoverHint">
+    <span>👇</span>
+    <span>You can drag the stadium card down to resize or close it.</span>
+  </div>
 
-      <!-- Main card -->
-      <section class="card" id="lookupCard">
-        <div class="hero-block">
-          <div class="hero-label">Graduation jackets</div>
-          <div class="hero-title">Find your pickup details</div>
-          <div class="hero-subtitle">
-            Enter your student ID to see your <strong>section</strong> and <strong>period time</strong>
-            for jacket collection at the college sports field.
-          </div>
-        </div>
+  <!-- Stadium Draggable Pop-up -->
+  <div id="stadium-popup" class="stadium-popup">
+    <div class="stadium-grabber"></div>
 
-        <div class="form-block">
-          <label class="field-label" for="studentId">Student ID number</label>
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="studentId"
-              name="studentId"
-              class="input-text"
-              placeholder="e.g. 20201234"
-              inputmode="numeric"
-              autocomplete="off"
-              aria-describedby="studentIdHelp"
-            />
-          </div>
-          <button type="button" class="submit-button" id="submitButton">
-            Check my pickup details
-          </button>
-          <div class="help-text" id="studentIdHelp">
-            Type your 8-digit student ID. The system will only show your <strong>section</strong> and <strong>period time</strong>.
-          </div>
-
-          <button
-            type="button"
-            class="location-inline-button"
-            onclick="window.open('https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc','_blank')"
-          >
-            <div class="location-inline-button-icon">📍</div>
-            <span>Open sports field location in Maps</span>
-          </button>
-
-          <div class="loading-text" id="loadingText">
-            <span class="dot-pulse"></span>
-            <span>Loading collection data… Please wait a moment.</span>
-          </div>
-
-          <div class="error-text" id="errorText" role="alert" aria-live="polite"></div>
-        </div>
-
-        <!-- Popover hint -->
-        <div class="popover-hint" id="popoverHint">
-          <span>⚠</span>
-          <span>Remember: come only at your assigned period time.</span>
-        </div>
-
-        <!-- Results -->
-        <div class="results" id="results">
-          <div id="jacketResultBlock">
-            <div class="section-badge" id="sectionBadge">
-              <div class="section-badge-label">Your section</div>
-              <div class="section-badge-value">—</div>
-            </div>
-
-            <div class="warning-bar">
-              <span>⚠</span>
-              <span>Important: your jacket can only be collected at the period shown below.</span>
-            </div>
-
-            <div class="results-row">
-              <div class="results-item">
-                <div class="results-label">Section</div>
-                <div class="results-value" id="resultSection">—</div>
-              </div>
-              <div class="results-item results-item-time">
-                <div class="time-icon">⏰</div>
-                <div>
-                  <div class="results-label">Period time</div>
-                  <div class="results-value" id="resultPeriod">—</div>
-                </div>
-              </div>
-            </div>
-
-            <p class="results-note">
-              Please arrive at the college sports field <strong>only during this period</strong>.
-              Arriving <strong>earlier or later</strong> means you will
-              <strong>not be able to collect</strong> your items.
-            </p>
-          </div>
-
-          <!-- Robe info -->
-          <div class="robe-card" id="robeCard" style="display:none;">
-            <div class="robe-card-title">Robe Pickup</div>
-            <p>
-              الاستلام يتم من مخزن <strong>رعاية الطلبة</strong> في الكلية. بعد استلامك للروب، يُفضّل التوجّه
-              إلى ساحة الكلية لتخفيف الزحام عند نقطة التسليم.
-            </p>
-            <button
-              type="button"
-              class="location-inline-button robe-location-button"
-              onclick="window.open('https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc','_blank')"
-            >
-              <div class="location-inline-button-icon">📍</div>
-              <span>موقع مخزن رعاية الطلبة في الخريطة</span>
-            </button>
-          </div>
-
-          <p class="screenshot-tip" id="screenshotTip">
-            Tip: take a screenshot of this screen so you can quickly show your section and period at the field.
-          </p>
-        </div>
-        
-      </section>
-
-      <!-- Footer -->
-      <footer>
-        <div class="footer-credit">PROGRAMMED BY ALBARA.</div>
-      </footer>
-    </div>
+    <!-- 🔥 هنا تحط صورة تقسيمة الملعب -->
+    <img
+      id="stadium-img"
+      src="stadium_layout.jpg"
+      alt="Stadium Layout"
+    />
   </div>
 
   <script>
-    // --------- Config: Excel file names and column headers ----------
-    const JACKETS_FILE = "Order_Arrangement_UPDATED.xlsx";
-    const ROBES_FILE = "All_graduation_Orders_sorted_by_size.xlsx";
+    // =======================
+    // Data loading with SheetJS
+    // =======================
+    const jacketMap = new Map();
+    const robeSet = new Set();
+    let dataReady = false;
 
-    const JACKETS_STUDENT_ID_COL = "Student ID ( 8 digits e.g.20200456)";
-    const JACKETS_STATION_COL = "Station ";
-    const JACKETS_PERIOD_COL = "Period";
-    const ROBES_STUDENT_ID_COL = "Student ID";
-
-    let jacketData = [];
-    let robeIdSet = new Set();
-    let dataLoaded = false;
-    let dataLoadFailed = false;
-
-    const resultsEl = document.getElementById("results");
-    const jacketBlockEl = document.getElementById("jacketResultBlock");
-    const sectionEl = document.getElementById("resultSection");
-    const periodEl = document.getElementById("resultPeriod");
-    const sectionBadgeEl = document.getElementById("sectionBadge");
-    const robeCardEl = document.getElementById("robeCard");
-    const errorEl = document.getElementById("errorText");
-    const loadingTextEl = document.getElementById("loadingText");
-    const submitButton = document.getElementById("submitButton");
-    const studentIdInput = document.getElementById("studentId");
-
-    const modalBackdrop = document.getElementById("guidelinesModal");
-    const modalConfirm = document.getElementById("guidelinesConfirm");
-    const modalCheck = document.getElementById("guidelinesCheck");
-
-    const lookupCard = document.getElementById("lookupCard");
-    const floatingOrb = document.getElementById("floatingOrb");
-    const popoverHint = document.getElementById("popoverHint");
-
-    let pendingResult = null;
-    let pendingHasRobe = false;
-
-    function normalizeId(raw) {
-      if (raw === null || raw === undefined) return "";
-      let str = String(raw).trim();
-      if (str.includes(".")) {
-        str = str.split(".")[0];
-      }
-      str = str.replace(/\D/g, "");
-      if (str.length > 8) {
-        str = str.slice(-8);
-      }
-      return str;
+    function normalizeId(value) {
+      if (value === undefined || value === null) return "";
+      const digits = String(value).replace(/\\D/g, "");
+      if (!digits) return "";
+      return digits.padStart(8, "0");
     }
 
-    async function loadExcelData() {
-      loadingTextEl.style.display = "flex";
-      submitButton.disabled = true;
+    async function loadWorkbook(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to load " + url);
+      const arrayBuffer = await res.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const firstSheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[firstSheetName];
+      const json = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+      return json;
+    }
 
+    async function loadData() {
       try {
-        const [jacketsResp, robesResp] = await Promise.all([
-          fetch(JACKETS_FILE),
-          fetch(ROBES_FILE)
+        const [jacketRows, robeRows] = await Promise.all([
+          loadWorkbook("Order_Arrangement_UPDATED.xlsx"),
+          loadWorkbook("All_graduation_Orders_sorted_by_size.xlsx"),
         ]);
 
-        if (!jacketsResp.ok || !robesResp.ok) {
-          throw new Error("Could not fetch Excel files.");
-        }
-
-        const jacketsArrayBuffer = await jacketsResp.arrayBuffer();
-        const robesArrayBuffer = await robesResp.arrayBuffer();
-
-        const jacketsWorkbook = XLSX.read(jacketsArrayBuffer, { type: "array" });
-        const robesWorkbook = XLSX.read(robesArrayBuffer, { type: "array" });
-
-        const jacketsSheet = jacketsWorkbook.Sheets[jacketsWorkbook.SheetNames[0]];
-        const robesSheet = robesWorkbook.Sheets[robesWorkbook.SheetNames[0]];
-
-        const jacketsRows = XLSX.utils.sheet_to_json(jacketsSheet, {
-          defval: "",
-          raw: true
+        jacketRows.forEach((row) => {
+          const id = normalizeId(row["Student ID"] ?? row["student id"]);
+          if (!id) return;
+          jacketMap.set(id, {
+            station: row["Station"] ?? row["station"] ?? "",
+            period: row["Period"] ?? row["period"] ?? "",
+          });
         });
 
-        const robesRows = XLSX.utils.sheet_to_json(robesSheet, {
-          defval: "",
-          raw: true
+        robeRows.forEach((row) => {
+          const id = normalizeId(row["Student ID"] ?? row["student id"]);
+          if (!id) return;
+          robeSet.add(id);
         });
 
-        jacketData = jacketsRows
-          .map((row) => {
-            const rawId = row[JACKETS_STUDENT_ID_COL];
-            const id = normalizeId(rawId);
-            if (!id) return null;
-            const station = (row[JACKETS_STATION_COL] || "").toString().trim();
-            const period = (row[JACKETS_PERIOD_COL] || "").toString().trim();
-            return { id, station, period };
-          })
-          .filter((x) => x !== null);
-
-        robesRows.forEach((row) => {
-          const rawId = row[ROBES_STUDENT_ID_COL];
-          const id = normalizeId(rawId);
-          if (id) robeIdSet.add(id);
-        });
-
-        dataLoaded = true;
-        dataLoadFailed = false;
+        dataReady = true;
       } catch (err) {
-        console.error("Error loading Excel data:", err);
-        dataLoaded = false;
-        dataLoadFailed = true;
-        errorEl.textContent =
-          "We could not load the collection data. Please contact the Graduation Team.";
-      } finally {
-        loadingTextEl.style.display = "none";
-        submitButton.disabled = false;
+        console.error("Error loading data:", err);
       }
     }
 
-    function showGuidelinesModal() {
-      modalBackdrop.classList.add("visible");
-      modalCheck.checked = false;
-      modalConfirm.disabled = true;
+    window.addEventListener("load", loadData);
+
+    // =======================
+    // DOM references
+    // =======================
+    const lookupForm = document.getElementById("lookupForm");
+    const studentIdInput = document.getElementById("studentIdInput");
+    const errorText = document.getElementById("errorText");
+    const resultsSection = document.getElementById("resultsSection");
+    const jacketCard = document.getElementById("jacketCard");
+    const robeCard = document.getElementById("robeCard");
+    const noItemsCard = document.getElementById("noItemsCard");
+    const noItemsText = document.getElementById("noItemsText");
+    const sectionBadge = document.getElementById("sectionBadge");
+    const stationLabelEl = document.getElementById("stationLabel");
+    const periodMainEl = document.getElementById("periodMain");
+    const periodSubEl = document.getElementById("periodSub");
+    const mainCard = document.getElementById("mainCard");
+    const orb = document.getElementById("orb");
+
+    const rulesModal = document.getElementById("rulesModal");
+    const rulesCheckbox = document.getElementById("rulesCheckbox");
+    const rulesConfirmBtn = document.getElementById("rulesConfirmBtn");
+    const popoverHint = document.getElementById("popoverHint");
+
+    const stadiumPopup = document.getElementById("stadium-popup");
+    const stadiumImg = document.getElementById("stadium-img");
+
+    let pendingLookup = null;
+
+    // =======================
+    // Modal logic
+    // =======================
+    function openRulesModal() {
+      rulesCheckbox.checked = false;
+      rulesConfirmBtn.classList.remove("enabled");
+      rulesModal.classList.add("active");
     }
 
-    function hideGuidelinesModal() {
-      modalBackdrop.classList.remove("visible");
+    function closeRulesModal() {
+      rulesModal.classList.remove("active");
     }
 
-    function handleLookup() {
-      errorEl.textContent = "";
-      resultsEl.style.display = "none";
-      jacketBlockEl.style.display = "none";
-      robeCardEl.style.display = "none";
-      pendingResult = null;
-      pendingHasRobe = false;
-
-      const rawInput = studentIdInput.value;
-      const id = normalizeId(rawInput);
-
-      if (!dataLoaded && !dataLoadFailed) {
-        errorEl.textContent =
-          "The collection data is still loading. Please wait a moment and try again.";
-        return;
+    rulesCheckbox.addEventListener("change", () => {
+      if (rulesCheckbox.checked) {
+        rulesConfirmBtn.classList.add("enabled");
+      } else {
+        rulesConfirmBtn.classList.remove("enabled");
       }
-
-      if (dataLoadFailed) {
-        errorEl.textContent =
-          "The collection data is not available. Please contact the Graduation Team.";
-        return;
-      }
-
-      if (!id || id.length < 4) {
-        errorEl.textContent = "Please enter a valid student ID.";
-        return;
-      }
-
-      const match = jacketData.find((row) => row.id === id);
-      const hasRobeOnly = !match && robeIdSet.has(id);
-      const hasRobeAlso = robeIdSet.has(id);
-
-      if (!match && !hasRobeOnly) {
-        errorEl.textContent =
-          "This student ID does not have a jacket or robe order in the system.";
-        return;
-      }
-
-      pendingResult = match
-        ? { station: match.station || "N/A", period: match.period || "N/A", id }
-        : null;
-
-      pendingHasRobe = hasRobeAlso;
-      showGuidelinesModal();
-    }
-
-    modalCheck.addEventListener("change", () => {
-      modalConfirm.disabled = !modalCheck.checked;
     });
 
-    modalConfirm.addEventListener("click", () => {
-      hideGuidelinesModal();
+    rulesConfirmBtn.addEventListener("click", () => {
+      if (!rulesCheckbox.checked || !pendingLookup) return;
 
-      const hasJacket = !!pendingResult;
-      const hasRobe = pendingHasRobe;
+      closeRulesModal();
+      applyResults(pendingLookup.id, pendingLookup.hasJacket, pendingLookup.hasRobe);
+      pendingLookup = null;
 
-      if (!hasJacket && !hasRobe) {
-        pendingResult = null;
-        pendingHasRobe = false;
-        return;
+      showPopoverHint();
+      openStadiumPopup();
+    });
+
+    // =======================
+    // Popover hint
+    // =======================
+    function showPopoverHint() {
+      popoverHint.classList.add("active");
+      setTimeout(() => {
+        popoverHint.classList.remove("active");
+      }, 2600);
+    }
+
+    // =======================
+    // Stadium popup logic
+    // =======================
+    let startY = 0;
+    let currentY = 0;
+    let dragging = false;
+
+    function onDragStart(clientY) {
+      dragging = true;
+      startY = clientY;
+      currentY = 0;
+    }
+
+    function onDragMove(clientY) {
+      if (!dragging) return;
+      currentY = clientY - startY;
+
+      if (currentY > 0) {
+        const translate = currentY;
+        // scale from 0.9 up to ~1.05 as you pull a bit
+        const scale = 0.9 + Math.min(currentY / 600, 0.15);
+        stadiumImg.style.transform = "scale(" + scale.toFixed(3) + ")";
+        stadiumPopup.style.transform = "translateY(" + translate + "px)";
+      }
+    }
+
+    function onDragEnd() {
+      if (!dragging) return;
+      dragging = false;
+
+      if (currentY > 140) {
+        // close with shrink
+        stadiumPopup.classList.remove("active");
+        stadiumPopup.style.transform = "translateY(100%)";
+        stadiumImg.style.transform = "scale(0.85)";
+      } else {
+        // snap back to open
+        stadiumPopup.classList.add("active");
+        stadiumPopup.style.transform = "translateY(0)";
+        stadiumImg.style.transform = "scale(0.95)";
       }
 
-      resultsEl.style.display = "block";
+      currentY = 0;
+    }
+
+    stadiumPopup.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      onDragStart(touch.clientY);
+    });
+
+    stadiumPopup.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      onDragMove(touch.clientY);
+    });
+
+    stadiumPopup.addEventListener("touchend", () => {
+      onDragEnd();
+    });
+
+    // Mouse support (optional)
+    stadiumPopup.addEventListener("mousedown", (e) => {
+      onDragStart(e.clientY);
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      onDragMove(e.clientY);
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (!dragging) return;
+      onDragEnd();
+    });
+
+    function openStadiumPopup() {
+      stadiumPopup.classList.add("active");
+      stadiumPopup.style.transform = "translateY(0)";
+      stadiumImg.style.transform = "scale(0.9)";
+    }
+
+    // =======================
+    // Lookup behavior
+    // =======================
+    function boostOrb() {
+      orb.classList.remove("orb-boost");
+      void orb.offsetWidth; // restart animation
+      orb.classList.add("orb-boost");
+    }
+
+    function animateMainCard() {
+      mainCard.classList.remove("card-glow");
+      void mainCard.offsetWidth;
+      mainCard.classList.add("card-glow");
+    }
+
+    function showResultsWrapper() {
+      resultsSection.style.display = "block";
+      resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function applyResults(id, hasJacket, hasRobe) {
+      // Reset visibility
+      jacketCard.style.display = "none";
+      robeCard.style.display = "none";
+      noItemsCard.style.display = "none";
 
       if (hasJacket) {
-        jacketBlockEl.style.display = "block";
-        sectionEl.textContent = pendingResult.station;
-        periodEl.textContent = pendingResult.period;
-        const badgeValue = sectionBadgeEl.querySelector(".section-badge-value");
-        if (badgeValue) badgeValue.textContent = pendingResult.station;
-        sectionBadgeEl.classList.add("badge-pop");
-        setTimeout(() => sectionBadgeEl.classList.remove("badge-pop"), 600);
-      } else {
-        jacketBlockEl.style.display = "none";
+        const data = jacketMap.get(id);
+        const station = (data && data.station) ? String(data.station).trim() : "";
+        const period = (data && data.period) ? String(data.period).trim() : "";
+
+        const sectionLetter = station ? station.toString().trim().charAt(0).toUpperCase() : "-";
+        sectionBadge.textContent = sectionLetter || "-";
+
+        stationLabelEl.textContent = station ? ("Station " + station) : "Station –";
+        periodMainEl.textContent = period || "Assigned period";
+        periodSubEl.textContent = "Please follow the time exactly.";
+
+        sectionBadge.classList.remove("pop-in");
+        void sectionBadge.offsetWidth;
+        sectionBadge.classList.add("pop-in");
+
+        jacketCard.style.display = "block";
       }
 
       if (hasRobe) {
-        robeCardEl.style.display = "block";
-      } else {
-        robeCardEl.style.display = "none";
+        robeCard.style.display = "block";
       }
 
-      lookupCard.classList.add("card-glow");
-      setTimeout(() => lookupCard.classList.remove("card-glow"), 1600);
-
-      if (floatingOrb) {
-        floatingOrb.classList.add("orb-active");
-        setTimeout(() => floatingOrb.classList.remove("orb-active"), 2200);
+      if (!hasJacket && !hasRobe) {
+        noItemsText.textContent = "This student ID does not have any graduation items registered.";
+        noItemsCard.style.display = "block";
       }
 
-      if (popoverHint && hasJacket) {
-        popoverHint.classList.add("visible");
-        setTimeout(() => popoverHint.classList.remove("visible"), 3200);
+      animateMainCard();
+      boostOrb();
+      showResultsWrapper();
+    }
+
+    lookupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let rawId = studentIdInput.value.trim();
+      const normalized = normalizeId(rawId);
+
+      errorText.textContent = "";
+
+      if (!normalized || normalized.length < 6) {
+        errorText.textContent = "Please enter a valid student ID.";
+        return;
       }
 
-      pendingResult = null;
-      pendingHasRobe = false;
-    });
+      if (!dataReady) {
+        errorText.textContent = "Data is still loading. Please try again in a few seconds.";
+        return;
+      }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      loadExcelData();
+      const hasJacket = jacketMap.has(normalized);
+      const hasRobe = robeSet.has(normalized);
 
-      submitButton.addEventListener("click", handleLookup);
-      studentIdInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          handleLookup();
-        }
-      });
+      if (!hasJacket && !hasRobe) {
+        pendingLookup = null;
+        applyResults(normalized, false, false);
+        return;
+      }
+
+      pendingLookup = { id: normalized, hasJacket, hasRobe };
+      openRulesModal();
     });
   </script>
 </body>

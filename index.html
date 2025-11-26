@@ -110,7 +110,7 @@
       text-align: center;
       margin-top: 20px;
       margin-bottom: 16px;
-      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+      transition: transform 0.35s.ease-out, opacity 0.35s ease-out;
     }
 
     .logo-wrapper {
@@ -234,7 +234,7 @@
       cursor: pointer;
       white-space: nowrap;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s.ease-out;
     }
 
     .primary-btn:active {
@@ -484,7 +484,7 @@
       gap: 6px;
       cursor: pointer;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8);
-      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
+      transition: transform 0.14s ease-out, box-shadow 0.14s.ease-out, background var(--transition-soft);
     }
 
     .robe-location-btn:active {
@@ -681,19 +681,17 @@
     }
 
     .stadium-popup img {
-  width: 90%;
-  border-radius: 16px;
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-  user-select: none;
-  pointer-events: none;
-  transform: scale(0.85);   /* أصغر وهو مقفول */
-}
+      width: 90%;
+      border-radius: 16px;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      user-select: none;
+      pointer-events: none;
+      transform: scale(0.85);
+    }
 
-/* لما ينفتح الـ pop-up تكبر الصورة بوضوح */
-.stadium-popup.active img {
-  transform: scale(1.05);
-}
-
+    .stadium-popup.active img {
+      transform: scale(1.05);
+    }
 
     @media (max-width: 360px) {
       .header-title { font-size: 1.25rem; }
@@ -767,11 +765,19 @@
           <span>Important: your items can only be collected at your assigned period.</span>
         </div>
 
+        <div class="period-block">
+          <div class="period-row">
+            <div class="period-icon">⏰</div>
+            <div>
+              <div class="period-text-main" id="periodMainDetail">Assigned period</div>
+            </div>
+          </div>
+        </div>
+
         <!-- stadium preview -->
         <div class="stadium-preview" id="stadiumPreview">
           <img src="stadium_layout.jpg" alt="Stadium layout" />
-          <div class="stadium-preview-caption">
-          </div>
+          <div class="stadium-preview-caption"></div>
         </div>
 
         <!-- Jacket location button -->
@@ -828,7 +834,7 @@
         <div class="modal-step">
           <div class="modal-step-title">1</div>
           <div class="modal-step-text">
-            You must bring your student ID card. Having your order number ready will make the pickup faster and smoother.
+            Bringing your student ID card is mandatory. Knowing your order number helps speed things up, but it’s okay if you don’t know it as long as you have your ID ready at pickup.
           </div>
         </div>
 
@@ -1019,8 +1025,6 @@
       currentY = clientY - startY;
       if (currentY > 0) {
         const translate = currentY;
-        const scale = 0.9 + Math.min(currentY / 600, 0.15);
-        stadiumImg.style.transform = "scale(" + scale.toFixed(3) + ")";
         stadiumPopup.style.transform = "translateY(" + translate + "px)";
       }
     }
@@ -1032,11 +1036,9 @@
       if (currentY > 140) {
         stadiumPopup.classList.remove("active");
         stadiumPopup.style.transform = "translateY(100%)";
-        stadiumImg.style.transform = "scale(0.85)";
       } else {
         stadiumPopup.classList.add("active");
         stadiumPopup.style.transform = "translateY(0)";
-        stadiumImg.style.transform = "scale(0.95)";
       }
       currentY = 0;
     }
@@ -1056,9 +1058,9 @@
     window.addEventListener("mouseup", () => { if (dragging) onDragEnd(); });
 
     function openStadiumPopup() {
-  stadiumPopup.classList.add("active");
-  stadiumPopup.style.transform = "translateY(0)";
-}
+      stadiumPopup.classList.add("active");
+      stadiumPopup.style.transform = "translateY(0)";
+    }
 
     // Click on preview to open popup (always)
     if (stadiumPreview) {

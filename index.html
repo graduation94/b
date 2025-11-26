@@ -681,13 +681,19 @@
     }
 
     .stadium-popup img {
-      width: 90%;
-      border-radius: 16px;
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-      user-select: none;
-      pointer-events: none;
-      transform: scale(0.9);
-    }
+  width: 90%;
+  border-radius: 16px;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  user-select: none;
+  pointer-events: none;
+  transform: scale(0.85);   /* أصغر وهو مقفول */
+}
+
+/* لما ينفتح الـ pop-up تكبر الصورة بوضوح */
+.stadium-popup.active img {
+  transform: scale(1.05);
+}
+
 
     @media (max-width: 360px) {
       .header-title { font-size: 1.25rem; }
@@ -774,7 +780,7 @@
         <div class="stadium-preview" id="stadiumPreview">
           <img src="stadium_layout.jpg" alt="Stadium layout" />
           <div class="stadium-preview-caption">
-            Tap to enlarge the stadium pickup map (opens in a pop-up view).
+            Tap to enlarge.
           </div>
         </div>
 
@@ -1060,10 +1066,9 @@
     window.addEventListener("mouseup", () => { if (dragging) onDragEnd(); });
 
     function openStadiumPopup() {
-      stadiumPopup.classList.add("active");
-      stadiumPopup.style.transform = "translateY(0)";
-      stadiumImg.style.transform = "scale(0.9)";
-    }
+  stadiumPopup.classList.add("active");
+  stadiumPopup.style.transform = "translateY(0)";
+}
 
     // Click on preview to open popup (always)
     if (stadiumPreview) {

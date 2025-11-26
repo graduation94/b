@@ -44,7 +44,7 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 24px 12px 80px;
+      padding: 18px 12px 60px;
       overflow-x: hidden;
       position: relative;
       background: radial-gradient(circle at top, #191b27 0, #05060c 55%, #000 100%);
@@ -65,7 +65,6 @@
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; }
 
-    /* Orb خفيف بالخلفية */
     .orb {
       position: fixed;
       width: 220px;
@@ -73,7 +72,7 @@
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, rgba(201, 162, 95, 0.4), rgba(10, 14, 18, 0.2));
       filter: blur(4px);
-      top: 9%;
+      top: 8%;
       left: 50%;
       transform: translateX(-50%);
       opacity: 0.1;
@@ -109,17 +108,16 @@
     /* Header */
     .header {
       text-align: center;
-      margin-top: 36px;
-      margin-bottom: 24px;
+      margin-top: 20px;
+      margin-bottom: 16px;
       transition: transform 0.35s ease-out, opacity 0.35s ease-out;
     }
 
-    /* لوجو بسيط */
     .logo-wrapper {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px;
+      padding: 5px;
       border-radius: 18px;
       border: 1px solid rgba(201, 162, 95, 0.35);
       background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
@@ -127,28 +125,28 @@
       box-shadow:
         0 14px 30px rgba(0,0,0,0.9),
         inset 0 0 0 1px rgba(0,0,0,0.7);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .logo-wrapper img {
-      width: 72px;
-      height: 72px;
+      width: 68px;
+      height: 68px;
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.9);
     }
 
     .header-title {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
       color: var(--gold-soft);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .header-subtitle {
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
     }
 
@@ -157,14 +155,14 @@
       background: radial-gradient(circle at top left, #22232f 0, #10111a 45%, #080912 100%);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
-      padding: 20px 18px 22px;
+      padding: 16px 16px 18px;
       border: 1px solid rgba(255, 255, 255, 0.03);
       position: relative;
       overflow: hidden;
       transition: transform 0.35s ease-out;
     }
 
-    .card-main { margin-bottom: 20px; }
+    .card-main { margin-bottom: 14px; }
 
     .card::before {
       content: "";
@@ -189,27 +187,27 @@
     }
 
     .section-label {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .input-row {
       display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 8px;
+      margin-bottom: 8px;
     }
 
     .input-row input {
       flex: 1;
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-soft);
       background: var(--input-bg);
       color: var(--text-main);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       outline: none;
       transition: border-color var(--transition-soft), box-shadow var(--transition-soft), background var(--transition-soft);
     }
@@ -223,7 +221,7 @@
     }
 
     .primary-btn {
-      padding: 0 18px;
+      padding: 0 16px;
       border-radius: var(--radius-pill);
       border: none;
       background: linear-gradient(135deg, #c9a25f, #8b6a35);
@@ -233,14 +231,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
       cursor: pointer;
       white-space: nowrap;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
       transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
-
-    .primary-btn span.icon { font-size: 1rem; }
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.98);
@@ -249,9 +244,9 @@
     }
 
     .hint-text {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .error-text {
@@ -261,49 +256,25 @@
       margin-top: 2px;
     }
 
-    .location-btn {
-      width: 100%;
-      margin-top: 10px;
-      padding: 11px 14px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(102, 194, 194, 0.22);
-      background: linear-gradient(135deg, #0b181b, #081214);
-      color: var(--teal);
-      font-size: 0.86rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
-    }
-
-    .location-btn-icon { font-size: 1rem; }
-    .location-btn:active {
-      transform: translateY(1px) scale(0.985);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
-    }
-
     /* Results */
     .results-wrapper {
-      margin-top: 18px;
+      margin-top: 10px;
       display: none;
       transition: transform 0.35s ease-out, opacity 0.35s ease-out;
     }
 
     .results-title {
-      font-size: 0.95rem;
-      margin-bottom: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
       color: var(--text-muted);
     }
 
     .result-card {
       background: radial-gradient(circle at top left, #22232f 0, #11111a 40%, #080912 100%);
       border-radius: var(--radius-lg);
-      padding: 16px 16px 18px;
+      padding: 14px 14px 16px;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       position: relative;
       overflow: hidden;
     }
@@ -312,17 +283,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .result-title { font-size: 1rem; font-weight: 600; }
-    .result-sub { font-size: 0.8rem; color: var(--text-muted); }
+    .result-title { font-size: 0.98rem; font-weight: 600; }
+    .result-sub { font-size: 0.78rem; color: var(--text-muted); }
 
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .info-box {
@@ -331,19 +302,19 @@
       box-shadow:
         0 12px 26px rgba(0, 0, 0, 0.9),
         inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-      padding: 10px 12px;
+      padding: 8px 10px;
     }
 
     .info-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .info-value {
-      font-size: 0.96rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--gold-soft);
       display: flex;
@@ -355,8 +326,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 25%, #f3d9a0, #b4873f 48%, #6c4b1f 100%);
       box-shadow:
@@ -364,7 +335,7 @@
         inset 0 0 10px rgba(255,255,255,0.18);
       color: #1b1207;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       transform: scale(0);
       opacity: 0;
     }
@@ -382,21 +353,21 @@
     .warning-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      padding: 7px 10px;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 8px;
       border-radius: var(--radius-md);
       background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(139, 106, 53, 0.05));
       border: 1px solid rgba(255, 204, 102, 0.35);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--danger);
     }
 
-    .warning-icon { font-size: 1rem; }
+    .warning-icon { font-size: 0.9rem; }
 
     .period-block {
-      margin-top: 12px;
-      padding: 11px 12px;
+      margin-top: 8px;
+      padding: 9px 10px;
       border-radius: var(--radius-md);
       background:
         radial-gradient(circle at top, rgba(201, 162, 95, 0.22), transparent 65%),
@@ -421,51 +392,74 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .period-icon {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #f4dea6, #a57c3b);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       color: #20130a;
       box-shadow: 0 10px 18px rgba(0, 0, 0, 0.8);
     }
 
-    .period-text-main { font-size: 0.9rem; font-weight: 500; }
-    .period-text-sub { font-size: 0.78rem; color: var(--text-muted); }
+    .period-text-main { font-size: 0.88rem; font-weight: 500; }
+    .period-text-sub { font-size: 0.76rem; color: var(--text-muted); }
 
     .jacket-note {
-      margin-top: 12px;
-      font-size: 0.8rem;
+      margin-top: 8px;
+      font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.4;
     }
 
     .jacket-note strong { color: var(--gold-soft); }
 
-    .robe-block-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; }
+    .jacket-location-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 9px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(102, 194, 194, 0.22);
+      background: linear-gradient(135deg, #0b181b, #081214);
+      color: var(--teal);
+      font-size: 0.84rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+    }
+
+    .jacket-location-btn:active {
+      transform: translateY(1px) scale(0.985);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .robe-block-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
     .robe-block-text {
       direction: rtl;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
       line-height: 1.6;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .robe-location-btn {
       width: 100%;
-      padding: 10px 14px;
+      padding: 9px 12px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(201, 162, 95, 0.4);
       background: linear-gradient(135deg, #151521, #1c1c2a);
       color: var(--gold-soft);
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -481,13 +475,13 @@
     }
 
     .no-items {
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
-      padding: 12px 12px 8px;
+      padding: 10px 10px 6px;
     }
 
     .footer {
-      margin-top: 26px;
+      margin-top: 18px;
       text-align: center;
       font-size: 0.8rem;
       letter-spacing: 0.26em;
@@ -499,7 +493,7 @@
     .footer-glow {
       display: inline-block;
       position: relative;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: var(--radius-pill);
       background: rgba(0, 0, 0, 0.22);
       overflow: hidden;
@@ -539,7 +533,7 @@
       margin: 0 18px;
       background: radial-gradient(circle at top, #262633 0, #14141b 45%, #09090d 100%);
       border-radius: 22px;
-      padding: 18px 18px 16px;
+      padding: 16px 16px 14px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.04);
       transform: translateY(30px);
@@ -553,37 +547,37 @@
     }
 
     .modal-icon {
-      width: 38px;
-      height: 38px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #f4dea6, #a57c3b);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #1f130a;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
     }
 
-    .modal-title { font-size: 1.02rem; font-weight: 600; margin-bottom: 4px; }
-    .modal-subtitle { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+    .modal-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px; }
 
     .modal-steps {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       max-height: 48vh;
       overflow-y: auto;
-      padding-right: 4px;
+      padding-right: 2px;
     }
 
-    .modal-step { margin-bottom: 8px; }
+    .modal-step { margin-bottom: 6px; }
     .modal-step-title {
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--gold-soft);
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
     .modal-step-text {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.45;
     }
@@ -593,14 +587,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .modal-checkbox-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
+      gap: 6px;
+      font-size: 0.78rem;
       color: var(--text-muted);
       flex: 1;
     }
@@ -614,8 +608,8 @@
     .modal-confirm-btn {
       border-radius: var(--radius-pill);
       border: none;
-      padding: 8px 14px;
-      font-size: 0.84rem;
+      padding: 7px 12px;
+      font-size: 0.82rem;
       font-weight: 600;
       background: linear-gradient(135deg, #c9a25f, #8b6a35);
       color: #121219;
@@ -639,13 +633,13 @@
 
     .popover-hint {
       position: fixed;
-      bottom: 80px;
+      bottom: 70px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(16, 16, 24, 0.96);
       border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 0.78rem;
+      padding: 5px 12px;
+      font-size: 0.76rem;
       color: var(--text-muted);
       border: 1px solid rgba(201, 162, 95, 0.35);
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
@@ -682,7 +676,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 14px;
+      padding-top: 12px;
       touch-action: none;
     }
 
@@ -693,7 +687,7 @@
       height: 6px;
       background: #444;
       border-radius: 6px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .stadium-popup img {
@@ -706,9 +700,9 @@
     }
 
     @media (max-width: 360px) {
-      .header-title { font-size: 1.3rem; }
-      .card, .result-card { padding: 16px 14px 18px; }
-      .period-block { padding: 10px; }
+      .header-title { font-size: 1.25rem; }
+      .card, .result-card { padding: 12px 12px 14px; }
+      .period-block { padding: 8px; }
     }
   </style>
 </head>
@@ -731,13 +725,13 @@
         <div class="input-row">
           <input
             id="studentIdInput"
-            type="tel"
+            type="text"
             inputmode="numeric"
+            pattern="\\d*"
             maxlength="8"
             placeholder="e.g. 20201234"
           />
           <button type="submit" class="primary-btn">
-            <span class="icon">🔎</span>
             <span>Check</span>
           </button>
         </div>
@@ -746,15 +740,6 @@
         </div>
         <div id="errorText" class="error-text"></div>
       </form>
-
-      <a
-        href="https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc"
-        target="_blank"
-        class="location-btn"
-      >
-        <span class="location-btn-icon">📍</span>
-        <span>Open sports field location in Maps</span>
-      </a>
     </main>
 
     <section class="results-wrapper" id="resultsSection">
@@ -800,6 +785,16 @@
           Please arrive at the sports field only during the assigned period.
           Arriving <strong>before or after your period</strong> means you cannot collect your items.
         </div>
+
+        <!-- زر موقع الملعب الخاص باستلام الجاكت -->
+        <a
+          href="https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc"
+          target="_blank"
+          class="jacket-location-btn"
+        >
+          <span>📍</span>
+          <span>Open sports field location for jacket pickup</span>
+        </a>
       </div>
 
       <div class="result-card" id="robeCard" style="display:none;">
@@ -843,42 +838,26 @@
         <div class="modal-step">
           <div class="modal-step-title">1</div>
           <div class="modal-step-text">
-            Bringing the student ID card is mandatory.
-            Knowing the order number is strongly recommended for faster pickup.
+            You must bring your student ID card. Having your order number ready will make the pickup faster and smoother.
           </div>
         </div>
 
         <div class="modal-step">
           <div class="modal-step-title">2</div>
           <div class="modal-step-text">
-            If you cannot come, send someone with:
-            <br />• Picture of your student ID card
+            If you are unable to come yourself, you may send someone on your behalf. They must have:
+            <br />• A clear photo of your student ID card
             <br />• Your order number
-            <br />(Required)
+            <br /><strong>Both are required.</strong>
           </div>
         </div>
 
         <div class="modal-step">
           <div class="modal-step-title">3</div>
           <div class="modal-step-text">
-            Come only at your assigned period to avoid crowding.
-            Before/after period = no collection.
-          </div>
-        </div>
-
-        <div class="modal-step">
-          <div class="modal-step-title">4</div>
-          <div class="modal-step-text">
-            After collecting your items, move to the college yard
-            to keep the pickup point clear.
-          </div>
-        </div>
-
-        <div class="modal-step">
-          <div class="modal-step-title">5</div>
-          <div class="modal-step-text">
-            If you miss your assigned pickup day,
-            there will be no second pickup until after practical exams.
+            Come only at your assigned period. Before/after your period = no collection.
+            After collecting your items, move to the college yard to keep the pickup point clear.
+            If you miss your pickup day, the next chance will be only after practical exams.
           </div>
         </div>
       </div>
@@ -904,7 +883,7 @@
   </div>
 
   <script>
-    // أسماء الأعمدة الحقيقية من الملفات
+    // Excel columns
     const JACKET_ID_COL = "Student ID ( 8 digits e.g.20200456)";
     const JACKET_STATION_COL = "Station";
     const JACKET_PERIOD_COL = "Period";
@@ -921,7 +900,6 @@
       return digits.padStart(8, "0");
     }
 
-    // يساعدنا نتعامل مع مسافات في آخر اسم العمود مثل "Station "
     function getTrimmed(row, targetName) {
       const target = targetName.trim().toLowerCase();
       for (const key of Object.keys(row)) {
@@ -998,6 +976,12 @@
     const stadiumImg = document.getElementById("stadium-img");
 
     let pendingLookup = null;
+    let lastLookupHasJacket = false;
+
+    // force digits only while typing
+    studentIdInput.addEventListener("input", () => {
+      studentIdInput.value = studentIdInput.value.replace(/[^0-9]/g, "").slice(0, 8);
+    });
 
     // Modal
     function openRulesModal() {
@@ -1023,10 +1007,11 @@
 
       closeRulesModal();
       applyResults(pendingLookup.id, pendingLookup.hasJacket, pendingLookup.hasRobe);
+      if (lastLookupHasJacket) {
+        showPopoverHint();
+        openStadiumPopup();
+      }
       pendingLookup = null;
-
-      showPopoverHint();
-      openStadiumPopup();
     });
 
     function showPopoverHint() {
@@ -1094,22 +1079,22 @@
       stadiumImg.style.transform = "scale(0.9)";
     }
 
-    // Scroll swapping animation (Header/Main card/Results)
+    // Scroll swap animation
     window.addEventListener("scroll", () => {
       const y = window.scrollY;
-      const max = 200;
+      const max = 180;
       const t = Math.min(y / max, 1);
 
       const mainScale = 1 - 0.04 * t;
-      const mainTranslate = -6 * t;
+      const mainTranslate = -4 * t;
       mainCard.style.transform = `translateY(${mainTranslate}px) scale(${mainScale})`;
 
-      const headerTranslate = -8 * t;
+      const headerTranslate = -6 * t;
       const headerOpacity = 1 - 0.3 * t;
       header.style.transform = `translateY(${headerTranslate}px)`;
       header.style.opacity = headerOpacity.toString();
 
-      const resultsTranslate = 14 * (1 - t);
+      const resultsTranslate = 12 * (1 - t);
       const resultsOpacity = 0.1 + 0.9 * t;
       resultsSection.style.transform = `translateY(${resultsTranslate}px)`;
       resultsSection.style.opacity = resultsOpacity.toString();
@@ -1191,6 +1176,8 @@
 
       const hasJacket = jacketMap.has(normalized);
       const hasRobe = robeSet.has(normalized);
+
+      lastLookupHasJacket = hasJacket;
 
       if (!hasJacket && !hasRobe) {
         pendingLookup = null;

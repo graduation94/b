@@ -47,11 +47,10 @@
       padding: 24px 12px 80px;
       overflow-x: hidden;
       position: relative;
-      background: radial-gradient(circle at top, #1a1b27 0, #05060c 55%, #000 100%);
+      background: radial-gradient(circle at top, #191b27 0, #05060c 55%, #000 100%);
     }
 
     body::before {
-      /* فينيت خفيف على الأطراف عشان يعطي إحساس احترافي */
       content: "";
       position: fixed;
       inset: -40px;
@@ -62,27 +61,20 @@
       z-index: 0;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
 
-    button {
-      font-family: inherit;
-    }
-
-    /* Orb صغيرة وخفيفة جداً */
     .orb {
       position: fixed;
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(201, 162, 95, 0.45), rgba(10, 14, 18, 0.2));
+      background: radial-gradient(circle at 30% 30%, rgba(201, 162, 95, 0.4), rgba(10, 14, 18, 0.2));
       filter: blur(4px);
       top: 9%;
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0.12;
+      opacity: 0.1;
       pointer-events: none;
       animation: orbFloat 12s ease-in-out infinite;
       z-index: 0;
@@ -101,7 +93,7 @@
     @keyframes orbBoost {
       0%   { transform: translate(-50%, 0) scale(1); opacity: 0.18; }
       40%  { transform: translate(-50%, -8px) scale(1.12); opacity: 0.22; }
-      100% { transform: translate(-50%, -4px) scale(1); opacity: 0.12; }
+      100% { transform: translate(-50%, -4px) scale(1); opacity: 0.1; }
     }
 
     .app-shell {
@@ -115,38 +107,37 @@
     /* Header */
     .header {
       text-align: center;
-      margin-top: 40px;
-      margin-bottom: 26px;
+      margin-top: 36px;
+      margin-bottom: 24px;
     }
 
+    /* ✅ شكل لوجو بسيط واحترافي بدون دوائر غريبة */
     .logo-wrapper {
-      width: 84px;
-      height: 84px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 25% 10%, rgba(255,255,255,0.22), transparent 55%),
-        radial-gradient(circle at 30% 30%, #f4e1ac, #b9883c 52%, #664016 100%);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.9),
-        inset 0 0 12px rgba(255,255,255,0.32);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
+      padding: 6px;
+      border-radius: 18px;
+      border: 1px solid rgba(201, 162, 95, 0.35);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
+                  linear-gradient(145deg, #101118, #07080f);
+      box-shadow:
+        0 14px 30px rgba(0,0,0,0.9),
+        inset 0 0 0 1px rgba(0,0,0,0.7);
+      margin-bottom: 14px;
     }
 
     .logo-wrapper img {
-      width: 60%;
-      height: 60%;
+      width: 72px;
+      height: 72px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.9);
     }
 
     .header-title {
-      font-size: 1.5rem;
-      letter-spacing: 0.08em;
+      font-size: 1.4rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
       color: var(--gold-soft);
@@ -169,16 +160,14 @@
       overflow: hidden;
     }
 
-    .card-main {
-      margin-bottom: 20px;
-    }
+    .card-main { margin-bottom: 20px; }
 
     .card::before {
       content: "";
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.16), transparent 55%);
+      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.16), transparent 60%);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.6s ease-out;
@@ -195,7 +184,6 @@
       100% { opacity: 0; }
     }
 
-    /* Input section */
     .section-label {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -222,9 +210,7 @@
       transition: border-color var(--transition-soft), box-shadow var(--transition-soft), background var(--transition-soft);
     }
 
-    .input-row input::placeholder {
-      color: #6b6b73;
-    }
+    .input-row input::placeholder { color: #6b6b73; }
 
     .input-row input:focus {
       border-color: var(--gold-soft);
@@ -250,9 +236,7 @@
       transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
 
-    .primary-btn span.icon {
-      font-size: 1rem;
-    }
+    .primary-btn span.icon { font-size: 1rem; }
 
     .primary-btn:active {
       transform: translateY(1px) scale(0.98);
@@ -263,12 +247,19 @@
     .hint-text {
       font-size: 0.76rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+    }
+
+    .error-text {
+      font-size: 0.78rem;
+      color: #ff9b6a;
+      min-height: 16px;
+      margin-top: 2px;
     }
 
     .location-btn {
       width: 100%;
-      margin-top: 4px;
+      margin-top: 8px;
       padding: 11px 14px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(102, 194, 194, 0.22);
@@ -284,23 +275,61 @@
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
     }
 
-    .location-btn-icon {
-      font-size: 1rem;
-    }
-
+    .location-btn-icon { font-size: 1rem; }
     .location-btn:active {
       transform: translateY(1px) scale(0.985);
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
     }
 
-    .error-text {
-      font-size: 0.78rem;
-      color: #ff9b6a;
-      min-height: 16px;
-      margin-top: 2px;
+    /* File uploads */
+    .file-upload-wrapper {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,0.08);
     }
 
-    /* Results section */
+    .file-upload-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .file-upload-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .file-btn {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255,255,255,0.06);
+      background: #10121b;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .file-btn span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .file-btn span.status {
+      font-size: 0.7rem;
+      color: var(--teal);
+    }
+
+    .file-btn input[type="file"] {
+      display: none;
+    }
+
+    /* Results */
     .results-wrapper {
       margin-top: 18px;
       display: none;
@@ -329,17 +358,9 @@
       margin-bottom: 10px;
     }
 
-    .result-title {
-      font-size: 1rem;
-      font-weight: 600;
-    }
+    .result-title { font-size: 1rem; font-weight: 600; }
+    .result-sub { font-size: 0.8rem; color: var(--text-muted); }
 
-    .result-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* Station & time boxes */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -414,9 +435,7 @@
       color: var(--danger);
     }
 
-    .warning-icon {
-      font-size: 1rem;
-    }
+    .warning-icon { font-size: 1rem; }
 
     .period-block {
       margin-top: 12px;
@@ -461,15 +480,8 @@
       box-shadow: 0 10px 18px rgba(0, 0, 0, 0.8);
     }
 
-    .period-text-main {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .period-text-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
+    .period-text-main { font-size: 0.9rem; font-weight: 500; }
+    .period-text-sub { font-size: 0.78rem; color: var(--text-muted); }
 
     .jacket-note {
       margin-top: 12px;
@@ -478,17 +490,9 @@
       line-height: 1.4;
     }
 
-    .jacket-note strong {
-      color: var(--gold-soft);
-    }
+    .jacket-note strong { color: var(--gold-soft); }
 
-    /* Robe block */
-    .robe-block-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
+    .robe-block-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; }
     .robe-block-text {
       direction: rtl;
       font-size: 0.84rem;
@@ -525,7 +529,6 @@
       padding: 12px 12px 8px;
     }
 
-    /* Footer */
     .footer {
       margin-top: 26px;
       text-align: center;
@@ -571,9 +574,7 @@
       z-index: 3000;
     }
 
-    .modal-backdrop.active {
-      display: flex;
-    }
+    .modal-backdrop.active { display: flex; }
 
     .modal-dialog {
       width: 100%;
@@ -607,17 +608,8 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
     }
 
-    .modal-title {
-      font-size: 1.02rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .modal-subtitle {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
+    .modal-title { font-size: 1.02rem; font-weight: 600; margin-bottom: 4px; }
+    .modal-subtitle { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 10px; }
 
     .modal-steps {
       margin-bottom: 10px;
@@ -626,17 +618,13 @@
       padding-right: 4px;
     }
 
-    .modal-step {
-      margin-bottom: 8px;
-    }
-
+    .modal-step { margin-bottom: 8px; }
     .modal-step-title {
       font-size: 0.86rem;
       font-weight: 600;
       color: var(--gold-soft);
       margin-bottom: 2px;
     }
-
     .modal-step-text {
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -692,7 +680,6 @@
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.9);
     }
 
-    /* Popover hint */
     .popover-hint {
       position: fixed;
       bottom: 80px;
@@ -721,7 +708,7 @@
       100% { opacity: 1; transform: translate(-50%, 0); }
     }
 
-    /* Stadium Pop-up */
+    /* Stadium popup */
     .stadium-popup {
       position: fixed;
       bottom: -70%;
@@ -742,9 +729,7 @@
       touch-action: none;
     }
 
-    .stadium-popup.active {
-      transform: translateY(0);
-    }
+    .stadium-popup.active { transform: translateY(0); }
 
     .stadium-grabber {
       width: 55px;
@@ -764,16 +749,9 @@
     }
 
     @media (max-width: 360px) {
-      .header-title {
-        font-size: 1.3rem;
-      }
-      .card,
-      .result-card {
-        padding: 16px 14px 18px;
-      }
-      .period-block {
-        padding: 10px;
-      }
+      .header-title { font-size: 1.3rem; }
+      .card, .result-card { padding: 16px 14px 18px; }
+      .period-block { padding: 10px; }
     }
   </style>
 </head>
@@ -781,7 +759,6 @@
   <div class="orb" id="orb"></div>
 
   <div class="app-shell">
-    <!-- Header -->
     <header class="header">
       <div class="logo-wrapper">
         <img src="logo.png" alt="Graduation Logo" />
@@ -790,7 +767,6 @@
       <div class="header-subtitle">Because every detail matters</div>
     </header>
 
-    <!-- Main card -->
     <main class="card card-main" id="mainCard">
       <div class="section-label">Student ID lookup</div>
 
@@ -822,13 +798,35 @@
         <span class="location-btn-icon">📍</span>
         <span>Open sports field location in Maps</span>
       </a>
+
+      <!-- File uploads -->
+      <div class="file-upload-wrapper">
+        <div class="file-upload-title">
+          Upload the Excel files once (jacket & robe) to enable lookup.
+        </div>
+        <div class="file-upload-row">
+          <label class="file-btn">
+            <span class="label">
+              📎 Jacket Excel
+            </span>
+            <span class="status" id="jacketStatus">Not loaded</span>
+            <input type="file" id="jacketFileInput" accept=".xlsx,.xls" />
+          </label>
+
+          <label class="file-btn">
+            <span class="label">
+              📎 Robe Excel
+            </span>
+            <span class="status" id="robeStatus">Not loaded</span>
+            <input type="file" id="robeFileInput" accept=".xlsx,.xls" />
+          </label>
+        </div>
+      </div>
     </main>
 
-    <!-- Results -->
     <section class="results-wrapper" id="resultsSection">
       <div class="results-title">Your graduation items</div>
 
-      <!-- Jacket card -->
       <div class="result-card" id="jacketCard" style="display:none;">
         <div class="result-card-header">
           <div>
@@ -871,7 +869,6 @@
         </div>
       </div>
 
-      <!-- Robe card -->
       <div class="result-card" id="robeCard" style="display:none;">
         <div class="robe-block-title">Robe Pickup</div>
         <p class="robe-block-text">
@@ -888,7 +885,6 @@
         </a>
       </div>
 
-      <!-- No items message -->
       <div class="result-card" id="noItemsCard" style="display:none;">
         <div class="no-items" id="noItemsText">
           This student ID does not have any graduation items registered.
@@ -896,7 +892,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="footer-glow">
         <span>PROGRAMMED BY ALBARA.</span>
@@ -904,7 +899,7 @@
     </footer>
   </div>
 
-  <!-- Items pickup modal -->
+  <!-- Modal -->
   <div class="modal-backdrop" id="rulesModal">
     <div class="modal-dialog">
       <div class="modal-icon">!</div>
@@ -965,24 +960,18 @@
     </div>
   </div>
 
-  <!-- Popover hint -->
   <div class="popover-hint" id="popoverHint">
     <span>👇</span>
     <span>You can drag the stadium card down to resize or close it.</span>
   </div>
 
-  <!-- Stadium Draggable Pop-up -->
   <div id="stadium-popup" class="stadium-popup">
     <div class="stadium-grabber"></div>
-    <img
-      id="stadium-img"
-      src="stadium_layout.jpg"
-      alt="Stadium Layout"
-    />
+    <img id="stadium-img" src="stadium_layout.jpg" alt="Stadium Layout" />
   </div>
 
   <script>
-    // ======== Excel config: column names من الملفات اللي رفعتها =========
+    // أعمدة الإكسل اللي اتفقنا عليها
     const JACKET_ID_COL = "Student ID ( 8 digits e.g.20200456)";
     const JACKET_STATION_COL = "Station";
     const JACKET_PERIOD_COL = "Period";
@@ -990,7 +979,8 @@
 
     const jacketMap = new Map();
     const robeSet = new Set();
-    let dataReady = false;
+    let jacketLoaded = false;
+    let robeLoaded = false;
 
     function normalizeId(value) {
       if (value === undefined || value === null) return "";
@@ -999,47 +989,48 @@
       return digits.padStart(8, "0");
     }
 
-    async function loadWorkbook(url) {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Failed to load " + url);
-      const arrayBuffer = await res.arrayBuffer();
-      const workbook = XLSX.read(arrayBuffer, { type: "array" });
-      const firstSheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[firstSheetName];
-      return XLSX.utils.sheet_to_json(sheet, { defval: "" });
+    function sheetToJson(file) {
+      return file.arrayBuffer().then((buf) => {
+        const wb = XLSX.read(buf, { type: "array" });
+        const sheetName = wb.SheetNames[0];
+        const sheet = wb.Sheets[sheetName];
+        return XLSX.utils.sheet_to_json(sheet, { defval: "" });
+      });
     }
 
-    async function loadData() {
-      try {
-        const [jacketRows, robeRows] = await Promise.all([
-          loadWorkbook("Order_Arrangement_UPDATED (1).xlsx"),
-          loadWorkbook("All_graduation_Orders_sorted_by_size (3).xlsx"),
-        ]);
-
-        jacketRows.forEach((row) => {
-          const id = normalizeId(row[JACKET_ID_COL]);
-          if (!id) return;
-          jacketMap.set(id, {
-            station: row[JACKET_STATION_COL] ?? "",
-            period: row[JACKET_PERIOD_COL] ?? "",
-          });
+    function processJacketRows(rows) {
+      jacketMap.clear();
+      rows.forEach((row) => {
+        const id = normalizeId(row[JACKET_ID_COL]);
+        if (!id) return;
+        jacketMap.set(id, {
+          station: row[JACKET_STATION_COL] ?? "",
+          period: row[JACKET_PERIOD_COL] ?? "",
         });
-
-        robeRows.forEach((row) => {
-          const id = normalizeId(row[ROBE_ID_COL]);
-          if (!id) return;
-          robeSet.add(id);
-        });
-
-        dataReady = true;
-      } catch (err) {
-        console.error("Error loading data:", err);
-      }
+      });
+      jacketLoaded = true;
     }
 
-    window.addEventListener("load", loadData);
+    function processRobeRows(rows) {
+      robeSet.clear();
+      rows.forEach((row) => {
+        const id = normalizeId(row[ROBE_ID_COL]);
+        if (!id) return;
+        robeSet.add(id);
+      });
+      robeLoaded = true;
+    }
+
+    function dataReady() {
+      return jacketLoaded || robeLoaded;
+    }
 
     // DOM refs
+    const jacketFileInput = document.getElementById("jacketFileInput");
+    const robeFileInput = document.getElementById("robeFileInput");
+    const jacketStatus = document.getElementById("jacketStatus");
+    const robeStatus = document.getElementById("robeStatus");
+
     const lookupForm = document.getElementById("lookupForm");
     const studentIdInput = document.getElementById("studentIdInput");
     const errorText = document.getElementById("errorText");
@@ -1066,7 +1057,35 @@
 
     let pendingLookup = null;
 
-    // Modal
+    jacketFileInput.addEventListener("change", async () => {
+      const file = jacketFileInput.files[0];
+      if (!file) return;
+      jacketStatus.textContent = "Loading...";
+      try {
+        const rows = await sheetToJson(file);
+        processJacketRows(rows);
+        jacketStatus.textContent = "Loaded ✓";
+      } catch (e) {
+        console.error(e);
+        jacketStatus.textContent = "Error";
+      }
+    });
+
+    robeFileInput.addEventListener("change", async () => {
+      const file = robeFileInput.files[0];
+      if (!file) return;
+      robeStatus.textContent = "Loading...";
+      try {
+        const rows = await sheetToJson(file);
+        processRobeRows(rows);
+        robeStatus.textContent = "Loaded ✓";
+      } catch (e) {
+        console.error(e);
+        robeStatus.textContent = "Error";
+      }
+    });
+
+    // Modal logic
     function openRulesModal() {
       rulesCheckbox.checked = false;
       rulesConfirmBtn.classList.remove("enabled");
@@ -1142,28 +1161,18 @@
     }
 
     stadiumPopup.addEventListener("touchstart", (e) => {
-      const touch = e.touches[0];
-      onDragStart(touch.clientY);
+      const t = e.touches[0];
+      onDragStart(t.clientY);
     });
     stadiumPopup.addEventListener("touchmove", (e) => {
-      const touch = e.touches[0];
-      onDragMove(touch.clientY);
+      const t = e.touches[0];
+      onDragMove(t.clientY);
     });
-    stadiumPopup.addEventListener("touchend", () => {
-      onDragEnd();
-    });
+    stadiumPopup.addEventListener("touchend", () => onDragEnd());
 
-    stadiumPopup.addEventListener("mousedown", (e) => {
-      onDragStart(e.clientY);
-    });
-    window.addEventListener("mousemove", (e) => {
-      if (!dragging) return;
-      onDragMove(e.clientY);
-    });
-    window.addEventListener("mouseup", () => {
-      if (!dragging) return;
-      onDragEnd();
-    });
+    stadiumPopup.addEventListener("mousedown", (e) => onDragStart(e.clientY));
+    window.addEventListener("mousemove", (e) => { if (dragging) onDragMove(e.clientY); });
+    window.addEventListener("mouseup", () => { if (dragging) onDragEnd(); });
 
     function openStadiumPopup() {
       stadiumPopup.classList.add("active");
@@ -1228,12 +1237,11 @@
       showResultsWrapper();
     }
 
-    // Lookup
+    // Lookup submit
     lookupForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const rawId = studentIdInput.value.trim();
       const normalized = normalizeId(rawId);
-
       errorText.textContent = "";
 
       if (!normalized || normalized.length < 6) {
@@ -1241,8 +1249,8 @@
         return;
       }
 
-      if (!dataReady) {
-        errorText.textContent = "Data is still loading. Please try again in a few seconds.";
+      if (!dataReady()) {
+        errorText.textContent = "Please upload the Excel files first.";
         return;
       }
 

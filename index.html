@@ -411,7 +411,7 @@
     .period-text-main { font-size: 0.88rem; font-weight: 500; }
     .period-text-sub { font-size: 0.76rem; color: var(--text-muted); }
 
-    /* معاينة الملعب داخل كرت الجاكت */
+    /* stadium preview inside jacket card */
     .stadium-preview {
       margin-top: 8px;
       border-radius: 14px;
@@ -420,15 +420,20 @@
       border: 1px solid rgba(255,255,255,0.06);
       cursor: pointer;
       box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+      text-align: center;
+      padding: 6px 0 2px;
     }
 
     .stadium-preview img {
-      width: 100%;
+      width: 55%;
+      max-width: 190px;
       display: block;
+      margin: 0 auto 4px;
+      border-radius: 12px;
     }
 
     .stadium-preview-caption {
-      padding: 6px 10px 7px;
+      padding: 0 10px 7px;
       font-size: 0.78rem;
       color: var(--text-muted);
       text-align: center;
@@ -795,15 +800,15 @@
           </div>
         </div>
 
-        <!-- معاينة الملعب داخل كرت الجاكت -->
+        <!-- stadium preview -->
         <div class="stadium-preview" id="stadiumPreview">
           <img src="stadium_layout.jpg" alt="Stadium layout" />
           <div class="stadium-preview-caption">
-            Tap to view the full stadium pickup layout.
+            Tap to enlarge the stadium pickup map (opens in a pop-up view).
           </div>
         </div>
 
-        <!-- زر لوكيشن الملعب الخاص باستلام الجاكت -->
+        <!-- Jacket location button -->
         <a
           href="https://maps.app.goo.gl/adK8qC9BRnMzKmiF6?g_st=ipc"
           target="_blank"
@@ -896,7 +901,7 @@
     <span>You can drag the stadium card down to resize or close it.</span>
   </div>
 
-  <!-- Bottom-sheet صورة الملعب -->
+  <!-- Bottom-sheet stadium -->
   <div id="stadium-popup" class="stadium-popup">
     <div class="stadium-grabber"></div>
     <img id="stadium-img" src="stadium_layout.jpg" alt="Stadium Layout" />
@@ -915,7 +920,7 @@
 
     function normalizeId(value) {
       if (value === undefined || value === null) return "";
-      const digits = String(value).replace(/\\D/g, "");
+      const digits = String(value).replace(/\D/g, "");
       if (!digits) return "";
       return digits.padStart(8, "0");
     }

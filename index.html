@@ -414,13 +414,24 @@
     }
 
     .robe-block-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
-    .robe-block-text {
-      direction: rtl;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 8px;
-    }
+.robe-block-text {
+  direction: rtl;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+  text-align: right;
+}
+    .robe-list {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 0 8px;
+}
+
+.robe-list li {
+  margin-bottom: 4px;
+}
+
 
     .robe-location-btn {
       width: 100%;
@@ -737,11 +748,32 @@
         </a>
       </div>
 
-<p class="robe-block-text" style="direction: rtl; text-align: right; line-height: 1.65;">
-  • الاستلام يتم من <strong>قاعة الأنشطة – رعاية الشباب</strong> في الكلية.<br />
-  • موعد الاستلام: <strong>بعد استلام الجاكت بربع ساعة</strong>.<br />
-  • بعد استلام الروب، يُفضّل التوجّه إلى <strong>ساحة الكلية</strong> لتخفيف الزحام عند نقطة التسليم.
-</p>
+<!-- Robe card -->
+<div class="result-card" id="robeCard" style="display:none;">
+  <div class="robe-block-title">Robe Pickup</div>
+
+  <ul class="robe-block-text robe-list">
+    <li>
+      الاستلام يتم من <strong>قاعة الأنشطة – رعاية الشباب</strong> في الكلية.
+    </li>
+    <li>
+      موعد الاستلام: <strong>بعد استلام الجاكت بربع ساعة</strong>.
+    </li>
+    <li>
+      بعد استلام الروب، يُفضّل التوجّه إلى <strong>ساحة الكلية</strong> لتخفيف الزحام عند نقطة التسليم.
+    </li>
+  </ul>
+
+  <a
+    href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"
+    target="_blank"
+    class="robe-location-btn"
+  >
+    <span>📍</span>
+    <span>موقع مخزن رعاية الشباب في الخريطة</span>
+  </a>
+</div>
+
 
         <a
           href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"

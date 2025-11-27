@@ -228,7 +228,7 @@
       cursor: pointer;
       white-space: nowrap;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
+      transition: transform 0.18s.ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
 
     .primary-btn:active {
@@ -254,7 +254,7 @@
     .results-wrapper {
       margin-top: 10px;
       display: none;
-      transition: transform 0.35s ease-out, opacity 0.35s.ease-out;
+      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
     }
 
     .results-title {
@@ -345,18 +345,17 @@
     }
 
     .warning-bar {
-  display: flex;
-  align-items: flex-start; /* بدل center لو تبغى الأسطر تبدأ من فوق */
-  gap: 6px;
-  margin-top: 8px;
-  padding: 6px 8px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(139, 106, 53, 0.05));
-  border: 1px solid rgba(255, 204, 102, 0.35);
-  font-size: 0.78rem;
-  color: var(--danger);
-}
-
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 6px 8px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(139, 106, 53, 0.05));
+      border: 1px solid rgba(255, 204, 102, 0.35);
+      font-size: 0.78rem;
+      color: var(--danger);
+    }
 
     .warning-icon { font-size: 0.9rem; }
 
@@ -404,7 +403,7 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
+      transition: background var(--transition-soft), transform 0.14s.ease-out, box-shadow 0.18s ease-out;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
     }
 
@@ -414,24 +413,25 @@
     }
 
     .robe-block-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
-.robe-block-text {
-  direction: rtl;
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 8px;
-  text-align: right;
-}
+
+    .robe-block-text {
+      direction: rtl;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 8px;
+      text-align: right;
+    }
+
     .robe-list {
-  list-style-position: inside;
-  padding-left: 0;
-  margin: 0 0 8px;
-}
+      list-style-position: inside;
+      padding-left: 0;
+      margin: 0 0 8px;
+    }
 
-.robe-list li {
-  margin-bottom: 4px;
-}
-
+    .robe-list li {
+      margin-bottom: 4px;
+    }
 
     .robe-location-btn {
       width: 100%;
@@ -447,7 +447,7 @@
       gap: 6px;
       cursor: pointer;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8);
-      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
+      transition: transform 0.14s.ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
     }
 
     .robe-location-btn:active {
@@ -598,7 +598,7 @@
       white-space: nowrap;
       opacity: 0.4;
       pointer-events: none;
-      transition: opacity 0.2s ease-out, transform 0.14s ease-out, box-shadow 0.18s ease-out;
+      transition: opacity 0.2s ease-out, transform 0.14s.ease-out, box-shadow 0.18s ease-out;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
     }
 
@@ -721,15 +721,14 @@
           </div>
         </div>
 
-<div class="warning-bar">
-  <span class="warning-icon">⚠️</span>
-  <span>
-    Important: your items can only be collected at your assigned period.<br />
-    • Take a <strong>SCREENSHOT</strong> to show the organizers at the entrance, and keep your <strong>ID</strong> ready.<br />
-    • No need for the order number.
-  </span>
-</div>
-
+        <div class="warning-bar">
+          <span class="warning-icon">⚠️</span>
+          <span>
+            Important: your items can only be collected at your assigned period.<br />
+            • Take a <strong>SCREENSHOT</strong> to show the organizers at the entrance, and keep your <strong>ID</strong> ready.<br />
+            • No need for the order number.
+          </span>
+        </div>
 
         <!-- stadium preview -->
         <div class="stadium-preview" id="stadiumPreview">
@@ -748,32 +747,21 @@
         </a>
       </div>
 
-<!-- Robe card -->
-<div class="result-card" id="robeCard" style="display:none;">
-  <div class="robe-block-title">Robe Pickup</div>
+      <!-- Robe card -->
+      <div class="result-card" id="robeCard" style="display:none;">
+        <div class="robe-block-title">Robe Pickup</div>
 
-  <ul class="robe-block-text robe-list">
-    <li>
-      الاستلام يتم من <strong>قاعة الأنشطة – رعاية الشباب</strong> في الكلية.
-    </li>
-    <li>
-      موعد الاستلام: <strong>بعد استلام الجاكت بربع ساعة</strong>.
-    </li>
-    <li>
-      بعد استلام الروب، يُفضّل التوجّه إلى <strong>ساحة الكلية</strong> لتخفيف الزحام عند نقطة التسليم.
-    </li>
-  </ul>
-
-  <a
-    href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"
-    target="_blank"
-    class="robe-location-btn"
-  >
-    <span>📍</span>
-    <span>موقع مخزن رعاية الشباب في الخريطة</span>
-  </a>
-</div>
-
+        <ul class="robe-block-text robe-list">
+          <li>
+            الاستلام يتم من <strong>قاعة الأنشطة – رعاية الشباب</strong> في الكلية.
+          </li>
+          <li>
+            موعد الاستلام: <strong>بعد استلام الجاكت بربع ساعة</strong>.
+          </li>
+          <li>
+            بعد استلام الروب، يُفضّل التوجّه إلى <strong>ساحة الكلية</strong> لتخفيف الزحام عند نقطة التسليم.
+          </li>
+        </ul>
 
         <a
           href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"
@@ -1065,7 +1053,7 @@
       resultsSection.style.opacity = resultsOpacity.toString();
 
       if (stadiumPreviewImg) {
-        const imgScale = 1 + 0.06 * t; // يكبر شوي مع السكروول
+        const imgScale = 1 + 0.06 * t;
         stadiumPreviewImg.style.transform = `scale(${imgScale})`;
       }
     });

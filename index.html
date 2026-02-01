@@ -17,10 +17,11 @@
       --bg-card: #11121a;
       --bg-card-soft: #161722;
 
-      /* Burgundy palette (from your image) */
+      /* Burgundy palette */
       --gold: #3B111A;        /* main accent */
       --gold-soft: #9B4B5C;   /* softer highlight */
       --gold-deep: #25090F;   /* deeper shade */
+      --gold-title: #25090F;  /* NEW: darker title color for "GRADUATION TEAM" */
 
       --teal: #66c2c2;
       --text-main: #f6f6f6;
@@ -36,11 +37,7 @@
       --transition-spring: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -84,9 +81,7 @@
       z-index: 0;
     }
 
-    .orb.orb-boost {
-      animation: orbBoost 0.9s ease-out;
-    }
+    .orb.orb-boost { animation: orbBoost 0.9s ease-out; }
 
     @keyframes orbFloat {
       0%   { transform: translate(-50%, -4px) scale(1); }
@@ -139,12 +134,13 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.9);
     }
 
+    /* UPDATED: darker title color */
     .header-title {
       font-size: 1.35rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
-      color: var(--gold-soft);
+      color: var(--gold-title);
     }
 
     /* Main card */
@@ -191,11 +187,7 @@
       margin-bottom: 10px;
     }
 
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
+    .input-row { display: flex; gap: 8px; margin-bottom: 8px; }
 
     .input-row input {
       flex: 1;
@@ -240,11 +232,7 @@
       filter: brightness(0.96);
     }
 
-    .hint-text {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
+    .hint-text { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 4px; }
 
     .error-text {
       font-size: 0.78rem;
@@ -257,7 +245,7 @@
     .results-wrapper {
       margin-top: 10px;
       display: none;
-      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+      /* REMOVED: scroll animation transforms via JS, keep simple */
     }
 
     .results-title {
@@ -276,12 +264,7 @@
       overflow: hidden;
     }
 
-    .result-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
+    .result-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 
     .result-title { font-size: 0.98rem; font-weight: 600; }
     .result-sub { font-size: 0.78rem; color: var(--text-muted); }
@@ -337,9 +320,7 @@
       opacity: 0;
     }
 
-    .info-value-badge.pop-in {
-      animation: badgePop 0.5s var(--transition-spring) forwards;
-    }
+    .info-value-badge.pop-in { animation: badgePop 0.5s var(--transition-spring) forwards; }
 
     @keyframes badgePop {
       0% { transform: scale(0.2) translateY(8px); opacity: 0; }
@@ -370,11 +351,7 @@
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
     }
 
-    .no-items {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      padding: 10px 10px 6px;
-    }
+    .no-items { font-size: 0.84rem; color: var(--text-muted); padding: 10px 10px 6px; }
 
     .footer {
       margin-top: 18px;
@@ -437,10 +414,7 @@
       transition: transform var(--transition-spring), opacity var(--transition-soft);
     }
 
-    .modal-backdrop.active .modal-dialog {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    .modal-backdrop.active .modal-dialog { transform: translateY(0); opacity: 1; }
 
     .modal-icon {
       width: 34px;
@@ -517,10 +491,7 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
     }
 
-    .modal-confirm-btn.enabled {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .modal-confirm-btn.enabled { opacity: 1; pointer-events: auto; }
 
     .modal-confirm-btn:active {
       transform: translateY(1px) scale(0.98);
@@ -726,7 +697,6 @@
     const stationLabelEl = document.getElementById("stationLabel");
     const periodMainEl = document.getElementById("periodMain");
     const mainCard = document.getElementById("mainCard");
-    const header = document.getElementById("header");
     const orb = document.getElementById("orb");
     const rulesModal = document.getElementById("rulesModal");
     const rulesCheckbox = document.getElementById("rulesCheckbox");
@@ -766,27 +736,6 @@
       pendingLookup = null;
     });
 
-    // Scroll swap animation
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
-      const max = 180;
-      const t = Math.min(y / max, 1);
-
-      const mainScale = 1 - 0.04 * t;
-      const mainTranslate = -4 * t;
-      mainCard.style.transform = `translateY(${mainTranslate}px) scale(${mainScale})`;
-
-      const headerTranslate = -6 * t;
-      const headerOpacity = 1 - 0.3 * t;
-      header.style.transform = `translateY(${headerTranslate}px)`;
-      header.style.opacity = headerOpacity.toString();
-
-      const resultsTranslate = 12 * (1 - t);
-      const resultsOpacity = 0.1 + 0.9 * t;
-      resultsSection.style.transform = `translateY(${resultsTranslate}px)`;
-      resultsSection.style.opacity = resultsOpacity.toString();
-    });
-
     // Animations & results
     function boostOrb() {
       orb.classList.remove("orb-boost");
@@ -800,9 +749,9 @@
       mainCard.classList.add("card-glow");
     }
 
+    // UPDATED: show results without forced scroll animation
     function showResultsWrapper() {
       resultsSection.style.display = "block";
-      resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function applyResults(id, hasJacket) {

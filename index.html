@@ -17,10 +17,10 @@
       --bg-card: #11121a;
       --bg-card-soft: #161722;
 
-      /* Burgundy palette (replacing gold) */
-      --gold: #7a0f2d;        /* main accent */
-      --gold-soft: #c46b82;   /* softer highlight */
-      --gold-deep: #3d0618;   /* deeper shade */
+      /* Burgundy palette (from your image) */
+      --gold: #3B111A;        /* main accent */
+      --gold-soft: #9B4B5C;   /* softer highlight */
+      --gold-deep: #25090F;   /* deeper shade */
 
       --teal: #66c2c2;
       --text-main: #f6f6f6;
@@ -73,7 +73,7 @@
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(122, 15, 45, 0.4), rgba(10, 14, 18, 0.2));
+      background: radial-gradient(circle at 30% 30%, rgba(59, 17, 26, 0.4), rgba(10, 14, 18, 0.2));
       filter: blur(4px);
       top: 8%;
       left: 50%;
@@ -122,7 +122,7 @@
       justify-content: center;
       padding: 5px;
       border-radius: 18px;
-      border: 1px solid rgba(122, 15, 45, 0.35);
+      border: 1px solid rgba(59, 17, 26, 0.35);
       background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
                   linear-gradient(145deg, #101118, #07080f);
       box-shadow:
@@ -166,7 +166,7 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at top, rgba(122, 15, 45, 0.16), transparent 60%);
+      background: radial-gradient(circle at top, rgba(59, 17, 26, 0.16), transparent 60%);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.6s ease-out;
@@ -213,7 +213,7 @@
 
     .input-row input:focus {
       border-color: var(--gold-soft);
-      box-shadow: 0 0 0 1px rgba(122, 15, 45, 0.6), 0 0 18px rgba(122, 15, 45, 0.32);
+      box-shadow: 0 0 0 1px rgba(59, 17, 26, 0.6), 0 0 18px rgba(59, 17, 26, 0.32);
       background: #181822;
     }
 
@@ -326,7 +326,7 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, #e2b3c1, #a24760 48%, var(--gold-deep) 100%);
+      background: radial-gradient(circle at 30% 25%, #9B4B5C, #682735 48%, var(--gold-deep) 100%);
       box-shadow:
         0 10px 20px rgba(0,0,0,0.8),
         inset 0 0 10px rgba(255,255,255,0.18);
@@ -346,21 +346,6 @@
       60% { transform: scale(1.1) translateY(-2px); opacity: 1; }
       100% { transform: scale(1) translateY(0); opacity: 1; }
     }
-
-    .warning-bar {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      margin-top: 8px;
-      padding: 6px 8px;
-      border-radius: var(--radius-md);
-      background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(61, 6, 24, 0.05));
-      border: 1px solid rgba(255, 204, 102, 0.35);
-      font-size: 0.78rem;
-      color: var(--danger);
-    }
-
-    .warning-icon { font-size: 0.9rem; }
 
     .jacket-location-btn {
       width: 100%;
@@ -411,7 +396,7 @@
     }
 
     .footer-glow span {
-      background: linear-gradient(120deg, var(--gold-deep), #d18a9d, var(--gold-deep));
+      background: linear-gradient(120deg, var(--gold-deep), #9B4B5C, var(--gold-deep));
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -461,7 +446,7 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #e2b3c1, #a24760);
+      background: radial-gradient(circle at 30% 30%, #9B4B5C, #682735);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -607,18 +592,9 @@
           </div>
         </div>
 
-        <div class="warning-bar">
-          <span class="warning-icon">⚠️</span>
-          <span>
-            Important: your items can only be collected at your assigned period.<br />
-            • Take a <strong>SCREENSHOT</strong> to show the organizers at the entrance, and keep your <strong>ID</strong> ready.<br />
-            • No need for the order number.
-          </span>
-        </div>
-
         <!-- Jacket location button -->
         <a
-          href="https://maps.app.goo.gl/Sg9exBwLkvCzmJAg6?g_st=ipc"
+          href="https://maps.app.goo.gl/JYptt894g5prKaz1A?g_st=ic"
           target="_blank"
           class="jacket-location-btn"
         >

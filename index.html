@@ -17,16 +17,14 @@
       --bg-card: #11121a;
       --bg-card-soft: #161722;
 
-      /* Burgundy palette */
-      --gold: #3B111A;        /* main accent */
-      --gold-soft: #9B4B5C;   /* softer highlight */
+      /* Burgundy palette (less pink / more burgundy) */
+      --gold: #3B111A;        /* main accent (from your image) */
+      --gold-soft: #7B2A3A;   /* UPDATED: softer highlight but NOT pink */
       --gold-deep: #25090F;   /* deeper shade */
-      --gold-title: #25090F;  /* NEW: darker title color for "GRADUATION TEAM" */
 
       --teal: #66c2c2;
       --text-main: #f6f6f6;
       --text-muted: #b2b2b8;
-      --danger: #ffcc66;
       --input-bg: #15151c;
       --border-soft: #2b2b35;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.9);
@@ -134,13 +132,13 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.9);
     }
 
-    /* UPDATED: darker title color */
+    /* UPDATED: now uses the new burgundy-soft (not pink) */
     .header-title {
       font-size: 1.35rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
-      color: var(--gold-title);
+      color: var(--gold-soft);
     }
 
     /* Main card */
@@ -223,7 +221,7 @@
       cursor: pointer;
       white-space: nowrap;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-      transition: transform 0.18s.ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
     }
 
     .primary-btn:active {
@@ -242,11 +240,7 @@
     }
 
     /* Results */
-    .results-wrapper {
-      margin-top: 10px;
-      display: none;
-      /* REMOVED: scroll animation transforms via JS, keep simple */
-    }
+    .results-wrapper { margin-top: 10px; display: none; }
 
     .results-title {
       font-size: 0.9rem;
@@ -309,7 +303,7 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, #9B4B5C, #682735 48%, var(--gold-deep) 100%);
+      background: radial-gradient(circle at 30% 25%, var(--gold-soft), #682735 48%, var(--gold-deep) 100%);
       box-shadow:
         0 10px 20px rgba(0,0,0,0.8),
         inset 0 0 10px rgba(255,255,255,0.18);
@@ -342,7 +336,7 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      transition: background var(--transition-soft), transform 0.14s.ease-out, box-shadow 0.18s ease-out;
+      transition: background var(--transition-soft), transform 0.14s ease-out, box-shadow 0.18s ease-out;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
     }
 
@@ -373,7 +367,7 @@
     }
 
     .footer-glow span {
-      background: linear-gradient(120deg, var(--gold-deep), #9B4B5C, var(--gold-deep));
+      background: linear-gradient(120deg, var(--gold-deep), var(--gold-soft), var(--gold-deep));
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -420,7 +414,7 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #9B4B5C, #682735);
+      background: radial-gradient(circle at 30% 30%, var(--gold-soft), #682735);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -446,6 +440,7 @@
       color: var(--gold-soft);
       margin-bottom: 1px;
     }
+
     .modal-step-text {
       font-size: 0.78rem;
       color: var(--text-muted);
@@ -487,7 +482,7 @@
       white-space: nowrap;
       opacity: 0.4;
       pointer-events: none;
-      transition: opacity 0.2s ease-out, transform 0.14s.ease-out, box-shadow 0.18s ease-out;
+      transition: opacity 0.2s ease-out, transform 0.14s ease-out, box-shadow 0.18s ease-out;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
     }
 
@@ -749,7 +744,6 @@
       mainCard.classList.add("card-glow");
     }
 
-    // UPDATED: show results without forced scroll animation
     function showResultsWrapper() {
       resultsSection.style.display = "block";
     }

@@ -16,9 +16,12 @@
       --bg-main: #05060c;
       --bg-card: #11121a;
       --bg-card-soft: #161722;
-      --gold: #c9a25f;
-      --gold-soft: #e0c58a;
-      --gold-deep: #8b6a35;
+
+      /* Burgundy palette (replacing gold) */
+      --gold: #7a0f2d;        /* main accent */
+      --gold-soft: #c46b82;   /* softer highlight */
+      --gold-deep: #3d0618;   /* deeper shade */
+
       --teal: #66c2c2;
       --text-main: #f6f6f6;
       --text-muted: #b2b2b8;
@@ -70,7 +73,7 @@
       width: 220px;
       height: 220px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(201, 162, 95, 0.4), rgba(10, 14, 18, 0.2));
+      background: radial-gradient(circle at 30% 30%, rgba(122, 15, 45, 0.4), rgba(10, 14, 18, 0.2));
       filter: blur(4px);
       top: 8%;
       left: 50%;
@@ -119,7 +122,7 @@
       justify-content: center;
       padding: 5px;
       border-radius: 18px;
-      border: 1px solid rgba(201, 162, 95, 0.35);
+      border: 1px solid rgba(122, 15, 45, 0.35);
       background: radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 60%),
                   linear-gradient(145deg, #101118, #07080f);
       box-shadow:
@@ -163,7 +166,7 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at top, rgba(201, 162, 95, 0.16), transparent 60%);
+      background: radial-gradient(circle at top, rgba(122, 15, 45, 0.16), transparent 60%);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.6s ease-out;
@@ -210,7 +213,7 @@
 
     .input-row input:focus {
       border-color: var(--gold-soft);
-      box-shadow: 0 0 0 1px rgba(201, 162, 95, 0.6), 0 0 18px rgba(201, 162, 95, 0.32);
+      box-shadow: 0 0 0 1px rgba(122, 15, 45, 0.6), 0 0 18px rgba(122, 15, 45, 0.32);
       background: #181822;
     }
 
@@ -218,7 +221,7 @@
       padding: 0 16px;
       border-radius: var(--radius-pill);
       border: none;
-      background: linear-gradient(135deg, #c9a25f, #8b6a35);
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
       color: #0b0b10;
       font-weight: 600;
       font-size: 0.9rem;
@@ -323,7 +326,7 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, #f3d9a0, #b4873f 48%, #6c4b1f 100%);
+      background: radial-gradient(circle at 30% 25%, #e2b3c1, #a24760 48%, var(--gold-deep) 100%);
       box-shadow:
         0 10px 20px rgba(0,0,0,0.8),
         inset 0 0 10px rgba(255,255,255,0.18);
@@ -351,43 +354,13 @@
       margin-top: 8px;
       padding: 6px 8px;
       border-radius: var(--radius-md);
-      background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(139, 106, 53, 0.05));
+      background: linear-gradient(120deg, rgba(255, 204, 102, 0.15), rgba(61, 6, 24, 0.05));
       border: 1px solid rgba(255, 204, 102, 0.35);
       font-size: 0.78rem;
       color: var(--danger);
     }
 
     .warning-icon { font-size: 0.9rem; }
-
-    /* stadium preview inside jacket card */
-    .stadium-preview {
-      margin-top: 8px;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #05060c;
-      border: 1px solid rgba(255,255,255,0.06);
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.7);
-      text-align: center;
-      padding: 6px 0 2px;
-    }
-
-    .stadium-preview img {
-      width: 55%;
-      max-width: 190px;
-      display: block;
-      margin: 0 auto 4px;
-      border-radius: 12px;
-      transform-origin: center center;
-      transition: transform 0.25s ease-out;
-    }
-
-    .stadium-preview-caption {
-      padding: 0 10px 7px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
 
     .jacket-location-btn {
       width: 100%;
@@ -410,49 +383,6 @@
     .jacket-location-btn:active {
       transform: translateY(1px) scale(0.985);
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
-    }
-
-    .robe-block-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
-
-    .robe-block-text {
-      direction: rtl;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 8px;
-      text-align: right;
-    }
-
-    .robe-list {
-      list-style-position: inside;
-      padding-left: 0;
-      margin: 0 0 8px;
-    }
-
-    .robe-list li {
-      margin-bottom: 4px;
-    }
-
-    .robe-location-btn {
-      width: 100%;
-      padding: 9px 12px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(201, 162, 95, 0.4);
-      background: linear-gradient(135deg, #151521, #1c1c2a);
-      color: var(--gold-soft);
-      font-size: 0.84rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.8);
-      transition: transform 0.14s.ease-out, box-shadow 0.14s ease-out, background var(--transition-soft);
-    }
-
-    .robe-location-btn:active {
-      transform: translateY(1px) scale(0.985);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.85);
     }
 
     .no-items {
@@ -481,7 +411,7 @@
     }
 
     .footer-glow span {
-      background: linear-gradient(120deg, #5b4420, #f1d08d, #5b4420);
+      background: linear-gradient(120deg, var(--gold-deep), #d18a9d, var(--gold-deep));
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -531,7 +461,7 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #f4dea6, #a57c3b);
+      background: radial-gradient(circle at 30% 30%, #e2b3c1, #a24760);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -592,7 +522,7 @@
       padding: 7px 12px;
       font-size: 0.82rem;
       font-weight: 600;
-      background: linear-gradient(135deg, #c9a25f, #8b6a35);
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
       color: #121219;
       cursor: pointer;
       white-space: nowrap;
@@ -610,50 +540,6 @@
     .modal-confirm-btn:active {
       transform: translateY(1px) scale(0.98);
       box-shadow: 0 5px 12px rgba(0, 0, 0, 0.9);
-    }
-
-    /* Stadium popup */
-    .stadium-popup {
-      position: fixed;
-      bottom: -70%;
-      left: 0;
-      width: 100%;
-      height: 65%;
-      background: #0c0d13;
-      border-top-left-radius: 26px;
-      border-top-right-radius: 26px;
-      box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.7);
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-      transform: translateY(100%);
-      z-index: 2500;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 12px;
-      touch-action: none;
-    }
-
-    .stadium-popup.active { transform: translateY(0); }
-
-    .stadium-grabber {
-      width: 55px;
-      height: 6px;
-      background: #444;
-      border-radius: 6px;
-      margin-bottom: 10px;
-    }
-
-    .stadium-popup img {
-      width: 90%;
-      border-radius: 16px;
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-      user-select: none;
-      pointer-events: none;
-      transform: scale(0.85);
-    }
-
-    .stadium-popup.active img {
-      transform: scale(1.05);
     }
 
     @media (max-width: 360px) {
@@ -690,7 +576,7 @@
           </button>
         </div>
         <div class="hint-text">
-          Enter your 8-digit student ID to see your jacket and robe pickup details.
+          Enter your 8-digit student ID to see your jacket pickup details.
         </div>
         <div id="errorText" class="error-text"></div>
       </form>
@@ -730,12 +616,6 @@
           </span>
         </div>
 
-        <!-- stadium preview -->
-        <div class="stadium-preview" id="stadiumPreview">
-          <img src="stadium_layout.jpg" alt="Stadium layout" />
-          <div class="stadium-preview-caption"></div>
-        </div>
-
         <!-- Jacket location button -->
         <a
           href="https://maps.app.goo.gl/Sg9exBwLkvCzmJAg6?g_st=ipc"
@@ -744,32 +624,6 @@
         >
           <span>📍</span>
           <span>Open Location</span>
-        </a>
-      </div>
-
-      <!-- Robe card -->
-      <div class="result-card" id="robeCard" style="display:none;">
-        <div class="robe-block-title">Robe Pickup</div>
-
-        <ul class="robe-block-text robe-list">
-          <li>
-            الاستلام يتم من <strong>قاعة الأنشطة – رعاية الشباب</strong> في الكلية.
-          </li>
-          <li>
-            موعد الاستلام: <strong>بعد استلام الجاكت بربع ساعة</strong>.
-          </li>
-          <li>
-            بعد استلام الروب، يُفضّل التوجّه إلى <strong>ساحة الكلية</strong> لتخفيف الزحام عند نقطة التسليم.
-          </li>
-        </ul>
-
-        <a
-          href="https://maps.app.goo.gl/aLQH48X5iewSXqzT8?g_st=ipc"
-          target="_blank"
-          class="robe-location-btn"
-        >
-          <span>📍</span>
-          <span>موقع قاعة الانشطة - رعاية الشباب</span>
         </a>
       </div>
 
@@ -806,22 +660,12 @@
         <div class="modal-step">
           <div class="modal-step-title">2</div>
           <div class="modal-step-text">
-            If you are unable to come yourself, you may send someone on your behalf. They must have:
-            <br />• A clear photo of your student ID card
-            <br />• Your order number
-            <br /><strong>Both are required.</strong>
+            Come only at your assigned period.
           </div>
         </div>
 
         <div class="modal-step">
           <div class="modal-step-title">3</div>
-          <div class="modal-step-text">
-            Come only at your assigned period. <strong>If you miss the pickup day</strong>, the next chance will be only <strong>after practical exams</strong>.
-          </div>
-        </div>
-
-        <div class="modal-step">
-          <div class="modal-step-title">4</div>
           <div class="modal-step-text">
             After collecting your items, <strong>move to the college yard</strong> to keep the pickup point uncrowded.
           </div>
@@ -838,21 +682,13 @@
     </div>
   </div>
 
-  <!-- Bottom-sheet stadium -->
-  <div id="stadium-popup" class="stadium-popup">
-    <div class="stadium-grabber"></div>
-    <img id="stadium-img" src="stadium_layout.jpg" alt="Stadium Layout" />
-  </div>
-
   <script>
     // Excel columns
     const JACKET_ID_COL = "Student ID ( 8 digits e.g.20200456)";
     const JACKET_STATION_COL = "Station";
     const JACKET_PERIOD_COL = "Period";
-    const ROBE_ID_COL = "Student ID";
 
     const jacketMap = new Map();
-    const robeSet = new Set();
     let dataReady = false;
 
     function normalizeId(value) {
@@ -884,10 +720,7 @@
 
     async function loadData() {
       try {
-        const [jacketRows, robeRows] = await Promise.all([
-          loadWorkbook("Order_Arrangement_UPDATED.xlsx"),
-          loadWorkbook("All_graduation_Orders_sorted_by_size.xlsx"),
-        ]);
+        const jacketRows = await loadWorkbook("Order_Arrangement_UPDATED.xlsx");
 
         jacketRows.forEach((row) => {
           const id = normalizeId(getTrimmed(row, JACKET_ID_COL));
@@ -895,12 +728,6 @@
           const station = getTrimmed(row, JACKET_STATION_COL);
           const period = getTrimmed(row, JACKET_PERIOD_COL);
           jacketMap.set(id, { station, period });
-        });
-
-        robeRows.forEach((row) => {
-          const id = normalizeId(getTrimmed(row, ROBE_ID_COL));
-          if (!id) return;
-          robeSet.add(id);
         });
 
         dataReady = true;
@@ -917,7 +744,6 @@
     const errorText = document.getElementById("errorText");
     const resultsSection = document.getElementById("resultsSection");
     const jacketCard = document.getElementById("jacketCard");
-    const robeCard = document.getElementById("robeCard");
     const noItemsCard = document.getElementById("noItemsCard");
     const noItemsText = document.getElementById("noItemsText");
     const stationBadge = document.getElementById("stationBadge");
@@ -929,13 +755,8 @@
     const rulesModal = document.getElementById("rulesModal");
     const rulesCheckbox = document.getElementById("rulesCheckbox");
     const rulesConfirmBtn = document.getElementById("rulesConfirmBtn");
-    const stadiumPopup = document.getElementById("stadium-popup");
-    const stadiumImg = document.getElementById("stadium-img");
-    const stadiumPreview = document.getElementById("stadiumPreview");
-    const stadiumPreviewImg = stadiumPreview ? stadiumPreview.querySelector("img") : null;
 
     let pendingLookup = null;
-    let lastLookupHasJacket = false;
 
     // digits only in input
     studentIdInput.addEventListener("input", () => {
@@ -965,74 +786,11 @@
       if (!rulesCheckbox.checked || !pendingLookup) return;
 
       closeRulesModal();
-      applyResults(pendingLookup.id, pendingLookup.hasJacket, pendingLookup.hasRobe);
-      if (lastLookupHasJacket) {
-        openStadiumPopup();
-      }
+      applyResults(pendingLookup.id, pendingLookup.hasJacket);
       pendingLookup = null;
     });
 
-    // Stadium popup drag
-    let startY = 0;
-    let currentY = 0;
-    let dragging = false;
-
-    function onDragStart(clientY) {
-      dragging = true;
-      startY = clientY;
-      currentY = 0;
-    }
-
-    function onDragMove(clientY) {
-      if (!dragging) return;
-      currentY = clientY - startY;
-      if (currentY > 0) {
-        const translate = currentY;
-        stadiumPopup.style.transform = "translateY(" + translate + "px)";
-      }
-    }
-
-    function onDragEnd() {
-      if (!dragging) return;
-      dragging = false;
-
-      if (currentY > 140) {
-        stadiumPopup.classList.remove("active");
-        stadiumPopup.style.transform = "translateY(100%)";
-      } else {
-        stadiumPopup.classList.add("active");
-        stadiumPopup.style.transform = "translateY(0)";
-      }
-      currentY = 0;
-    }
-
-    stadiumPopup.addEventListener("touchstart", (e) => {
-      const t = e.touches[0];
-      onDragStart(t.clientY);
-    });
-    stadiumPopup.addEventListener("touchmove", (e) => {
-      const t = e.touches[0];
-      onDragMove(t.clientY);
-    });
-    stadiumPopup.addEventListener("touchend", () => onDragEnd());
-
-    stadiumPopup.addEventListener("mousedown", (e) => onDragStart(e.clientY));
-    window.addEventListener("mousemove", (e) => { if (dragging) onDragMove(e.clientY); });
-    window.addEventListener("mouseup", () => { if (dragging) onDragEnd(); });
-
-    function openStadiumPopup() {
-      stadiumPopup.classList.add("active");
-      stadiumPopup.style.transform = "translateY(0)";
-    }
-
-    // Click on preview to open popup (always)
-    if (stadiumPreview) {
-      stadiumPreview.addEventListener("click", () => {
-        openStadiumPopup();
-      });
-    }
-
-    // Scroll swap animation + stadium preview scale on scroll
+    // Scroll swap animation
     window.addEventListener("scroll", () => {
       const y = window.scrollY;
       const max = 180;
@@ -1051,11 +809,6 @@
       const resultsOpacity = 0.1 + 0.9 * t;
       resultsSection.style.transform = `translateY(${resultsTranslate}px)`;
       resultsSection.style.opacity = resultsOpacity.toString();
-
-      if (stadiumPreviewImg) {
-        const imgScale = 1 + 0.06 * t;
-        stadiumPreviewImg.style.transform = `scale(${imgScale})`;
-      }
     });
 
     // Animations & results
@@ -1076,9 +829,8 @@
       resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    function applyResults(id, hasJacket, hasRobe) {
+    function applyResults(id, hasJacket) {
       jacketCard.style.display = "none";
-      robeCard.style.display = "none";
       noItemsCard.style.display = "none";
 
       if (hasJacket) {
@@ -1097,13 +849,7 @@
         stationBadge.classList.add("pop-in");
 
         jacketCard.style.display = "block";
-      }
-
-      if (hasRobe) {
-        robeCard.style.display = "block";
-      }
-
-      if (!hasJacket && !hasRobe) {
+      } else {
         noItemsText.textContent = "This student ID does not have any graduation items registered.";
         noItemsCard.style.display = "block";
       }
@@ -1131,17 +877,14 @@
       }
 
       const hasJacket = jacketMap.has(normalized);
-      const hasRobe = robeSet.has(normalized);
 
-      lastLookupHasJacket = hasJacket;
-
-      if (!hasJacket && !hasRobe) {
+      if (!hasJacket) {
         pendingLookup = null;
-        applyResults(normalized, false, false);
+        applyResults(normalized, false);
         return;
       }
 
-      pendingLookup = { id: normalized, hasJacket, hasRobe };
+      pendingLookup = { id: normalized, hasJacket };
       openRulesModal();
     });
   </script>
